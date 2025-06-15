@@ -18,7 +18,6 @@ export const cadastro = async (req, res) => {
     } catch (error) {
         next(error);
     }
-
 };
 
 export const signin = async(req, res, next) => {
