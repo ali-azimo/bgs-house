@@ -2,16 +2,17 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import userRouter from './routes/user.route.js';
+import cadRouter from './routes/cad.route.js';
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO).then(() => {
+mongoose
+    .connect(process.env.MONGO).then(() => {
     console.log('Conectado ao MongoDB');
 }).catch((err) => {
     console.log(err);
 });
-
-
+// Importando o express
 const app = express();
 app.use(express.json());
 
@@ -22,3 +23,4 @@ app.listen(3000, () => {
 
 //Importando as rotas
 app.use("/api/user", userRouter);
+app.use("/api/cad", cadRouter);
