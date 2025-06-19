@@ -4,7 +4,7 @@ import { errorHandler } from "../utils/erros.js";
 import jwt from 'jsonwebtoken';
 
 
-export const cadastro = async (req, res) => {
+export const cadastro = async (req, res, next) => {
     const { username, email, password } = req.body;
     const hashedPassword = bcryptjs.hashSync(password, 10);
     const newUser = new User({
