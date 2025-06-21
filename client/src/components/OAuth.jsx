@@ -12,7 +12,7 @@ export default function OAuth(){
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app)
       const result = await signInWithPopup(auth, provider);
-      const res = await fetch('/api/auth/google',{
+      const res = await fetch('/api/cad/google',{
         method: "POST",
         headers:{
           'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ export default function OAuth(){
       navigate('/');      
       console.log(result);
     }catch(error){
-      console.log('Could not sign with google');
+      console.log('Nao foi possivel fazer o login com o google ' + error);
     }
   };
   return (

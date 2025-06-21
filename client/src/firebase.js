@@ -5,13 +5,13 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDZNeLfZry5w3ZzjQ51zBaiaZ9m-dY_oU8",
-  authDomain: "bgs-imo.firebaseapp.com",
-  projectId: "bgs-imo",
-  storageBucket: "bgs-imo.firebasestorage.app",
-  messagingSenderId: "257840016462",
-  appId: "1:257840016462:web:bf8fc9efaaeb30a3cfa71f"
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: "bgs-imo-b1008.firebaseapp.com",
+  projectId: "bgs-imo-b1008",
+  storageBucket: "bgs-imo-b1008.firebasestorage.app",
+  messagingSenderId: "229692291885",
+  appId: "1:229692291885:web:4c854e9e32c12d508df1a4"
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+export const app = initializeApp(firebaseConfig);;
