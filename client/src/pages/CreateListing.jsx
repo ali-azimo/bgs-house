@@ -54,11 +54,11 @@ export default function CreateListing() {
                 setImageUploadError(false);
                 setUploading(false);
             }).catch((err) =>{
-                setImageUploadError('Image upload failed (2 mb ma per image)');
+                setImageUploadError('Erro ao carregar imagem (apens 2mb por imagem)');
                     setUploading(false);
             });
         }else{
-            setImageUploadError('You can only upload 6 images per listing');
+            setImageUploadError('Apenas 6 imagens são permitidas');
                 setUploading(false);
         }
     };
@@ -73,7 +73,7 @@ export default function CreateListing() {
                 (snapshot)=>{
                     const progress = 
                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log(`Upload is ${progress}% done`);
+                    console.log(`O carregamento esta ${progress}% feito`);
                 },
                 (error) => {
                     reject(error);
@@ -121,8 +121,8 @@ export default function CreateListing() {
     const handleSubmit = async (e) =>{
         e.preventDefault();
         try{
-            if(formData.imageUrls.length < 1) return setErrorSubmit('You must upload at least one image');
-            if(+formData.regularPrice < +formData.discountPrice) return setErrorSubmit("Discount Price must be lower than regular Price");
+            if(formData.imageUrls.length < 1) return setErrorSubmit('Deve carregar pelo menos uma imagem');
+            if(+formData.regularPrice < +formData.discountPrice) return setErrorSubmit("O preço regular não pode ser menor que o preço com desconto");
             setLoadingSubmit(true);
             setErrorSubmit(false);
             const res = await fetch('/api/listing/create',{
@@ -299,7 +299,7 @@ export default function CreateListing() {
 
                 <div className='flex flex-col flex-1 gap-4'>
                     <p className='font-semibold'>Images:
-                    <span className='font-normal text-gray-600 ml2'>The first image will be the cover (max 6)</span>
+                    <span className='font-normal text-gray-600 ml2'>A primeira imagem sera usada na entrada (max 6)</span>
                     </p>
                     <div className='flex gap-4'>
 
@@ -314,7 +314,7 @@ export default function CreateListing() {
                             type='button'
                             onClick={handleImageSubmit}
                             className='p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80'>
-                            {uploading ? 'Uploading...' : 'Upload'}
+                            {uploading ? 'Carregando...' : 'Carregar imagens'}
                         </button>
                     </div>
                     <p className='text-red-700 text-sm'>{imageUploadError && imageUploadError}</p>

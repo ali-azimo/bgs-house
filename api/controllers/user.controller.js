@@ -11,7 +11,7 @@ export const test = (req, res) => {
 };
 
 export const updateUser = async(req, res, next) => {
-    if (req.user.id !== req.params.id) return next(errorHandler(401, "you can only upadate your own account!"))
+    if (req.user.id !== req.params.id) return next(errorHandler(401, "Apenas podes atualizar seus dados!"))
     try {
         if (req.body.password) {
             req.body.password = bycryptjs.hashSync(req.body.password, 10)
@@ -32,11 +32,11 @@ export const updateUser = async(req, res, next) => {
 }
 
 export const deleteUser = async(req, res, next) => {
-    if (req.user.id !== req.params.id) return next(errorHandler(401, "You can only delete your own account!"));
+    if (req.user.id !== req.params.id) return next(errorHandler(401, "Apenas o usuario pode deletar sua conta!"));
     try {
         await User.findByIdAndDelete(req.params.id);
         res.clearCookie('access_token');
-        res.status(200).json('User has been deleted');
+        res.status(200).json('Usuario deletado com sucesso!');
     } catch (error) {
         next(error)
     }
@@ -44,7 +44,7 @@ export const deleteUser = async(req, res, next) => {
 export const signOut = async(req, res, next) => {
     try {
         res.clearCookie('access_token');
-        res.status(200).json('User has been logged Out');
+        res.status(200).json('Usuario deslogado com sucesso!');
     } catch (error) {
         next(error)
     }
@@ -58,13 +58,13 @@ export const getUserListing = async(req, res, next) => {
             next(error)
         }
     } else {
-        return next(errorHandler(401, 'YOu can only view your ownn listing'));
+        return next(errorHandler(401, 'Apemas o usuario pode ver suas proprias listagens!'));
     }
 };
 export const getUser = async(req, res, next) => {
     try {
         const user = await User.findById(req.params.id);
-        if (!user) return next(errorHandler(404, "User not found"));
+        if (!user) return next(errorHandler(404, "Usuario não encontrado!"));
         const { password: pass, ...rest } = user._doc;
         res.status(200).json(rest);
     } catch (error) {
