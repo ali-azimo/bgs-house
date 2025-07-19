@@ -7,6 +7,9 @@ import listingRouter from './routes/listar.route.js';
 import cookieParser from 'cookie-parser';
 
 
+//Utilizado para o modo producao
+import path from 'path';
+
 dotenv.config();
 
 mongoose
@@ -15,6 +18,11 @@ mongoose
 }).catch((err) => {
     console.log(err);
 });
+
+//Definindo o diretório de trabalho
+const __dirname = path.resolve();
+
+
 // Importando o express
 const app = express();
 app.use(express.json());
@@ -28,6 +36,14 @@ app.listen(3000, () => {
 app.use("/api/user", userRouter);
 app.use("/api/cad", cadRouter);
 app.use('/api/listing', listingRouter);
+
+
+// Definindo o diretório de trabalho
+app.use(express.static(path.join(__dirname, '/client/dist')));
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+})
+
 
 //Mostrar erros
 app.use((err, req, res, next) => {
