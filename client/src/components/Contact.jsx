@@ -25,7 +25,7 @@ export default function Contact({listing}) {
     <>
         {landlord && (
             <div className='flex flex-col gap-2'>
-                <p>Contact <span className='font-semibold'>
+                <p>Contacto <span className='font-semibold'>
                     {landlord.username}</span> for <span className='font-semibold'>
                         {listing.name.toLowerCase()}
                     </span>
@@ -35,7 +35,7 @@ export default function Contact({listing}) {
                     id="message" rows='2'
                     value={message} 
                     onChange={onChange}
-                    placeholder='Enter your menssage here!'
+                    placeholder='Coloque seu email aqui!'
                     className='w-full p-3 rounded-lg'
                 ></textarea>
 
@@ -43,7 +43,7 @@ export default function Contact({listing}) {
                     to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
                     className='bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95'
                 >
-                    Send Message
+                    Enviar messagem
                 </Link>
             </div>
         )}

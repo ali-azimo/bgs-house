@@ -10,6 +10,9 @@ import CreateListing from './pages/CreateListing'
 import UpdateListing from './pages/UpdateListing'
 import Search from './pages/Search'
 import Listing from './pages/Listing'
+import Footer from './components/Footer'
+import Team from "./pages/Team";
+
 
 
 export default function App() {
@@ -22,6 +25,7 @@ export default function App() {
             <Route path='/sign-in' element={<SignIn />} />
             <Route path='/sign-up' element={<SignUp />} />
             <Route path='/search' element={<Search />} />
+            <Route path='/team' element={<Team />} />
             <Route path='/listing/:listingId' element={<Listing />} />
             <Route element={<PrivateRoute/>}>
               <Route path='/profile' element={<Profile />} />
@@ -30,6 +34,7 @@ export default function App() {
               path='/update-listing/:listingId' element={<UpdateListing/>}/> 
             </Route>
         </Routes>
+        <Footer />
     </BrowserRouter>
   )
 }

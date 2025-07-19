@@ -8,6 +8,8 @@ import 'swiper/css/bundle';
 import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare } from 'react-icons/fa';
 import Contact from '../components/Contact';
 
+
+
 export default function Listing(){
     SwiperCore.use([Navigation]);
     const [listing, setListing] = useState(null);
@@ -42,10 +44,10 @@ export default function Listing(){
         <main>
             {loading && 
             
-            <p className='text-center my-7 text-2xl'>Loading...</p>
+            <p className='text-center my-7 text-2xl'>Carregando...</p>
             }
             {error && 
-            <p className='text-center my-7 text-2xl'>Something went wrong</p>
+            <p className='text-center my-7 text-2xl'>Algo deu errado</p>
             }
 
             {listing && !loading && !error && (
@@ -72,7 +74,7 @@ export default function Listing(){
                 </div>
                 {copied && (
                     <p className='fixed top-[23%] right-[5%] z-10 rounded-md bg-slate-100'>
-                        Link copied!
+                        Link copiado!
                     </p>
                 )}
                 <div className='flex flex-col max-w-4xl mx-auto p-3 my-7 gap-6'>
@@ -86,6 +88,9 @@ export default function Listing(){
                     <p className='flex items-center mt-6 gap-2 text-slate-600 m-2 text-sm'>
                         <FaMapMarkerAlt className='text-green-700'/>
                         {listing.address}
+                        <div className="">
+                           
+                        </div>
                     </p>
                     <div className='flex gap-4'>
                         <p className='bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
