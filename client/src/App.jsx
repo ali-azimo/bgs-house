@@ -22,9 +22,9 @@ export default function App() {
       <Header />
         <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/about' element={<About />} />
+            <Route path='/sign-in' element={<SignIn/>}/>
             <Route path='/sign-up' element={<SignUp />} />
-            <Route path='/sign-in' element={<SignIn/>} />
+            <Route path='/about' element={<About />} />
             <Route path='/search' element={<Search />} />
             <Route path='/team' element={<Team />} />
             <Route path='/listing/:listingId' element={<Listing />} />
