@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import OAuth from '../components/OAuth';
 
-export default function Signin() {
+export default function SignIn() {
 
   //Segurar os dados do formulário
   //Usar o useState para armazenar os dados do formulário
