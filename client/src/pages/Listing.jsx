@@ -9,7 +9,6 @@ import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare } from 'reac
 import Contact from '../components/Contact';
 
 
-
 export default function Listing(){
     SwiperCore.use([Navigation]);
     const [listing, setListing] = useState(null);
