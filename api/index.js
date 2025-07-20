@@ -5,6 +5,8 @@ import userRouter from './routes/user.route.js';
 import cadRouter from './routes/cad.route.js';
 import listingRouter from './routes/listar.route.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
+
 
 //Diploy method
 import path from 'path';
@@ -26,8 +28,10 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.listen(4000, () => {
-        console.log("Servidor aberto a porta 4000");
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+        console.log(`Servidor aberto a porta ${PORT}`);
     }
 
 );
@@ -40,6 +44,12 @@ app.use(express.static(path.join(__dirname, '/client/dist')));
 app.get("*splat", (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 })
+
+// CORS para permitir acesso do Vercel
+app.use(cors({
+  origin: 'https://bgs-house.vercel.app',
+  credentials: true,
+}));
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;

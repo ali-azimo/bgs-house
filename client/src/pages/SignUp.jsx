@@ -23,7 +23,7 @@ export default function SignUp() {
     e.preventDefault();
     try{
       setLoading(true);
-      const res = await fetch('/api/cad/cadastro',{
+      const res = await fetch(`/api/cad/cadastro`,{
         method: 'POST',
         headers:{
           'Content-Type': 'application/json',
