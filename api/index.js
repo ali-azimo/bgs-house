@@ -26,8 +26,10 @@ const __dirname = path.resolve();
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-app.listen(3000, () => {
-        console.log("O Serividor está rodando na porta 3000!");
+
+
+app.listen(4000, () => {
+        console.log("O Serividor está rodando na porta 4000!");
     }
 );
 
@@ -39,10 +41,9 @@ app.use('/api/listing', listingRouter);
 
 // Definindo o diretório de trabalho
 app.use(express.static(path.join(__dirname, '/client/dist')));
-
-app.get('*', (req, res) => {
+app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-});
+})
 
 //Mostrar erros
 app.use((err, req, res, next) => {
