@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Listing from '../../../api/models/listar.model';
 import ListingItems from './ListingItems';
 
+
 export default function Search() {
     const navigate = useNavigate();
     const [sidebardata, setSidebardata] = useState({
