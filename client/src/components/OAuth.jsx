@@ -12,7 +12,9 @@ export default function OAuth(){
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app)
       const result = await signInWithPopup(auth, provider);
-      const res = await fetch('https://bgs-house-back.onrender.com/api/cad/google',{
+      const res = await fetch(`${
+            import.meta.env.VITE_API_KEY_ONRENDER
+          }/api/cad/google`,{
         method: "POST",
         headers:{
           'Content-Type': 'application/json',

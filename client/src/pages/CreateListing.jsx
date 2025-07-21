@@ -125,7 +125,9 @@ export default function CreateListing() {
             if(+formData.regularPrice < +formData.discountPrice) return setErrorSubmit("O preço regular não pode ser menor que o preço com desconto");
             setLoadingSubmit(true);
             setErrorSubmit(false);
-            const res = await fetch('/api/listing/create',{
+            const res = await fetch(`${
+            import.meta.env.VITE_API_KEY_ONRENDER
+          }/api/listing/create`,{
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json"
