@@ -25,24 +25,38 @@ export default function SignUp() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch(`${
-            import.meta.env.VITE_API_KEY_ONRENDER
-          }/api/auth/singin`, {
+      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/auth/singin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
+        credentials: 'include',
       });
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(signIFailure(data.message));
-        return;
+
+      const contentType = res.headers.get('content-type');
+
+      if (!res.ok) {
+        throw new Error(`Erro HTTP ${res.status}`);
       }
-      dispatch(signInSuccess(data));
-      navigate('/');
+
+      if (contentType && contentType.includes('application/json')) {
+        const data = await res.json();
+
+        if (data.success === false) {
+          dispatch(signIFailure(data.message));
+          return;
+        }
+
+        dispatch(signInSuccess(data));
+        navigate('/');
+      } else {
+        const text = await res.text();
+        throw new Error(`Resposta inesperada do servidor: ${text.substring(0, 100)}...`);
+      }
     } catch (error) {
-      dispatch(signIFailure(error.message));
+      console.error('Erro personalizado:', error.message);
+      dispatch(signIFailure('Falha ao entrar. Verifica os dados ou tenta mais tarde.'));
     }
   };
 
