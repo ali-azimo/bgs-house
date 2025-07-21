@@ -17,19 +17,23 @@ export default function SignUp() {
         [e.target.id]:e.target.value,
     });
   };
-
   //Enviar os dados do formulário para o servidor
   const handleSubmit = async (e)=>{
     e.preventDefault();
     try{
       setLoading(true);
-      const res = await fetch(`/api/cad/cadastro`,{
-        method: 'POST',
-        headers:{
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const res = await fetch(
+        `https://bgs-house-back.onrender.com/api/auth/cadastro`,
+        { 
+          //mode: "no-cors",
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
       const data = await res.json();
       if(data.success===false){
         setLoading(false);

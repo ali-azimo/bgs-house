@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://bgs-house-back.onrender.com',
+        target: 'localhost:4000',
         secure: false,
       },
     },
