@@ -7,7 +7,7 @@ import {
   signIFailure
 } from '../redux/user/userSlice.js';
 
-export default function SignUp() {
+export default function SignIn() {
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ export default function SignUp() {
     e.preventDefault();
     try {
       dispatch(signInStart());
-      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/auth/singin`, {
+      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/auth/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
