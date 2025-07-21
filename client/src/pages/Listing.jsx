@@ -7,6 +7,7 @@ import { Navigation } from 'swiper/modules';
 import 'swiper/css/bundle';
 import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare } from 'react-icons/fa';
 import Contact from '../components/Contact';
+import MapMoz from '../components/MapMoz';
 
 export default function Listing(){
     SwiperCore.use([Navigation]);
@@ -133,6 +134,8 @@ export default function Listing(){
                 </div>
             </div>
             )}
+
+            <MapMoz/>
         </main>
     );
 }
