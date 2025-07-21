@@ -3,12 +3,11 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import path from 'path';
-import cors from 'cors';
 // Importa rotas
 import userRouter from './routes/user.route.js';
 import cadRouter from './routes/cad.route.js';
 import listingRouter from './routes/listar.route.js';
-
+import cors from 'cors';
 dotenv.config();
 
 const app = express();
@@ -19,12 +18,8 @@ mongoose.connect(process.env.MONGO)
   .then(() => console.log('MongoDB conectado'))
   .catch(err => console.error('Erro ao conectar MongoDB:', err));
 
-
-// Configura CORS
-// Configuração EXTENDIDA do CORS (resolve o pré-voo OPTIONS)
 app.use(cors({
-  origin: 'https://bgs-house.vercel.app', // URL do seu frontend
-  credentials: true // Se usar cookies/tokens
+    origin: 'https://bgs-house.vercel.app'
 }));
 
 

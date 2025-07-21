@@ -23,16 +23,15 @@ export default function SignUp() {
     try{
       setLoading(true);
       const res = await fetch(
-        `https://bgs-house-back.onrender.com/api/auth/cadastro`,
-        { 
+        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/auth/cadastro`,
+        {
           //mode: "no-cors",
           method: "POST",
+          module: "non-cors",
           headers: {
             "Content-Type": "application/json",
           },
-           body: JSON.stringify(formData),
-           credentials: "include",
-          
+          body: JSON.stringify(formData),
         }
       );
       const data = await res.json();
