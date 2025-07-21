@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://https://bgs-house-back.onrender.com/api/:path*"  
+    }
+  ]
+}
