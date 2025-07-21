@@ -6,7 +6,6 @@ import {
   signInSuccess,
   signIFailure
 } from '../redux/user/userSlice.js';
-import OAuth from '../components/OAuth.jsx';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
@@ -89,17 +88,7 @@ export default function SignUp() {
           {loading ? 'A entrar...' : 'Entrar'}
         </button>
 
-        <OAuth />
       </form>
-
-      <div className="flex justify-center items-center gap-2 mt-6 text-sm">
-        <p className="text-gray-600">Não tem uma conta?</p>
-        <Link to="/sign-up">
-          <span className="text-blue-700 font-semibold hover:text-blue-800 transition">
-            Criar conta
-          </span>
-        </Link>
-      </div>
 
       {error && (
         <p className="text-red-500 text-center mt-4 font-medium">

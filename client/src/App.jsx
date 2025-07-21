@@ -13,6 +13,8 @@ import Team from './pages/Team';
 import SignIn from './pages/SignIn';
 import Footer from './components/Footer'
 
+
+
 export default function App() {
   return (
     <BrowserRouter>
