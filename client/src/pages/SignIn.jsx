@@ -56,7 +56,7 @@ export default function SignUp() {
       }
     } catch (error) {
       console.error('Erro personalizado:', error.message);
-      dispatch(signIFailure('Falha ao entrar. Verifica os dados ou tenta mais tarde.'));
+      dispatch(signIFailure('Falha ao logar. Verifica os dados ou tenta mais tarde.'));
     }
   };
 
@@ -91,14 +91,6 @@ export default function SignUp() {
 
         <OAuth />
       </form>
-
-      <div className="text-center mt-4">
-        <Link to="/forgot-password">
-          <span className="text-blue-700 font-medium underline text-sm hover:text-blue-800 transition">
-            Esqueceu a senha?
-          </span>
-        </Link>
-      </div>
 
       <div className="flex justify-center items-center gap-2 mt-6 text-sm">
         <p className="text-gray-600">Não tem uma conta?</p>
