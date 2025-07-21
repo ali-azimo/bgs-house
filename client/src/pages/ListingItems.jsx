@@ -8,7 +8,7 @@ export default function ListingItems({listing}) {
 
         <Link to={`/listing/${listing._id}`}>
             <img src={listing.imageUrls[0]} alt='' 
-            className='h-[180px] sm:h-[220] w-[270px] object-cover hover:scale-110 transition-scale duration-300'
+            className='h-[180px] sm:h-[220] w-full object-cover hover:scale-110 transition-scale duration-300'
             />
             <div className='p-3 flex flex-col gap-2 w-full'>
                 <p className='truncate text-lg font-semibold text-slate-700'>{listing.name}</p>
