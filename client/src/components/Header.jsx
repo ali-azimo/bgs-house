@@ -30,6 +30,21 @@ export default function Header() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+    //logout
+    const handleSignOut = async()=>{
+      try{
+        dispatch(signOutUserStart());
+        const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/auth/signout`);
+        const data = await res.json;
+        if(data.success === false){
+          dispatch(deleteUserFailure(data.message));
+          return;
+        }
+        dispatch(deleteUserSuccess(data));
+      }catch(error){
+        dispatch(deleteUserFailure(data.message));
+      }
+    }
 
   return (
     <header className={`${darkMode ? 'bg-slate-900 text-white' : 'bg-white text-slate-800'} shadow-md sticky top-0 z-50 transition-colors`}>
@@ -93,7 +108,7 @@ export default function Header() {
                   <FaUser className="mr-2" /> Perfil
                 </Link>
                 <button
-                  onClick={() => console.log('Logout')} // Aqui você pode fazer dispatch(logout())
+                  onClick={(handleSignOut) => console.log('Logout')} // Aqui você pode fazer dispatch(logout())
                   className="w-full text-left flex items-center px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700"
                 >
                   <FaSignOutAlt className="mr-2" /> Sair
