@@ -20,6 +20,7 @@ mongoose.connect(process.env.MONGO)
 
 app.use(cors({
     origin: 'https://www.bgs-imo.com',
+    credentials: true
 }));
 
 
