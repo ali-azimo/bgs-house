@@ -5,6 +5,7 @@ import { Navigation } from 'swiper/modules';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
 import ListingItems from './ListingItems';
+import ServicosSecao from '../components/ServicosSecao';
 
 
 
@@ -170,6 +171,7 @@ export default function Home() {
             </div>
           )
         }
+        <ServicosSecao/>
       </div>
     </div>
   )
