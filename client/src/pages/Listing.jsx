@@ -135,7 +135,7 @@ export default function Listing(){
             </div>
             )}
 
-            <MapMoz/>
+            <MapMoz className ='mt-5'/>
         </main>
     );
 }
