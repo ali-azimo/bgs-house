@@ -109,8 +109,6 @@ export default function Home() {
         Descubra agora o seu próximo lar
       </Link>
     </div>
-
-
    
       {/* Lisnting product */}
 
