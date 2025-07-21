@@ -18,15 +18,17 @@ const __dirname = path.resolve();
 mongoose.connect(process.env.MONGO)
   .then(() => console.log('MongoDB conectado'))
   .catch(err => console.error('Erro ao conectar MongoDB:', err));
-
-// Middlewares - ordem importa!
+// Configura CORS
 app.use(cors({
-  origin: 
-    'https://bgs-house-back.onrender.com',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'UPDATE'],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Cors nao permitido'));
+    }
+  },
+  credentials: true,
 }));
-app.options('/', cors());
-
 
 app.use(express.json());
 app.use(cookieParser());
@@ -41,11 +43,6 @@ app.get('/', (req, res) => {
   res.send('API online 🚀');
 });
 
-// Serve frontend estático se usares
-// app.use(express.static(path.join(__dirname, 'client', 'dist')));
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-// });
 
 // Middleware de tratamento de erro
 app.use((err, req, res, next) => {
