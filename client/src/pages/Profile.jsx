@@ -110,7 +110,7 @@ const handleSignOut = async()=>{
     dispatch(signOutUserStart());
     const res = await fetch(`${
         import.meta.env.VITE_API_KEY_ONRENDER}/api/auth/signout`);
-        const data = await res.json;
+        const data = await res.json();
     if(data.success === false){
       dispatch(deleteUserFailure(data.message));
       return;
