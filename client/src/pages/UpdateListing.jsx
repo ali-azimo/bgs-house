@@ -9,7 +9,7 @@ import {app} from '../firebase';
 import {useSelector}from 'react-redux';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 
-export default function CreateListing() {
+export default function UpdateListing() {
     const Navigate = useNavigate();
     const {currentUser} = useSelector((state)=>state.user);
     const [files, setFiles] = useState([]); 
@@ -68,11 +68,11 @@ export default function CreateListing() {
                 setImageUploadError(false);
                 setUploading(false);
             }).catch((err) =>{
-                setImageUploadError('Image upload failed (2 mb ma per image)');
+                setImageUploadError('Erro ao carregar imagem (máx. 2MB por imagem)');
                     setUploading(false);
             });
         }else{
-            setImageUploadError('You can only upload 6 images per listing');
+            setImageUploadError('Apenas 6 imagens são permitidas');
                 setUploading(false);
         }
     };
@@ -87,7 +87,7 @@ export default function CreateListing() {
                 (snapshot)=>{
                     const progress = 
                     (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log(`Upload is ${progress}% done`);
+                    console.log(`O carregamento está ${progress}% concluído`);
                 },
                 (error) => {
                     reject(error);
@@ -135,11 +135,14 @@ export default function CreateListing() {
     const handleSubmit = async (e) =>{
         e.preventDefault();
         try{
-            if(formData.imageUrls.length < 1) return setErrorSubmit('You must upload at least one image');
-            if(+formData.regularPrice < +formData.discountPrice) return setErrorSubmit("Discount Price must be lower than regular Price");
+            if(formData.imageUrls.length < 1) return setErrorSubmit('Deves carregar pelo menos uma imagem');
+            if(+formData.regularPrice < +formData.discountPrice) return setErrorSubmit("O preço regular não pode ser menor que o preço com desconto");
+
             setLoadingSubmit(true);
             setErrorSubmit(false);
-            const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/update/${params.listingId}`,{
+
+            const res = await fetch(
+                `${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/update`,{
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json",
