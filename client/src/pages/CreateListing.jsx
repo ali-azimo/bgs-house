@@ -18,7 +18,6 @@ export default function CreateListing() {
     const [uploading, setUploading] = useState(false);
     const [erroSubmit, setErrorSubmit] = useState(false);
     const [loadingSubmit, setLoadingSubmit] = useState(false);
-    localStorage.setItem('token', data.token);
     const [formData, seteFormData] = useState({
         imageUrls: [],
         name: "",
