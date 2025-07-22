@@ -96,15 +96,9 @@ const handleDeleteUser = async()=>{
       });
     const data = await res.json();
     if(data.success === false){
-      console.error('❌ Erro do backend:', data.message);
-      alert('Erro: ' + data.message);
       dispatch(deleteUserFailure(data.message));
       return;
     }
-    console.log('✅ Conta apagada com sucesso');
-    alert('Conta apagada com sucesso');
-
-    
     dispatch(deleteUserSuccess(data));
   }catch(error){
   dispatch(deleteUserFailure(error.message));
