@@ -18,6 +18,7 @@ export default function AtualizarImovel() {
   const [erroEnvio, setErroEnvio] = useState(false);
   const [carregandoEnvio, setCarregandoEnvio] = useState(false);
   const params = useParams();
+  const token = localStorage.getItem('token');
 
   const [formData, setFormData] = useState({
     imageUrls: [],

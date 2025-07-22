@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO)
   .catch(err => console.error('Erro ao conectar MongoDB:', err));
 
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: 'https://www.bgs-imo.com',
     credentials: true
 }));
 
