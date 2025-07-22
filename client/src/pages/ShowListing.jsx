@@ -122,7 +122,6 @@ export default function ShowListing() {
           )}
         </>
       )}
-
       <div className="text-center mt-8">
         <Link
           to="/create-listing"
