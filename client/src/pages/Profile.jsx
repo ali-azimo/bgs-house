@@ -90,7 +90,8 @@ const handleDeleteUser = async()=>{
     dispatch(deleteUserStart());
     const res = await fetch(`${
         import.meta.env.VITE_API_KEY_ONRENDER}/api/user/delete/${currentUser._id}`,{
-        credentials: 'include',
+          method: "DELETE",
+          credentials: 'include',
       });
     const data = await res.json();
     if(data.success === false){
@@ -140,7 +141,8 @@ const handleListingDelete = async(listingId)=>{
   try{
     const res = await fetch(`${
       import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/delete/${listingId}`,{
-      method: "DELETE",
+        method: "DELETE",
+        credentials: 'include',
     });
     const data = await res.json();
     if(data.success === false){
