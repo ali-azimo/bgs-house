@@ -42,21 +42,21 @@ const provincias = [
   {
     nome: "Tete",
     imagem:
-      "https://w7.pngwing.com/pngs/244/240/png-transparent-tilapia-fish-fish-animals-seafood-fishing-rods-thumbnail.png",
+      "https://cdn.pixabay.com/photo/2020/04/29/10/20/tilapia-5108235_1280.jpg",
     texto:
       "Atuamos em Tete com foco em imóveis para mineração, indústria e residências, com atendimento local.",
   },
   {
     nome: "Zambézia",
     imagem:
-      "https://w7.pngwing.com/pngs/694/675/png-transparent-coconut-milk-coconut-water-nata-de-coco-coconut-oil-coconut-coconut-fruit-illustration-natural-foods-food-eating-thumbnail.png",
+      "https://cdn.pixabay.com/photo/2012/07/09/07/44/cashew-nut-52067_960_720.jpg",
     texto:
       "Presença ampla na Zambézia com imóveis residenciais e agrícolas, com suporte especializado.",
   },
   {
     nome: "Nampula",
     imagem:
-      "https://w7.pngwing.com/pngs/733/28/png-transparent-red-mangoes-juice-smoothie-mango-health-eating-mango-natural-foods-food-orange-thumbnail.png",
+      "https://cdn.pixabay.com/photo/2021/02/01/18/30/fruits-5971537_960_720.jpg",
     texto:
       "Oferecemos imóveis em Nampula com foco no crescimento urbano e oportunidades comerciais.",
   },
@@ -70,7 +70,7 @@ const provincias = [
   {
     nome: "Niassa",
     imagem:
-      "https://w7.pngwing.com/pngs/377/40/png-transparent-legume-bean-protein-health-food-bean-natural-foods-dried-fruit-food-thumbnail.png",
+      "https://cdn.pixabay.com/photo/2014/02/06/17/53/beans-260210_960_720.jpg",
     texto:
       "Presença em Niassa com imóveis rurais e habitacionais, oferecendo soluções adaptadas ao mercado local.",
   },
