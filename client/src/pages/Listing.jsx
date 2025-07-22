@@ -19,7 +19,6 @@ export default function Listing(){
     const {currentUser} = useSelector((state)=> state.user);
     const [contact, setContact] = useState(false);
     const token = localStorage.getItem('token');
-
     useEffect(()=>{
         const fetchListing = async()=>{
             try{

@@ -17,7 +17,7 @@ export default function Profile() {
   const fileRef = useRef(null);
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const [file, setFile] = useState(undefined);
-  const [filePerc, setFilePerc] = useState(0);
+  const [filePict, setFilePict] = useState(0);
   const [fileUploadError, setFileUploadError] = useState('');
   const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
@@ -44,7 +44,7 @@ export default function Profile() {
       'state_changed', // CORRIGIDO: 'storage_changed' → 'state_changed'
       (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        setFilePerc(Math.round(progress));
+        setFilePict(Math.round(progress));
       },
       (error) => {
         setFileUploadError('Falha no upload da imagem. Por favor, tente novamente.');
@@ -190,8 +190,8 @@ export default function Profile() {
 <p className='text-sm self-center'>
   {fileUploadError ? (
     <span className='text-red-700'>Erro ao carregar imagem, escolha uma imagem valida</span>
-  ) : filPerc > 0 && filPerc < 100 ? (
-    <span className='text-slate-700'>{`Carregando ${filPerc}%`}</span>
+  ) : filePict > 0 && filePict < 100 ? (
+    <span className='text-slate-700'>{`Carregando ${filePict}%`}</span>
   ) : filPerc === 100 ? (
     <span className='text-green-700'>Carregado com sucesso</span>
   ) : (
@@ -246,13 +246,13 @@ export default function Profile() {
       </span>
       
       <button onClick={handleShowListing} className='text-green-700 w-full'>Mostar listagem</button>
-      <p className='text-red-700 mt-5'>{showListintError ? 'Error showing listing' : ""}</p>
+      <p className='text-red-700 mt-5'>{showListingError ? 'Error showing listing' : ""}</p>
 
 
 
       {
         userListng &&
-          userListng.length > 0 &&
+          userListing.length > 0 &&
           <div className='flex flex-col gap-4'>
             <h1 className='text-center text-2xl font-semibold'>Meus produtos</h1>
             {userListng.map((listing)=>(
