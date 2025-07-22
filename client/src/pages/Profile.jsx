@@ -1,151 +1,176 @@
-import {useSelector}from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
-import {getDownloadURL, getStorage, list, ref, uploadBytesResumable} from 'firebase/storage';
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from '../firebase';
-import { 
-  updateUserStart, 
-  updateUserSuccess, 
-  updateUserFailure, 
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
-  signOutUserStart} from '../redux/user/userSlice';
-import { useDispatch } from 'react-redux';
-import {Link} from 'react-router-dom';
-
+  signOutUserStart,
+} from '../redux/user/userSlice';
+import { Link } from 'react-router-dom';
 
 export default function Profile() {
   const fileRef = useRef(null);
-  const {
-    currentUser,
-    loading,
-    error} = useSelector((state)=>state.user);
-  const [file, setFile]=useState(undefined);
-  const [filPerc, setFilePerc]=useState(0);
-  const [fileUploadError, setFileUploadError] = useState(false);
-  const [formData, setFormData]=useState({});
+  const { currentUser, loading, error } = useSelector((state) => state.user);
+  const [file, setFile] = useState(undefined);
+  const [filePerc, setFilePerc] = useState(0);
+  const [fileUploadError, setFileUploadError] = useState('');
+  const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  const [showListintError, setShowListintError,] = useState(false);
-  const [userListng, setUserListing] = useState({});
+  const [updateError, setUpdateError] = useState('');
+  const [showListingError, setShowListingError] = useState('');
+  const [userListing, setUserListing] = useState([]);
+  const [deleteError, setDeleteError] = useState('');
+  const [signOutError, setSignOutError] = useState('');
   const dispatch = useDispatch();
 
-
-  useEffect(()=>{
-    if(file){
+  useEffect(() => {
+    if (file) {
       handleFileUpload(file);
     }
-  },[file]);
-  const handleFileUpload=(file)=>{
+  }, [file]);
+
+  const handleFileUpload = (file) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on('storage_changed',
-      (snapshot)=>{
+    uploadTask.on(
+      'state_changed', // CORRIGIDO: 'storage_changed' → 'state_changed'
+      (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setFilePerc(Math.round(progress));
       },
-      (error)=>{
-        setFileUploadError(true);
+      (error) => {
+        setFileUploadError('Falha no upload da imagem. Por favor, tente novamente.');
       },
-      ()=>{
-        getDownloadURL(uploadTask.snapshot.ref).then
-        ((downlodURL)=>
-          setFormData({...formData, avatar: downlodURL})
-        );
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setFormData((prev) => ({ ...prev, avatar: downloadURL }));
+          setFileUploadError('');
+        });
       }
     );
   };
 
-const handleChange=(e)=>{
-  setFormData({...formData, [e.target.id]: e.target.value});
-};
-const handleSubmit = async (e) =>{
-  e.preventDefault();
-  try{
-    dispatch(updateUserStart());
-    const res = await fetch(`/api/user/update/${currentUser._id}`,{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },body: JSON.stringify(formData),
-    });
-    const data = await res.json();
-    if(data.success === false){
-      dispatch(updateUserFailure(data.message));
-      return;
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setUpdateError('');
+    setUpdateSuccess(false);
+    try {
+      dispatch(updateUserStart());
+      const res = await fetch(
+        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/user/update/${currentUser._id}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        }
+      );
+      const data = await res.json();
+      if (data.success === false) {
+        setUpdateError(data.message || 'Não foi possível atualizar o perfil.');
+        dispatch(updateUserFailure(data.message));
+        return;
+      }
+      dispatch(updateUserSuccess(data));
+      setUpdateSuccess(true);
+    } catch (error) {
+      setUpdateError('Ocorreu um erro inesperado ao atualizar o perfil.');
+      dispatch(updateUserFailure(error.message));
     }
-    dispatch(updateUserSuccess(data));
-    setUpdateSuccess(true);
-  }catch(error){
-    dispatch(updateUserFailure(error.message));
-  }
-}
-const handleDeleteUser = async()=>{
-  try{
-    dispatch(deleteUserStart());
-    const res = await fetch(`/api/user/delete/${currentUser._id}`,{
-      method: "DELETE",
-    });
-    const data = await res.json();
-    if(data.success === false){
-      dispatch(deleteUserFailure(data.message));
-      return;
+  };
+
+  const handleDeleteUser = async () => {
+    setDeleteError('');
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(
+        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/user/delete/${currentUser._id}`,
+        {
+          method: 'DELETE',
+        }
+      );
+      const data = await res.json();
+      if (data.success === false) {
+        setDeleteError(data.message || 'Falha ao apagar o utilizador.');
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      setDeleteError('Erro ao tentar apagar o utilizador.');
+      dispatch(deleteUserFailure(error.message));
     }
-    dispatch(deleteUserSuccess(data));
-  }catch(error){
-  dispatch(deleteUserFailure(error.message));
-}
-};
-const handleSignOut = async()=>{
-  try{
-    dispatch(signOutUserStart());
-    const res = await fetch('/api/auth/signout');
-    const data = await res.json;
-    if(data.success === false){
-      dispatch(deleteUserFailure(data.message));
-      return;
+  };
+
+  const handleSignOut = async () => {
+    setSignOutError('');
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/auth/signout`);
+      const data = await res.json();
+      if (data.success === false) {
+        setSignOutError(data.message || 'Falha ao sair da conta.');
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      setSignOutError('Erro ao tentar sair da conta.');
+      dispatch(deleteUserFailure(error.message));
     }
-    dispatch(deleteUserSuccess(data));
-  }catch(error){
-    dispatch(deleteUserFailure(data.message));
-  }
-}
-const handleShowListing = async()=>{
-  try{
-    setShowListintError(false);
-    const res = await fetch(`/api/user/listing/${currentUser._id}`);
-    const data = await res.json();
-    if(data.success === false){
-      setShowListintError(true);
-      return;
+  };
+
+  const handleShowListing = async () => {
+    setShowListingError('');
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/user/listing/${currentUser._id}`
+      );
+      const data = await res.json();
+      if (data.success === false) {
+        setShowListingError(data.message || 'Não foi possível carregar as listagens.');
+        return;
+      }
+      setUserListing(data);
+    } catch (error) {
+      setShowListingError('Erro ao carregar as listagens do utilizador.');
     }
-    setUserListing(data);
-  }catch(error){
-    setShowListintError(true);
-  }
-}
-const handleListingDelete = async(listingId)=>{
-  try{
-    const res = await fetch(`${
-            import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/delete/${listingId}`,{
-      method: "DELETE",
-      headers:{
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-    });
-    const data = await res.json();
-    if(data.success === false){
-      console.log(data.message);
-      return;
+  };
+
+  const handleListingDelete = async (listingId) => {
+    setDeleteError('');
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/delete/${listingId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await res.json();
+      if (data.success === false) {
+        setDeleteError(data.message || 'Falha ao apagar a listagem.');
+        return;
+      }
+      setUserListing((prev) => prev.filter((listing) => listing._id !== listingId));
+    } catch (error) {
+      setDeleteError('Erro ao tentar apagar a listagem.');
     }
-    setUserListing((prev)=> prev.filter((listing)=>listing._id !== listingId))
-  }catch(error){
-    console.log(error.message);
-  }
-}
+  };
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center mt-7' >Perfil</h1>
