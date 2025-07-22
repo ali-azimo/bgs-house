@@ -18,6 +18,7 @@ export default function CreateListing() {
     const [uploading, setUploading] = useState(false);
     const [erroSubmit, setErrorSubmit] = useState(false);
     const [loadingSubmit, setLoadingSubmit] = useState(false);
+    const token = localStorage.getItem('token');
 
 
     const [formData, seteFormData] = useState({
@@ -36,7 +37,6 @@ export default function CreateListing() {
     });
 
 
-    console.log(formData);
     const handleImageSubmit = (e) =>{
         if(files.length > 0 && files.length + formData.imageUrls.length < 7){
             setUploading(true);
