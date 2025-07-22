@@ -118,14 +118,14 @@ export default function AtualizarImovel() {
       setCarregandoEnvio(true);
       setErroEnvio(false);
 
-      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/update/${params.listingId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/update/${params.listingId}`, { 
         method: 'POST',
         headers: { 
-            'Content-Type': 'application/json' 
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`
-            },
+        },
         body: JSON.stringify({ ...formData, userRef: currentUser._id }),
-      });
+        });
 
       const data = await res.json();
       setCarregandoEnvio(false);
