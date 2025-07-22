@@ -9,6 +9,7 @@ import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare } from 'reac
 import Contact from '../components/Contact';
 import MapMoz from '../components/MapMoz';
 
+
 export default function Listing(){
     SwiperCore.use([Navigation]);
     const [listing, setListing] = useState(null);
@@ -23,7 +24,11 @@ export default function Listing(){
             try{
                 setLoading(true);
                 const res = await fetch(`${
-                import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/get/${params.listingId}`);
+                import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/get/${params.listingId}`,{
+                    headers:{
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    }
+                });
                 const data = await res.json();
                 if(data.success === false){
                     setError(true);

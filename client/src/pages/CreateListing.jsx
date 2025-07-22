@@ -123,17 +123,20 @@ export default function CreateListing() {
             if(+formData.regularPrice < +formData.discountPrice) return setErrorSubmit("O preço regular não pode ser menor que o preço com desconto");
             setLoadingSubmit(true);
             setErrorSubmit(false);
-            const res = await fetch(`${
-                import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/create`,{
+            const res = await fetch(
+              `${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/create`,
+              {
                 method: "POST",
-                headers:{
-                    "Content-Type": "application/json",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
                 body: JSON.stringify({
-                    ...formData,
-                    userRef: currentUser._id,
+                  ...formData,
+                  userRef: currentUser._id,
                 }),
-            });
+              }
+            );
             const data = await res.json();
             setLoadingSubmit(false);
             if(data.success === false){
