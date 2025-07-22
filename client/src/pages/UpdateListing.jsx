@@ -119,7 +119,6 @@ export default function AtualizarImovel() {
       setErroEnvio(false);
 
       const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/update/${params.listingId}`, { 
-        method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`
