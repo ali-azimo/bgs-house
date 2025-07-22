@@ -25,8 +25,8 @@ export default function Profile() {
   const [fileUploadError, setFileUploadError] = useState(false);
   const [formData, setFormData]=useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  const [showListintError, setShowListintError,] = useState(false);
-  const [userListng, setUserListing] = useState({});
+  const [showListintError, setShowListintError] = useState(false);
+  const [userListng, setUserListing] = useState([]);
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
@@ -41,7 +41,7 @@ export default function Profile() {
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on('storage_changed',
+    uploadTask.on('state_changed',
       (snapshot)=>{
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setFilePerc(Math.round(progress));
@@ -72,6 +72,7 @@ const handleSubmit = async (e) =>{
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(formData),
+          credentials: 'include',
     });
     const data = await res.json();
     if(data.success === false){
@@ -89,9 +90,6 @@ const handleDeleteUser = async()=>{
     dispatch(deleteUserStart());
     const res = await fetch(`${
         import.meta.env.VITE_API_KEY_ONRENDER}/api/user/delete/${currentUser._id}`,{
-          headers: {
-          'Content-Type': 'application/json',
-        },
         credentials: 'include',
       });
     const data = await res.json();
@@ -190,7 +188,7 @@ const handleListingDelete = async(listingId)=>{
         onChange={handleChange}/>
 
         <input 
-        type="emai" 
+        type="email" 
         name="email" 
         id="email" 
         placeholder='email' 
