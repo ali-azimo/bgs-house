@@ -45,7 +45,10 @@ export default function SignIn() {
           dispatch(signIFailure(data.message));
           return;
         }
-
+        // ✅ Guarda o token JWT
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+      }
         dispatch(signInSuccess(data));
         navigate('/');
       } else {
