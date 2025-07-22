@@ -126,11 +126,11 @@ export default function CreateListing() {
             setLoadingSubmit(true);
             setErrorSubmit(false);
             const res = await fetch(`${
-            import.meta.env.VITE_API_KEY_ONRENDER
-          }/api/listing/create`,{
+                                import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/create`,{
                 method: "POST",
                 headers:{
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     ...formData,

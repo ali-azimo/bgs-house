@@ -129,9 +129,12 @@ const handleShowListing = async()=>{
 const handleListingDelete = async(listingId)=>{
   try{
     const res = await fetch(`${
-            import.meta.env.VITE_API_KEY_ONRENDER
-          }/api/listing/delete/${listingId}`,{
+            import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/delete/${listingId}`,{
       method: "DELETE",
+      headers:{
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
     });
     const data = await res.json();
     if(data.success === false){

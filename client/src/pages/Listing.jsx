@@ -23,13 +23,17 @@ export default function Listing(){
             try{
                 setLoading(true);
                 const res = await fetch(`${
-            import.meta.env.VITE_API_KEY_ONRENDER
-          }/api/listing/get/${params.listingId}`);
-                const data = await res.json();
-                if(data.success === false){
-                    setError(true);
-                    setLoading(false);
-                    return;
+                        import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/get/${params.listingId}`,{
+                            headers:{
+                                "Content-Type": "application/json",
+                                Authorization: `Bearer ${token}`
+                            },
+                        });
+                        const data = await res.json();
+                        if(data.success === false){
+                            setError(true);
+                            setLoading(false);
+                            return;
                 }
                 setListing(data);
                 setLoading(false);
