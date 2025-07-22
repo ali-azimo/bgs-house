@@ -21,56 +21,56 @@ const provincias = [
   {
     nome: "Inhambane",
     imagem:
-      "https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "https://images.unsplash.com/photo-1684211757307-ccf7d147a48c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     texto:
       "Na costa de Inhambane promovemos imóveis voltados ao turismo, lazer e investimentos seguros.",
   },
   {
     nome: "Sofala",
     imagem:
-      "https://images.pexels.com/photos/681392/pexels-photo-681392.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "https://images.unsplash.com/photo-1650215771520-818a44a7ea92?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     texto:
       "Presença forte em Sofala com imóveis residenciais, comerciais e industriais, com suporte local dedicado.",
   },
   {
     nome: "Manica",
     imagem:
-      "https://images.unsplash.com/photo-1500336624523-d727130c3328?auto=format&fit=crop&w=800&q=60",
+      "https://images.unsplash.com/photo-1689009704495-ca263474f520?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     texto:
       "Oferecemos soluções habitacionais e rurais para Manica, sempre focados na qualidade e confiança.",
   },
   {
     nome: "Tete",
     imagem:
-      "https://images.unsplash.com/photo-1580830471928-93a800f76f5d?auto=format&fit=crop&w=800&q=60",
+      "https://w7.pngwing.com/pngs/244/240/png-transparent-tilapia-fish-fish-animals-seafood-fishing-rods-thumbnail.png",
     texto:
       "Atuamos em Tete com foco em imóveis para mineração, indústria e residências, com atendimento local.",
   },
   {
     nome: "Zambézia",
     imagem:
-      "https://images.pexels.com/photos/1603656/pexels-photo-1603656.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "https://w7.pngwing.com/pngs/694/675/png-transparent-coconut-milk-coconut-water-nata-de-coco-coconut-oil-coconut-coconut-fruit-illustration-natural-foods-food-eating-thumbnail.png",
     texto:
       "Presença ampla na Zambézia com imóveis residenciais e agrícolas, com suporte especializado.",
   },
   {
     nome: "Nampula",
     imagem:
-      "https://images.unsplash.com/photo-1553514029-1318c9127859?auto=format&fit=crop&w=800&q=60",
+      "https://w7.pngwing.com/pngs/733/28/png-transparent-red-mangoes-juice-smoothie-mango-health-eating-mango-natural-foods-food-orange-thumbnail.png",
     texto:
       "Oferecemos imóveis em Nampula com foco no crescimento urbano e oportunidades comerciais.",
   },
   {
     nome: "Cabo Delgado",
     imagem:
-      "https://images.pexels.com/photos/1819648/pexels-photo-1819648.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "https://cdn.pixabay.com/photo/2020/07/17/03/37/seal-5412860_960_720.jpg",
     texto:
       "Atuação em Cabo Delgado, destacando imóveis para turismo, mineração e residenciais.",
   },
   {
     nome: "Niassa",
     imagem:
-      "https://images.pexels.com/photos/602917/pexels-photo-602917.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "https://w7.pngwing.com/pngs/377/40/png-transparent-legume-bean-protein-health-food-bean-natural-foods-dried-fruit-food-thumbnail.png",
     texto:
       "Presença em Niassa com imóveis rurais e habitacionais, oferecendo soluções adaptadas ao mercado local.",
   },
