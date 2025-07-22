@@ -179,12 +179,13 @@ const handleSignOut = async()=>{
         to={'/create-listing'}>
         Criar 
         </Link>
+
+          <Link className='p-3 rounded-lg text-center uppercase hover:opacity-95'
+          to={'/show-listing'}>
+          Visualizar postagem
+          </Link>
       </form>
 
-         <Link className='p-3 rounded-lg text-center uppercase hover:opacity-95'
-        to={'/show-listing'}>
-        Visualizar postagem
-        </Link>
 
       <div className='flex justify-between mt-5'>
         <span onClick={handleDeleteUser}
