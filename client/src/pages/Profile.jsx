@@ -180,15 +180,10 @@ const handleSignOut = async()=>{
         Criar 
         </Link>
       </form>
-      
+
          <Link className='p-3 rounded-lg text-center uppercase hover:opacity-95'
         to={'/show-listing'}>
         Visualizar postagem
-        </Link>
-
-      <Link className='bg-green-700 text-white p-3 rounded-lg text-center uppercase hover:opacity-95'
-        to={'/show-listing'}>
-        Criar 
         </Link>
 
       <div className='flex justify-between mt-5'>
