@@ -1,158 +1,169 @@
-// Importações
 import { useEffect, useState } from 'react';
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
+import{
+    getDownloadURL, 
+    getStorage, 
+    ref, 
+    uploadBytesResumable
 } from 'firebase/storage';
-import { app } from '../firebase';
-import { useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import {app} from '../firebase';
+import {useSelector}from 'react-redux';
+import {Navigate, useNavigate, useParams} from 'react-router-dom';
 
-export default function UpdateListing() {
-  const navigate = useNavigate();
-  const { currentUser } = useSelector((state) => state.user);
-  const [files, setFiles] = useState([]);
-  const [imageUploadError, setImageUploadError] = useState(false);
-  const [uploading, setUploading] = useState(false);
-  const [submitError, setSubmitError] = useState(false);
-  const [loadingSubmit, setLoadingSubmit] = useState(false);
-  const params = useParams();
+export default function CreateListing() {
+    const Navigate = useNavigate();
+    const {currentUser} = useSelector((state)=>state.user);
+    const [files, setFiles] = useState([]); 
+    
+    const [imageUploadError, setImageUploadError] = useState(false);
+    const [uploading, setUploading] = useState(false);
+    const [erroSubmit, setErrorSubmit] = useState(false);
+    const [loadingSubmit, setLoadingSubmit] = useState(false);
+    const params = useParams();
 
-  const [formData, setFormData] = useState({
-    imageUrls: [],
-    name: '',
-    description: '',
-    address: '',
-    type: 'rent',
-    bedroom: 1,
-    bathroom: 1,
-    regularPrice: 50,
-    discountPrice: 0,
-    offer: false,
-    parking: false,
-    finished: false,
-  });
+    useEffect(()=>{
+        const fetchListing = async()=>{
+            const listingId = params.listingId;
+            const res = await fetch(`credentials: 'include',/api/listing/get/${listingId}`,{
+               credentials: 'include'
+            });
+            const data = await res.json();
+            seteFormData(data);
+            if(data.success ===false){
+                console.log(data.message);
+            }
+        }
+        fetchListing();
+    },[]);
 
-  useEffect(() => {
-    const fetchListing = async () => {
-      const listingId = params.listingId;
-      const res = await fetch(
-        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/get/${listingId}`,
-        { credentials: 'include' }
-      );
-      const data = await res.json();
-      setFormData(data);
-      if (data.success === false) {
-        console.log(data.message);
-      }
+    const [formData, seteFormData] = useState({
+        imageUrls: [],
+        name: "",
+        description: "",
+        address: "",
+        type: "rent",
+        bedroom: 1,
+        bathroom: 1,
+        regularPrice: 50,
+        discountPrice: 0,
+        offer: false,
+        parking: false,
+        finished: false,
+    });
+
+
+    const handleImageSubmit = (e) =>{
+        if(files.length > 0 && files.length + formData.imageUrls.length < 7){
+            setUploading(true);
+            setImageUploadError(false);
+            const promises = [];
+
+            for(let i = 0; i < files.length; i++) {
+                promises.push(storeImage(files[i]));
+            }
+            Promise.all(promises).then((urls)=>{
+                seteFormData({
+                    ... formData, 
+                    imageUrls: formData.imageUrls.concat(urls),
+                });
+                setImageUploadError(false);
+                setUploading(false);
+            }).catch((err) =>{
+                setImageUploadError('Image upload failed (2 mb ma per image)');
+                    setUploading(false);
+            });
+        }else{
+            setImageUploadError('You can only upload 6 images per listing');
+                setUploading(false);
+        }
     };
-    fetchListing();
-  }, []);
-
-  const handleImageSubmit = (e) => {
-    if (files.length > 0 && files.length + formData.imageUrls.length <= 6) {
-      setUploading(true);
-      setImageUploadError(false);
-      const promises = [];
-
-      for (let i = 0; i < files.length; i++) {
-        promises.push(storeImage(files[i]));
-      }
-      Promise.all(promises)
-        .then((urls) => {
-          setFormData({
-            ...formData,
-            imageUrls: formData.imageUrls.concat(urls),
-          });
-          setUploading(false);
-        })
-        .catch(() => {
-          setImageUploadError('Erro ao carregar imagem (máx. 2MB por imagem)');
-          setUploading(false);
+    const storeImage = async (file) =>{
+        return new Promise((resolve, reject) =>{
+            const storage = getStorage(app);
+            const fileName = new Date().getTime() + file.name;
+            const storageRef = ref(storage, fileName);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            uploadTask.on(
+                'state_changed',
+                (snapshot)=>{
+                    const progress = 
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(`Upload is ${progress}% done`);
+                },
+                (error) => {
+                    reject(error);
+                },
+                ()=>{
+                    getDownloadURL(uploadTask.snapshot.ref).then((downlodURL) => {
+                        resolve(downlodURL);
+                    });
+                }
+            );
         });
-    } else {
-      setImageUploadError('Apenas 6 imagens são permitidas');
-      setUploading(false);
-    }
-  };
+    };
 
-  const storeImage = async (file) => {
-    return new Promise((resolve, reject) => {
-      const storage = getStorage(app);
-      const fileName = new Date().getTime() + file.name;
-      const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      uploadTask.on(
-        'state_changed',
-        () => {},
-        (error) => reject(error),
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((url) => resolve(url));
-        }
-      );
-    });
-  };
-
-  const handleRemoveImage = (index) => {
-    setFormData({
-      ...formData,
-      imageUrls: formData.imageUrls.filter((_, i) => i !== index),
-    });
-  };
-
-  const handleChange = (e) => {
-    const { id, type, value, checked } = e.target;
-    if (id === 'sale' || id === 'rent') {
-      setFormData({ ...formData, type: id });
-    } else if (type === 'checkbox') {
-      setFormData({ ...formData, [id]: checked });
-    } else {
-      setFormData({ ...formData, [id]: value });
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      if (formData.imageUrls.length < 1)
-        return setSubmitError('Deves carregar pelo menos uma imagem');
-      if (+formData.regularPrice < +formData.discountPrice)
-        return setSubmitError(
-          'O preço regular não pode ser menor que o preço com desconto'
-        );
-
-      setLoadingSubmit(true);
-      setSubmitError(false);
-
-      const res = await fetch(
-        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/update`,
-        {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
+    const handleRemoveImage = (index) =>{
+        seteFormData({
             ...formData,
-            userRef: currentUser._id,
-            listingId: params.listingId, // incluído!
-          }),
+            imageUrls: formData.imageUrls.filter((_, i)=> i !== index),
+        });
+    };
+    const handChange = (e) =>{
+        if(e.target.id === 'sale' || e.target.id === 'rent'){
+            seteFormData({
+                ...formData,
+                type: e.target.id
+            });
+        };
+        if(e.target.id === 'parking' || e.target.id === 'finished' || e.target.id === 'offer'){
+            seteFormData({
+                ...formData,
+                [e.target.id]: e.target.checked
+            });
         }
-      );
-      const data = await res.json();
-      setLoadingSubmit(false);
-      if (data.success === false) {
-        return setSubmitError(data.message);
-      }
-      navigate(`/listing/${data._id}`);
-    } catch (error) {
-      setSubmitError(error.message);
-      setLoadingSubmit(false);
+
+        if(
+            e.target.type === 'number' || 
+            e.target.type === 'text' || 
+            e.target.type === 'textarea')
+            {
+            seteFormData({
+                ...formData,
+                [e.target.id]: e.target.value,
+            });
+        }
+    };
+    const handleSubmit = async (e) =>{
+        e.preventDefault();
+        try{
+            if(formData.imageUrls.length < 1) return setErrorSubmit('You must upload at least one image');
+            if(+formData.regularPrice < +formData.discountPrice) return setErrorSubmit("Discount Price must be lower than regular Price");
+            
+            setLoadingSubmit(true);
+            setErrorSubmit(false);
+
+            const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/update/${params.listingId}`,{
+                method: "POST",
+                headers:{
+                    "Content-Type": "application/json"
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    ...formData,
+                    userRef: currentUser._id,
+                }),
+            });
+            const data = await res.json();
+            setLoadingSubmit(false);
+            if(data.success === false){
+                setErrorSubmit(data.message);
+            }
+            Navigate(`/listing/${data._id}`);
+        }catch(error){
+            setErrorSubmit(error.message);
+            setLoadingSubmit(false);
+        }
     }
-  };
-return (
+  return (
     <main className='p-3 max-w-4xl mx-auto'>
         <h1 className='text-3xl font-semibold text-center my-7'>Update Listing</h1>
 
@@ -350,5 +361,4 @@ return (
             </form>
     </main>
   )
-
 }
