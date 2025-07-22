@@ -48,7 +48,7 @@ export default function SignIn() {
         }
 
     // 🔐 Aqui salvas o token após login bem-sucedido
-    localStorage.setItem('token', data.token);
+    localStorage.setItem('token', data.access_token);
 
     // (opcional) Salva também os dados do utilizador atual
     localStorage.setItem('user', JSON.stringify(data.user));
