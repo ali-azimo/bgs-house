@@ -90,7 +90,11 @@ const handleDeleteUser = async()=>{
     dispatch(deleteUserStart());
     const res = await fetch(`${
         import.meta.env.VITE_API_KEY_ONRENDER}/api/user/delete/${currentUser._id}`,{
-
+          headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        credentials: 'include',
       });
     const data = await res.json();
     if(data.success === false){
