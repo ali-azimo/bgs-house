@@ -1,8 +1,46 @@
+import { Link } from 'react-router-dom';
+import {
+  FaBalanceScale,
+  FaEye,
+  FaHandshake,
+  FaKey,
+  FaMapSigns,
+} from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay, Pagination } from 'swiper/modules';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
 
+
+
+
+const pontos = [
+  {
+    titulo: 'Visibilidade com Propósito',
+    texto: 'Mais do que exibir o seu imóvel, posicionamo-lo no mercado certo, com um público realmente interessado.',
+    icone: <FaEye className="text-[#3b3f52] text-4xl" />,
+  },
+  {
+    titulo: 'Parceria de Confiança',
+    texto: 'Conduzimos o processo com integridade. Aqui, o seu imóvel é tratado como investimento, não apenas como anúncio.',
+    icone: <FaHandshake className="text-[#3b3f52] text-4xl" />,
+  },
+  {
+    titulo: 'Experiência Local Autêntica',
+    texto: 'Conhecemos o valor de cada província, bairro e rua. É com este conhecimento que guiamos cada negócio.',
+    icone: <FaMapSigns className="text-[#3b3f52] text-4xl" />,
+  },
+  {
+    titulo: 'Processo Claro e Ágil',
+    texto: 'Publicação sem complicações, com apoio dedicado. Sem promessas exageradas. Apenas resultado e clareza.',
+    icone: <FaKey className="text-[#3b3f52] text-4xl" />,
+  },
+  {
+    titulo: 'Equilíbrio entre Valor e Tempo',
+    texto: 'Aliamos avaliação criteriosa ao ritmo do mercado, para garantir decisões equilibradas e vantajosas.',
+    icone: <FaBalanceScale className="text-[#3b3f52] text-4xl" />,
+  },
+];
 const provincias = [
   {
     nome: "Maputo",
@@ -76,43 +114,74 @@ const provincias = [
   },
 
 ];
-
-export default function ProvinciasSwiper() {
+export default function ParceriaImobiliaria() {
   return (
-    <section className="bg-gray-50 py-16 px-6 max-w-7xl mx-auto">
-      <h2 className="text-3xl font-bold text-center text-[#1F2E54] mb-10">
-        A Nossa Missão nas Províncias de Moçambique
-      </h2>
+    <div className="bg-gray-50 ">
+          <div className=" py-16 px-6 max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold text-center text-[#1F2E54] mb-10">
+          A Nossa Missão nas Províncias de Moçambique
+        </h2>
 
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={30}
-        slidesPerView={1}
-        navigation
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 4000 }}
-        breakpoints={{
-          640: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-          1280: { slidesPerView: 4 },
-        }}
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={30}
+          slidesPerView={1}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 4000 }}
+          breakpoints={{
+            640: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+            1280: { slidesPerView: 4 },
+          }}
+        >
+          {provincias.map(({ nome, imagem, texto }, idx) => (
+            <SwiperSlide key={idx}>
+              <div className="bg-white rounded-2xl shadow hover:shadow-lg transition p-4 flex flex-col h-full">
+                <img
+                  src={imagem}
+                  alt={nome}
+                  className="w-full h-48 object-cover rounded-xl mb-4"
+                  loading="lazy"
+                />
+                <h3 className="text-xl font-semibold text-[#1F2E54] mb-2">{nome}</h3>
+                <p className="text-gray-600 text-sm flex-grow">{texto}</p>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+
+      <section
+        id="vantagens"
+        className="bg-[#f7f7f7] w-[100%] py-24 px-6 max-w-7xl mx-auto"
       >
-        {provincias.map(({ nome, imagem, texto }, idx) => (
-          <SwiperSlide key={idx}>
-            <div className="bg-white rounded-2xl shadow hover:shadow-lg transition p-4 flex flex-col h-full">
-              <img
-                src={imagem}
-                alt={nome}
-                className="w-full h-48 object-cover rounded-xl mb-4"
-                loading="lazy"
-              />
-              <h3 className="text-xl font-semibold text-[#1F2E54] mb-2">{nome}</h3>
-              <p className="text-gray-600 text-sm flex-grow">{texto}</p>
+
+        <div className="grid gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {pontos.map((item, index) => (
+            <div
+              key={index}
+              className="bg-white border border-gray-200 rounded-xl p-8 shadow-sm hover:shadow-md transition flex flex-col items-center text-center"
+            >
+              <div className="mb-4">{item.icone}</div>
+              <h3 className="text-xl font-semibold text-[#1F2E54] mb-2">
+                {item.titulo}
+              </h3>
+              <p className="text-gray-600 text-sm">{item.texto}</p>
             </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </section>
+          ))}
+        </div>
+
+        <div className="text-center mt-16">
+          <Link
+            to="/sign-up"
+            className="inline-block text-[#1F2E54] border border-[#1F2E54] px-6 py-2 rounded-md hover:bg-[#e9e9e9] transition text-sm"
+          >
+            Tornar-se Parceiro BGS
+          </Link>
+        </div>
+      </section>
+    </div>
   );
 }
