@@ -25,9 +25,11 @@ export default function Listing(){
                 setLoading(true);
                 const res = await fetch(`${
                 import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/get/${params.listingId}`,{
-                    headers:{
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    }
+                    headers: {
+                        "Content-Type": "application/json",
+                        },
+                        credentials: 'include',
+                
                 });
                 const data = await res.json();
                 if(data.success === false){
