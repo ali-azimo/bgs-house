@@ -28,7 +28,7 @@ export default function Profile() {
   const [showListintError, setShowListintError,] = useState(false);
   const [userListng, setUserListing] = useState({});
   const dispatch = useDispatch();
-
+  const token = localStorage.getItem("token");
 
   useEffect(()=>{
     if(file){
@@ -70,6 +70,7 @@ const handleSubmit = async (e) =>{
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(formData),
     });
@@ -90,6 +91,9 @@ const handleDeleteUser = async()=>{
     const res = await fetch(`${
         import.meta.env.VITE_API_KEY_ONRENDER}/api/user/delete/${currentUser._id}`,{
         method: "DELETE",
+         headers: {
+        Authorization: `Bearer ${token}`, // necessário
+    },
       });
     const data = await res.json();
     if(data.success === false){
@@ -106,7 +110,6 @@ const handleSignOut = async()=>{
     dispatch(signOutUserStart());
     const res = await fetch(`${
         import.meta.env.VITE_API_KEY_ONRENDER}/api/auth/signout`);
-        const data = await res.json;
     if(data.success === false){
       dispatch(deleteUserFailure(data.message));
       return;
@@ -120,7 +123,11 @@ const handleShowListing = async()=>{
   try{
     setShowListintError(false);
     const res = await fetch(`${
-      import.meta.env.VITE_API_KEY_ONRENDER}/api/user/listing/${currentUser._id}`);
+      import.meta.env.VITE_API_KEY_ONRENDER}/api/user/listing/${currentUser._id}`,{
+          headers: {
+          Authorization: `Bearer ${token}`, // necessário
+        },
+      });
       const data = await res.json();
     if(data.success === false){
       setShowListintError(true);
@@ -136,6 +143,9 @@ const handleListingDelete = async(listingId)=>{
     const res = await fetch(`${
       import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/delete/${listingId}`,{
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`, // necessário
+      },
     });
     const data = await res.json();
     if(data.success === false){
