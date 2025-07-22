@@ -144,9 +144,6 @@ const handleListingDelete = async(listingId)=>{
     const res = await fetch(`${
       import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/delete/${listingId}`,{
       method: "DELETE",
-      headers: {
-          Authorization: `Bearer ${token}`, // necessário
-        },
     });
     const data = await res.json();
     if(data.success === false){
