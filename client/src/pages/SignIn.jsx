@@ -45,10 +45,13 @@ export default function SignIn() {
           dispatch(signIFailure(data.message));
           return;
         }
-        // ✅ Guarda o token JWT
-      if (data.token) {
-        localStorage.setItem('token', data.token);
-      }
+
+    // 🔐 Aqui salvas o token após login bem-sucedido
+    localStorage.setItem('token', data.token);
+
+    // (opcional) Salva também os dados do utilizador atual
+    localStorage.setItem('user', JSON.stringify(data.user));
+
         dispatch(signInSuccess(data));
         navigate('/');
       } else {

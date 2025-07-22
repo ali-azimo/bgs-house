@@ -4,12 +4,6 @@ import Listing from '../models/listar.model.js';
 import { errorHandler } from '../utils/erros.js';
 
 
-export const test = (req, res) => {
-    res.json({
-        message: "A API esta em funcionamento corecto!",
-    });
-};
-
 export const updateUser = async(req, res, next) => {
     if (req.user.id !== req.params.id) return next(errorHandler(401, "Apenas podes atualizar seus dados!"))
     try {
