@@ -12,6 +12,7 @@ import Search from './pages/Search';
 import Team from './pages/Team';
 import SignIn from './pages/SignIn';
 import Footer from './components/Footer'
+import ShowListing from './pages/ShowListing';
 
 
 
@@ -30,10 +31,8 @@ export default function App() {
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/create-listing" element={<CreateListing />} />
-            <Route
-              path="/update-listing/:listingId"
-              element={<UpdateListing />}
-            />
+            <Route path="/update-listing/:listingId" element={<UpdateListing />}/>
+            <Route path="show-listing" element={<ShowListing />}/>
           </Route>
         </Routes>
       <Footer/>

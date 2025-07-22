@@ -118,40 +118,7 @@ const handleSignOut = async()=>{
     dispatch(deleteUserFailure(data.message));
   }
 }
-const handleShowListing = async()=>{
-  try{
-    setShowListintError(false);
-    const res = await fetch(`${
-      import.meta.env.VITE_API_KEY_ONRENDER}/api/user/listing/${currentUser._id}`,{
-           credentials: 'include',
-      });
-      const data = await res.json();
-    if(data.success === false){
-      setShowListintError(true);
-      return;
-    }
-    setUserListing(data);
-  }catch(error){
-    setShowListintError(true);
-  }
-}
-const handleListingDelete = async(listingId)=>{
-  try{
-    const res = await fetch(`${
-      import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/delete/${listingId}`,{
-        method: "DELETE",
-        credentials: 'include',
-    });
-    const data = await res.json();
-    if(data.success === false){
-      console.log(data.message);
-      return;
-    }
-    setUserListing((prev)=> prev.filter((listing)=>listing._id !== listingId))
-  }catch(error){
-    console.log(error.message);
-  }
-}
+
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center mt-7' >Perfil</h1>
@@ -213,6 +180,17 @@ const handleListingDelete = async(listingId)=>{
         Criar 
         </Link>
       </form>
+      
+         <Link className='p-3 rounded-lg text-center uppercase hover:opacity-95'
+        to={'/show-listing'}>
+        Visualizar postagem
+        </Link>
+
+      <Link className='bg-green-700 text-white p-3 rounded-lg text-center uppercase hover:opacity-95'
+        to={'/show-listing'}>
+        Criar 
+        </Link>
+
       <div className='flex justify-between mt-5'>
         <span onClick={handleDeleteUser}
         className='text-red-700 cursor-pointer'>Apagar conta</span>
@@ -225,41 +203,9 @@ const handleListingDelete = async(listingId)=>{
       <span className='text-green-700 self-center'>
         {updateSuccess ? 'Usuario atualizado com sucesso' : ""}
       </span>
+    
+
       
-      <button onClick={handleShowListing} className='text-green-700 w-full'>Mostar listagem</button>
-      <p className='text-red-700 mt-5'>{showListintError ? 'Error showing listing' : ""}</p>
-
-
-
-      {
-        userListng &&
-          userListng.length > 0 &&
-          <div className='flex flex-col gap-4'>
-            <h1 className='text-center text-2xl font-semibold'>Meus produtos</h1>
-            {userListng.map((listing)=>(
-            <div key={listing._id} className='border rounded-lg p-3 flex justify-between items-center mt-5 gap-4'>
-                <Link to={`/listing/${listing._id}`}>
-                  <img
-                   src={listing.imageUrls[0]}
-                    alt='listing image'
-                    className='h-16 w-20 object-cover'
-                  />
-                </Link>
-                <Link to={`listing/${listing._id}`} className='flex-1 text-slate-700 font-semibold hover:underline truncate'>
-                <p>{listing.name}</p>
-                </Link>
-
-                <div className='flex flex-col items-center'>
-                  <button onClick={()=>handleListingDelete(listing._id)} className='text-red-700 uppercase'>Apagar</button>
-
-                  <Link to={`/update-listing/${listing._id}`}>
-                  <button className='text-green-700 uppercase'>Editar</button>
-                  </Link>
-                </div>
-            </div>
-          ))}
-          </div>
-      }
     </div>
   )
 }

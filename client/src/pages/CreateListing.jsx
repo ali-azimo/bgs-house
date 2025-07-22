@@ -318,12 +318,12 @@ export default function CreateListing() {
                 <img
                   src={url}
                   alt="Imagem do imóvel"
-                  className="w-24 h-24 object-cover rounded-xl border border-gray-200"
+                  className="w-35 h-24 object-cover rounded-xl border border-gray-200"
                 />
                 <button
                   type="button"
                   onClick={() => handleRemoveImage(index)}
-                  className="ml-4 px- py-2 text-sm bg-red-100 text-red-700 border border-red-300 rounded-lg uppercase hover:bg-red-200 transition"
+                  className="ml-4 px-3 py-2 text-sm bg-red-100 text-red-700 border border-red-300 rounded-lg uppercase hover:bg-red-200 transition"
                 >
                   Apagar
                 </button>
