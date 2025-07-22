@@ -95,7 +95,13 @@ export default function SignIn() {
         </button>
 
       </form>
-
+        <div className="flex gap-2 mt-5">
+            <p>Já tem uma conta?</p>
+                <Link to="/sign-up">
+                  <span className="text-blue-700">Sign p</span>
+                </Link>
+        </div>
+            
       {error && (
         <p className="text-red-500 text-center mt-4 font-medium">
           {error}
