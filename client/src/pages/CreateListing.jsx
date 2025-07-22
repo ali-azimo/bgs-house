@@ -18,8 +18,6 @@ export default function CreateListing() {
     const [uploading, setUploading] = useState(false);
     const [erroSubmit, setErrorSubmit] = useState(false);
     const [loadingSubmit, setLoadingSubmit] = useState(false);
-    const token = localStorage.getItem('token');
-
 
     const [formData, seteFormData] = useState({
         imageUrls: [],
@@ -130,7 +128,6 @@ export default function CreateListing() {
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     ...formData,
