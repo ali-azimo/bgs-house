@@ -139,10 +139,6 @@ export default function CreateListing() {
               }
             );
             const data = await res.json();
-             // ✅ Armazena token localmente (caso venha do backend)
-            if (data.token) {
-            localStorage.setItem('token', data.token);
-            }
             
             setLoadingSubmit(false);
             if(data.success === false){
