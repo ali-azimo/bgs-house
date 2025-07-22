@@ -6,8 +6,8 @@ import SwiperCore from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css/bundle';
 import 'swiper/css/pagination';
-import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare, FaHeart, FaEnvelope } from 'react-icons/fa';
-import { MdOutlineMeetingRoom } from 'react-icons/md';
+import { FaBath, FaBed, FaChair, FaMapMarkerAlt, FaParking, FaShare, FaHeart, FaEnvelope, FaPhone, FaWhatsapp } from 'react-icons/fa';
+import { MdOutlineMeetingRoom, MdEmail } from 'react-icons/md';
 import Contact from '../components/Contact';
 import MapMoz from '../components/MapMoz';
 
@@ -201,21 +201,81 @@ export default function Listing() {
                   </div>
                 </div>
 
-                {currentUser && listing.userRef !== currentUser._id && (
-                  <div className="mt-8">
-                    {!contact ? (
-                      <button
-                        onClick={() => setContact(true)}
-                        className="flex items-center gap-2 bg-[#1F2E54] hover:bg-[#2c3e6e] text-white px-6 py-3 rounded-lg font-medium transition-colors"
-                      >
-                        <FaEnvelope />
-                        Contactar Proprietário
-                      </button>
-                    ) : (
-                      <Contact listing={listing} />
-                    )}
+                {/* Seção de Contatos */}
+                <div className="mt-8 bg-blue-50 p-6 rounded-lg">
+                  <h3 className="text-xl font-semibold text-[#1F2E54] mb-4">Contactos do Proprietário</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
+                      <div className="p-3 bg-blue-100 rounded-full text-blue-600">
+                        <FaPhone className="text-xl" />
+                      </div>
+                      <div>
+                        <p className="text-gray-500 text-sm">Telefone</p>
+                        <a href="tel:+258845826662" className="font-semibold hover:text-blue-600 transition-colors">
+                          +258 84 582 6662
+                        </a>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
+                      <div className="p-3 bg-green-100 rounded-full text-green-600">
+                        <FaWhatsapp className="text-xl" />
+                      </div>
+                      <div>
+                        <p className="text-gray-500 text-sm">WhatsApp</p>
+                        <a 
+                          href="https://wa.me/258845826662" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="font-semibold hover:text-green-600 transition-colors"
+                        >
+                          +258 84 582 6662
+                        </a>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
+                      <div className="p-3 bg-red-100 rounded-full text-red-600">
+                        <MdEmail className="text-xl" />
+                      </div>
+                      <div>
+                        <p className="text-gray-500 text-sm">Email</p>
+                        <a 
+                          href="mailto:bgs.soluction@gmail.com" 
+                          className="font-semibold hover:text-red-600 transition-colors"
+                        >
+                          bgs.soluction@gmail.com
+                        </a>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
+                      <div className="p-3 bg-purple-100 rounded-full text-purple-600">
+                        <FaPhone className="text-xl" />
+                      </div>
+                      <div>
+                        <p className="text-gray-500 text-sm">Telefone Alternativo</p>
+                        <a href="tel:+258875826662" className="font-semibold hover:text-purple-600 transition-colors">
+                          +258 87 582 6662
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                )}
+
+                  {/* Formulário de Contato Alternativo */}
+                  {currentUser && listing.userRef !== currentUser._id && (
+                    <div className="mt-6">
+                      {!contact ? (
+                        <button
+                          onClick={() => setContact(true)}
+                          className="flex items-center gap-2 bg-[#1F2E54] hover:bg-[#2c3e6e] text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                        >
+                          <FaEnvelope />
+                          Enviar Mensagem Direta
+                        </button>
+                      ) : (
+                        <Contact listing={listing} />
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
