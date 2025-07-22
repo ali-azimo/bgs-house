@@ -18,22 +18,17 @@ export default function Listing(){
     const [copied, setCopied] = useState(false);
     const {currentUser} = useSelector((state)=> state.user);
     const [contact, setContact] = useState(false);
-    const token = localStorage.getItem('token');
     useEffect(()=>{
         const fetchListing = async()=>{
             try{
                 setLoading(true);
                 const res = await fetch(`${
-                        import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/get/${params.listingId}`,{
-                            headers:{
-                                "Content-Type": "application/json",
-                            },
-                        });
-                        const data = await res.json();
-                        if(data.success === false){
-                            setError(true);
-                            setLoading(false);
-                            return;
+                import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/get/${params.listingId}`);
+                const data = await res.json();
+                if(data.success === false){
+                    setError(true);
+                    setLoading(false);
+                    return;
                 }
                 setListing(data);
                 setLoading(false);
@@ -61,7 +56,6 @@ export default function Listing(){
                     {listing.imageUrls.map(url =>
                         <SwiperSlide key={url}>
                             <div className='h-[500px]' style={{background: `url(${url}) center no-repeat`, backgroundSize: 'cover', backgroundPosition: 'center center'}}>
-
                             </div>
                         </SwiperSlide>)}
                 </Swiper>
