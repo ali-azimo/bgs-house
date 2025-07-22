@@ -23,8 +23,8 @@ export default function CreateListing() {
     useEffect(()=>{
         const fetchListing = async()=>{
             const listingId = params.listingId;
-            const res = await fetch(`credentials: 'include',/api/listing/get/${listingId}`,{
-               credentials: 'include'
+            const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/get/${listingId}`,{
+                credentials: 'include',
             });
             const data = await res.json();
             seteFormData(data);
@@ -137,10 +137,8 @@ export default function CreateListing() {
         try{
             if(formData.imageUrls.length < 1) return setErrorSubmit('You must upload at least one image');
             if(+formData.regularPrice < +formData.discountPrice) return setErrorSubmit("Discount Price must be lower than regular Price");
-            
             setLoadingSubmit(true);
             setErrorSubmit(false);
-
             const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/update/${params.listingId}`,{
                 method: "POST",
                 headers:{
