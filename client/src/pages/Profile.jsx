@@ -123,9 +123,7 @@ const handleShowListing = async()=>{
     setShowListintError(false);
     const res = await fetch(`${
       import.meta.env.VITE_API_KEY_ONRENDER}/api/user/listing/${currentUser._id}`,{
-          headers: {
-          Authorization: `Bearer ${token}`, // necessário
-        },
+           credentials: 'include',
       });
       const data = await res.json();
     if(data.success === false){
