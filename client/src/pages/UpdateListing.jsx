@@ -255,7 +255,7 @@ export default function UpdateListing() {
                 type="number"
                 id='regularPrice'
                 min='50'
-                max='1000000'
+                max='1000000000'
                 required
                 className='p-3 border border-gray-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 focus:outline-none rounded-xl shadow-sm w-36'
                 onChange={handleChange}
