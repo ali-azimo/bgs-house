@@ -19,7 +19,9 @@ export default function Home() {
   useEffect(()=>{
     const fetchOfferListings = async () =>{
       try{
-        const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/get?offer=true&limit=4`,{
+        const res = await fetch(`${
+            import.meta.env.VITE_API_KEY_ONRENDER
+          }/api/listing/get?offer=true&limit=4`,{
           credentials: 'include',
         });        
         const data = await res.json();

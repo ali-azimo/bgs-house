@@ -22,7 +22,7 @@ export default function Footer() {
             <a href="#" className="hover:text-white transition duration-200">
               <FaFacebook />
             </a>
-            <a href="#" className="hover:text-white transition duration-200">
+            <a href="https://chat.whatsapp.com/L2ylfd89TG8JymjjG65sft" className="hover:text-white transition duration-200">
               <FaWhatsapp />
             </a>
             <a href="#" className="hover:text-white transition duration-200">
@@ -39,10 +39,9 @@ export default function Footer() {
           <h4 className="text-lg font-semibold mb-4 text-[#00AEEF]">Links Rápidos</h4>
           <ul className="space-y-2 text-[#CBD5E0]">
             <li><Link to="/" className="hover:text-white">Início</Link></li>
-            <li><Link to="/imoveis" className="hover:text-white">Imóveis</Link></li>
-            <li><Link to="/sobre" className="hover:text-white">Sobre Nós</Link></li>
+            <li><Link to="/search" className="hover:text-white">Imóveis</Link></li>
+            <li><Link to="/about" className="hover:text-white">Sobre Nós</Link></li>
             <li><Link to="/team" className="hover:text-white">Contacte-nos</Link></li>
-            <li><Link to="/blog" className="hover:text-white">Blog</Link></li>
           </ul>
         </div>
 
@@ -50,10 +49,9 @@ export default function Footer() {
         <div>
           <h4 className="text-lg font-semibold mb-4 text-[#00AEEF]">Serviços</h4>
           <ul className="space-y-2 text-[#CBD5E0]">
-            <li><a href="#" className="hover:text-white">Compra e Venda</a></li>
-            <li><a href="#" className="hover:text-white">Arrendamento</a></li>
-            <li><a href="#" className="hover:text-white">Avaliação de Imóveis</a></li>
-            <li><a href="#" className="hover:text-white">Consultoria Imobiliária</a></li>
+            <li><a href="https://www.bgs-imo.com/search?type=sale" className="hover:text-white">Compra e Venda</a></li>
+            <li><a href="https://www.bgs-imo.com/search?type=sale" className="hover:text-white">Arrendamento</a></li>
+            <li><a href="https://www.bgs-imo.com/team" className="hover:text-white">Consultoria Imobiliária</a></li>
           </ul>
         </div>
 

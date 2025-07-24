@@ -15,6 +15,16 @@ export default function Team() {
       linkedin: "https://www.linkedin.com/in/dercio-mungoy",
     },
     image: mungoy,
+    name: "Dércio Mauricio Mungoy",
+    role: "Especialista em Vendas",
+    description:
+      "Com mais de 10 anos de experiência, Dércio é um especialista em vendas que ajuda os clientes a encontrar a propriedade perfeita. Profissional comprometido com a excelência e com uma visão clara sobre o mercado imobiliário moçambicano.",
+    social: {
+      facebook: "https://www.facebook.com/dercio.mungoy",
+      whatsapp: "https://chat.whatsapp.com/L2ylfd89TG8JymjjG65sft",
+      linkedin: "https://www.linkedin.com/in/dercio-mungoy",
+    },
+    image: mungoy,
   };
 
   return (
