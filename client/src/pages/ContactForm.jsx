@@ -15,10 +15,10 @@ export default function ContactForm() {
 
     try {
       await emailjs.sendForm(
-        "service_lj0ov55",
-        "template_dx0lbmb",
+        "service_390rh7s",
+        "template_6aib88t",
         form.current,
-        "lmivO-YGXOjgc6gF3"
+        "F1D4D-0fhmjkz2noB"
       );
 
       setIsSuccess(true);
