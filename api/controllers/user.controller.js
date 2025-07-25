@@ -1,6 +1,7 @@
 import bycryptjs from 'bcryptjs';
 import User from '../models/user.model.js';
 import Listing from '../models/listar.model.js';
+import Blog from '../models/blog.model.js'
 import { errorHandler } from '../utils/erros.js';
 
 
@@ -63,5 +64,18 @@ export const getUser = async(req, res, next) => {
         res.status(200).json(rest);
     } catch (error) {
         next(error);
+    }
+};
+
+export const getUserBlog = async(req, res, next) => {
+    if (req.user.id === req.params.id) {
+        try {
+            const blogs = await Blog.find({ userRef: req.params.id });
+            res.status(200).json(blogs);
+        } catch (error) {
+            next(error)
+        }
+    } else {
+        return next(errorHandler(401, 'Apenas o usuario pode ver suas proprios blogs!'));
     }
 };
