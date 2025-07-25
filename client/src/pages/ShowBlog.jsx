@@ -5,26 +5,26 @@ import { Link } from 'react-router-dom';
 export default function ShowBlog() {
   const fileRef = useRef(null);
   const { currentUser } = useSelector((state) => state.user);
-  const [showBlogError, setShowBlogError] = useState(false);
-  const [userBlogs, setUserBlogs] = useState([]);
+  const [blogs, setBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   const fetchBlogs = useCallback(async () => {
     try {
-      setShowBlogError(false);
+      setHasError(false);
       setIsLoading(true);
-      const res = await fetch(`${
-          import.meta.env.VITE_API_KEY_ONRENDER}/api/user/blog/${currentUser._id}`,{
-            credentials: 'include',
-          });
+
+      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/user/blog/${currentUser._id}`, {
+        credentials: 'include',
+      });
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.message || 'Erro ao carregar postagens');
+      if (!res.ok) throw new Error(data.message || 'Erro ao carregar publicações');
 
-      setUserBlogs(data);
+      setBlogs(data);
     } catch (error) {
-      console.error('Erro ao buscar postagens:', error);
-      setShowBlogError(true);
+      console.error('Erro ao buscar blogs:', error);
+      setHasError(true);
     } finally {
       setIsLoading(false);
     }
@@ -34,7 +34,7 @@ export default function ShowBlog() {
     if (currentUser?._id) fetchBlogs();
   }, [currentUser?._id, fetchBlogs]);
 
-  const handleBlogDelete = async (blogId) => {
+  const handleDeleteBlog = async (blogId) => {
     try {
       const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/blog/delete/${blogId}`, {
         method: 'DELETE',
@@ -42,11 +42,11 @@ export default function ShowBlog() {
       });
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.message || 'Erro ao apagar');
+      if (!res.ok) throw new Error(data.message || 'Erro ao apagar publicação');
 
-      setUserBlogs((prev) => prev.filter((blog) => blog._id !== blogId));
+      setBlogs((prev) => prev.filter((blog) => blog._id !== blogId));
     } catch (error) {
-      console.error('Erro ao apagar:', error.message);
+      console.error('Erro ao apagar publicação:', error.message);
     }
   };
 
@@ -58,73 +58,66 @@ export default function ShowBlog() {
 
       {isLoading ? (
         <div className="text-center py-10">
-          <p className="text-gray-600">Carregando suas postagens...</p>
+          <p className="text-gray-600">A carregar as publicações...</p>
         </div>
+      ) : hasError ? (
+        <p className="text-red-700 mt-5 text-center">
+          Ocorreu um erro ao carregar as publicações.
+        </p>
+      ) : blogs.length === 0 ? (
+        <p className="text-gray-600 text-center mt-10">
+          Nenhuma publicação encontrada.
+        </p>
       ) : (
-        <>
-          {showBlogError && (
-            <p className="text-red-700 mt-5 text-center">
-              Ocorreu um erro ao carregar as postagens.
-            </p>
-          )}
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {blogs.map((blog) => (
+            <div
+              key={blog._id}
+              className="bg-white shadow hover:shadow-md rounded-xl overflow-hidden transition duration-300 flex flex-col"
+            >
+              <Link to={`/blog/${blog._id}`} className="block">
+                <img
+                  src={blog.imageUrls?.[0] || '/placeholder.jpg'}
+                  alt={blog.title}
+                  className="h-40 w-full object-cover"
+                  loading="lazy"
+                />
+              </Link>
 
-          {userBlogs.length === 0 && !showBlogError && (
-            <p className="text-gray-600 text-center mt-10">
-              Nenhuma postagem encontrada.
-            </p>
-          )}
-
-          {userBlogs.length > 0 && (
-            <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {userBlogs.map((blog) => (
-                <div
-                  key={blog._id}
-                  className="bg-white shadow hover:shadow-md rounded-xl overflow-hidden transition duration-300 flex flex-col"
+              <div className="flex-1 p-3 flex flex-col justify-between">
+                <Link
+                  to={`/blog/${blog._id}`}
+                  className="text-slate-800 font-semibold text-md hover:underline line-clamp-2"
                 >
-                  <Link to={`/blog/${blog._id}`} className="block">
-                    <img
-                      src={blog.imageUrls[0] || '/placeholder.jpg'}
-                      alt={blog.name}
-                      className="h-40 w-full object-cover"
-                      loading="lazy"
-                    />
+                  {blog.title}
+                </Link>
+                <p className="text-sm text-gray-500 mt-1">
+                  {new Date(blog.createdAt).toLocaleDateString()}
+                </p>
+
+                <div className="flex justify-between mt-4">
+                  <Link
+                    to={`/update-blog/${blog._id}`}
+                    className="text-green-600 text-sm hover:underline uppercase"
+                  >
+                    Editar
                   </Link>
-
-                  <div className="flex-1 p-3 flex flex-col justify-between">
-                    <Link
-                      to={`/blog/${blog._id}`}
-                      className="text-slate-800 font-semibold text-md hover:underline line-clamp-2"
-                    >
-                      {blog.name}
-                    </Link>
-                    <p className="text-sm text-gray-500 mt-1">
-                      {new Date(blog.createdAt).toLocaleDateString()}
-                    </p>
-
-                    <div className="flex justify-between mt-4">
-                      <Link
-                        to={`/update-blog/${blog._id}`}
-                        className="text-green-600 text-sm hover:underline uppercase"
-                      >
-                        Editar
-                      </Link>
-                      <button
-                        onClick={() => handleBlogDelete(blog._id)}
-                        className="text-red-600 text-sm hover:underline uppercase"
-                      >
-                        Apagar
-                      </button>
-                    </div>
-                  </div>
+                  <button
+                    onClick={() => handleDeleteBlog(blog._id)}
+                    className="text-red-600 text-sm hover:underline uppercase"
+                  >
+                    Apagar
+                  </button>
                 </div>
-              ))}
+              </div>
             </div>
-          )}
-        </>
+          ))}
+        </div>
       )}
+
       <div className="text-center mt-8">
         <Link
-          to="/create-listing"
+          to="/create-blog"
           className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition"
         >
           + Criar Nova Publicação

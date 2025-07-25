@@ -57,3 +57,11 @@ export const getBlog = async(req, res, next) => {
     }
 }
 
+export const getBlogs = async (req, res, next) => {
+  try {
+    const blogs = await Blog.find().sort({ createdAt: -1 });
+    res.status(200).json(blogs);
+  } catch (error) {
+    next(error);
+  }
+};
