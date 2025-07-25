@@ -7,6 +7,7 @@ import path from 'path';
 import userRouter from './routes/user.route.js';
 import cadRouter from './routes/cad.route.js';
 import listingRouter from './routes/listar.route.js';
+import blogRouter from './routes/blog.route.js'
 import cors from 'cors';
 dotenv.config();
 
@@ -31,6 +32,8 @@ app.use(cookieParser());
 app.use('/api/user', userRouter);
 app.use('/api/auth', cadRouter);
 app.use('/api/listing', listingRouter);
+app.use('/api/blog', blogRouter);
+
 
 // Testar backend
 app.get('/', (req, res) => {

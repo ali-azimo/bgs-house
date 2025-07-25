@@ -6,14 +6,16 @@ import Profile from './pages/Profile';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
 import CreateListing from './pages/CreateListing';
+import Createblog from './pages/CreateBlog';
 import UpdateListing from './pages/UpdateListing';
+import UpdateBlog from './pages/UpdateBlog';
 import Listing from './pages/Listing';
 import Search from './pages/Search';
 import Team from './pages/Team';
 import SignIn from './pages/SignIn';
 import Footer from './components/Footer'
 import ShowListing from './pages/ShowListing';
-
+import ShowBlog from './pages/ShowBlog';
 
 
 export default function App() {
@@ -33,6 +35,9 @@ export default function App() {
             <Route path="/create-listing" element={<CreateListing />} />
             <Route path="/update-listing/:listingId" element={<UpdateListing />}/>
             <Route path="show-listing" element={<ShowListing />}/>
+            <Route path="/create-blog" element={<Createblog />} />
+            <Route path="/update-blog/:blogId" element={<UpdateBlog />}/>
+            <Route path="show-blog" element={<ShowBlog />}/>
           </Route>
         </Routes>
       <Footer/>
