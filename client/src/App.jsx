@@ -16,7 +16,7 @@ import SignIn from './pages/SignIn';
 import Footer from './components/Footer'
 import ShowListing from './pages/ShowListing';
 import ShowBlog from './pages/ShowBlog';
-
+import Blog from "./pages/Blog";
 
 export default function App() {
   return (
@@ -30,6 +30,7 @@ export default function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/team" element={<Team />} />
           <Route path="/listing/:listingId" element={<Listing />} />
+          <Route path="/blog/blogId" element={<Blog />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/create-listing" element={<CreateListing />} />
