@@ -7,7 +7,7 @@ export default function BlogHome() {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/blogs`, {
+        const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/blog/get`, {
           credentials: 'include',
         });
         const data = await res.json();
@@ -32,12 +32,12 @@ export default function BlogHome() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogs.map((blog) => (
             <div
-              key={blog?._id}
+              key={blog._id}
               className="bg-white rounded-xl shadow hover:shadow-md transition duration-300 overflow-hidden"
             >
-              {blog?.imageUrl ? (
+              {blog.imageUrls ? (
                 <img
-                  src={blog.imageUrl}
+                  src={blog.imageUrls}
                   alt={blog.title}
                   className="w-full h-48 object-cover"
                 />
@@ -49,13 +49,13 @@ export default function BlogHome() {
 
               <div className="p-4">
                 <h2 className="text-lg font-semibold text-slate-800 mb-2">
-                  {blog?.title || 'Sem título'}
+                  {blog.name || 'Sem título'}
                 </h2>
                 <p className="text-sm text-gray-600 mb-4">
-                  {blog?.content?.substring(0, 100) || 'Sem conteúdo'}...
+                  {blog.description?.substring(0, 100) || 'Sem conteúdo'}...
                 </p>
                 <Link
-                  to={`/blog/${blog?._id}`}
+                  to={`/blog/${blog._id}`}
                   className="text-blue-600 hover:underline text-sm font-medium"
                 >
                   Ler mais →
