@@ -104,7 +104,7 @@ export default function CreateListing() {
       setLoadingSubmit(true);
       setErrorSubmit(false);
 
-      const res = await fetch(`/api/blog/create`,{
+      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/blog/create`,{
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           credentials: 'include',
