@@ -75,6 +75,7 @@ export default function Header() {
           <Link to="/" className="hover:text-sky-600 hidden sm:inline">Início</Link>
           <Link to="/about" className="hover:text-sky-600 hidden sm:inline">Sobre</Link>
           <Link to="/team" className="hover:text-sky-600 hidden sm:inline">Contacto</Link>
+          <Link to="/blog" className="hover:text-sky-600 hidden sm:inline">Blog</Link>
 
           {/* MODO ESCURO */}
           <button

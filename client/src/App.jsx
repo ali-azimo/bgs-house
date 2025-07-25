@@ -17,6 +17,7 @@ import Footer from './components/Footer'
 import ShowListing from './pages/ShowListing';
 import ShowBlog from './pages/ShowBlog';
 import Blog from "./pages/Blog";
+import BlogHome from './pages/BlogHome';
 
 export default function App() {
   return (
@@ -24,13 +25,14 @@ export default function App() {
       <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<BlogHome />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/about" element={<About />} />
           <Route path="/search" element={<Search />} />
           <Route path="/team" element={<Team />} />
           <Route path="/listing/:listingId" element={<Listing />} />
-          <Route path="/blog/blogId" element={<Blog />} />
+          <Route path="/blog/:blogId" element={<Blog />} />
           <Route element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
             <Route path="/create-listing" element={<CreateListing />} />

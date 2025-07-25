@@ -120,88 +120,118 @@ const handleSignOut = async()=>{
 }
 
   return (
-    <div className='p-3 max-w-lg mx-auto'>
-      <h1 className='text-3xl font-semibold text-center mt-7' >Perfil</h1>
+    <div className="p-3 max-w-lg mx-auto">
+      <h1 className="text-3xl font-semibold text-center mt-7">Perfil</h1>
 
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <input
+          onChange={(e) => setFile(e.target.files[0])}
+          type="file"
+          ref={fileRef}
+          hidden
+          accept="image/*"
+        />
+        <img
+          onClick={() => fileRef.current.click()}
+          src={formData.avatar || currentUser.avatar}
+          alt="Profile"
+          className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2 bg-cover bg-center"
+        />
 
-      <form onSubmit={handleSubmit}
-      className='flex flex-col gap-4'>
-        <input onChange={(e)=>setFile(e.target.files[0])} type="file" 
-        ref={fileRef} 
-        hidden 
-        accept='image/*'/>
-        <img onClick={()=>fileRef.current.click()} 
-        src={formData.avatar || currentUser.avatar} 
-        alt='Profile' 
-        className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2 bg-cover bg-center'/>
+        <p className="text-sm self-center">
+          {fileUploadError ? (
+            <span className="text-red-700">
+              Erro ao carregar imagem, escolha uma imagem valida
+            </span>
+          ) : filPerc > 0 && filPerc < 100 ? (
+            <span className="text-slate-700">{`Carregando ${filPerc}%`}</span>
+          ) : filPerc === 100 ? (
+            <span className="text-green-700">Carregado com sucesso</span>
+          ) : (
+            ""
+          )}
+        </p>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="username"
+          className="border border-gray-300 outline-blue-500 p-3 rounded-lg"
+          defaultValue={currentUser.username}
+          onChange={handleChange}
+        />
 
-      <p className='text-sm self-center'>
-        {fileUploadError ? (
-          <span className='text-red-700'>Erro ao carregar imagem, escolha uma imagem valida</span>
-        ) : filPerc > 0 && filPerc < 100 ? (
-          <span className='text-slate-700'>{`Carregando ${filPerc}%`}</span>
-        ) : filPerc === 100 ? (
-          <span className='text-green-700'>Carregado com sucesso</span>
-        ) : (
-        ""
-      )}
-      </p>
-        <input type="text" 
-        name="username" 
-        id="username" 
-        placeholder='username' 
-        className='border border-gray-300 outline-blue-500 p-3 rounded-lg'
-        defaultValue={currentUser.username}
-        onChange={handleChange}/>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          placeholder="email"
+          className="border border-gray-300 outline-blue-500 p-3 rounded-lg"
+          defaultValue={currentUser.email}
+          onChange={handleChange}
+        />
 
-        <input 
-        type="email" 
-        name="email" 
-        id="email" 
-        placeholder='email' 
-        className='border border-gray-300 outline-blue-500 p-3 rounded-lg'
-        defaultValue={currentUser.email}
-        onChange={handleChange}/>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="password"
+          className="border border-gray-300 outline-blue-500 p-3 rounded-lg"
+          onChange={handleChange}
+        />
 
-        <input 
-        type="password" 
-        name="password" 
-        id="password" 
-        placeholder='password' 
-        className='border border-gray-300 outline-blue-500 p-3 rounded-lg'
-        onChange={handleChange}/>
-
-
-        <button disabled={loading} className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'>
-          {loading ? 'Carregando...' : "Atualizar"}
+        <button
+          disabled={loading}
+          className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
+        >
+          {loading ? "Carregando..." : "Atualizar"}
         </button>
-        <Link className='bg-green-700 text-white p-3 rounded-lg text-center uppercase hover:opacity-95'
-        to={'/create-listing'}>
-        Criar 
-        </Link>
-
-          <Link className='p-3 rounded-lg text-center uppercase hover:opacity-95'
-          to={'/show-listing'}>
-          Visualizar postagem
+        <div className="grid grid-cols-2 gap-5 mt-5">
+          <Link
+            className="bg-green-700 text-white p-3 rounded-lg text-center uppercase hover:opacity-95"
+            to={"/create-listing"}
+          >
+            Criar imovel
           </Link>
+          <Link
+            className="bg-blue-400 text-white p-3 rounded-lg text-center uppercase hover:opacity-95"
+            to={"/create-blog"}
+          >
+            Criar blog
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 gap-5 mt-5">
+          <Link
+            className="p-1 rounded-lg text-center uppercase hover:opacity-95 hover:text-blue-600"
+            to={"/show-listing"}
+          >
+            Visualizar imovel
+          </Link>
+          <Link
+            className="p-1 rounded-lg text-center uppercase hover:opacity-95  hover:text-blue-600"
+            to={"/show-blog"}
+          >
+            Visualizar blog
+          </Link>
+        </div>
       </form>
 
-
-      <div className='flex justify-between mt-5'>
-        <span onClick={handleDeleteUser}
-        className='text-red-700 cursor-pointer'>Apagar conta</span>
-        <span onClick={handleSignOut}
-         className='text-red-700 cursor-pointer'>Sair</span>
+      <div className="flex justify-between mt-5">
+        <span
+          onClick={handleDeleteUser}
+          className="text-red-700 cursor-pointer"
+        >
+          Apagar conta
+        </span>
+        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
+          Sair
+        </span>
       </div>
-      <p className='text-red-700'>
-        {error?error:""}
-      </p>
-      <span className='text-green-700 self-center'>
-        {updateSuccess ? 'Usuario atualizado com sucesso' : ""}
+      <p className="text-red-700">{error ? error : ""}</p>
+      <span className="text-green-700 self-center">
+        {updateSuccess ? "Usuario atualizado com sucesso" : ""}
       </span>
-    
-
-      
     </div>
-  )
+  );
 }

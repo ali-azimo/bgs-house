@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import BlogItems from './BlogItems';
 
-export default function BlogHome() {
+export default function Blog() {
   const [blogs, setBlogs] = useState([]);
 
   useEffect(() => {
