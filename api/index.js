@@ -19,12 +19,26 @@ mongoose.connect(process.env.MONGO)
   .then(() => console.log('MongoDB conectado'))
   .catch(err => console.error('Erro ao conectar MongoDB:', err));
 
+// app.use(cors({
+//     origin: 'https://www.bgs-imo.com', 
+//     credentials: true
+// }));
+
+const allowedOrigins = [
+  'http://localhost:5173',        // desenvolvimento local
+  'https://www.bgs-imo.com'       // produção na Vercel
+];
+
 app.use(cors({
-    origin: 'https://www.bgs-imo.com',
-    credentials: true
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS: ' + origin));
+    }
+  },
+  credentials: true,
 }));
-
-
 app.use(express.json());
 app.use(cookieParser());
 

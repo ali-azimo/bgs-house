@@ -129,7 +129,7 @@ export default function CreateListing() {
       setErrorSubmit(false);
 
       const res = await fetch(
-        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/create`,
+       `/api/listing/create`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

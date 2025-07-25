@@ -10,50 +10,36 @@ export default function ShowBlog() {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchBlogs = useCallback(async () => {
-    if (!currentUser?._id) return;
-
     try {
       setShowBlogError(false);
       setIsLoading(true);
+      const res = await fetch(`${
+          import.meta.env.VITE_API_KEY_ONRENDER}/api/user/blog/${currentUser._id}`,{
+            credentials: 'include',
+          });
+      const data = await res.json();
 
-      const res = await fetch(
-        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/user/blog/${currentUser._id}`,
-        { credentials: 'include' }
-      );
+      if (!res.ok) throw new Error(data.message || 'Erro ao carregar postagens');
 
-      const contentType = res.headers.get('content-type');
-
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(`Erro ${res.status}: ${errorText}`);
-      }
-
-      if (contentType && contentType.includes('application/json')) {
-        const data = await res.json();
-        setUserBlogs(data);
-      } else {
-        const text = await res.text();
-        throw new Error(`Resposta inesperada (não é JSON): ${text.slice(0, 100)}`);
-      }
+      setUserBlogs(data);
     } catch (error) {
       console.error('Erro ao buscar postagens:', error);
       setShowBlogError(true);
     } finally {
       setIsLoading(false);
     }
-  }, [currentUser?._id]);
+  }, [currentUser._id]);
 
   useEffect(() => {
-    fetchBlogs();
-  }, [fetchBlogs]);
+    if (currentUser?._id) fetchBlogs();
+  }, [currentUser?._id, fetchBlogs]);
 
   const handleBlogDelete = async (blogId) => {
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/blog/delete/${blogId}`,
-        { method: 'DELETE', credentials: 'include' }
-      );
-
+      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/blog/delete/${blogId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message || 'Erro ao apagar');
@@ -97,8 +83,8 @@ export default function ShowBlog() {
                 >
                   <Link to={`/blog/${blog._id}`} className="block">
                     <img
-                      src={blog.imageUrls?.[0] || '/placeholder.jpg'}
-                      alt={blog.title || 'Imagem do blog'}
+                      src={blog.imageUrls[0] || '/placeholder.jpg'}
+                      alt={blog.name}
                       className="h-40 w-full object-cover"
                       loading="lazy"
                     />
@@ -109,12 +95,10 @@ export default function ShowBlog() {
                       to={`/blog/${blog._id}`}
                       className="text-slate-800 font-semibold text-md hover:underline line-clamp-2"
                     >
-                      {blog.title || blog.name}
+                      {blog.name}
                     </Link>
                     <p className="text-sm text-gray-500 mt-1">
-                      {blog.createdAt
-                        ? new Date(blog.createdAt).toLocaleDateString()
-                        : 'Data desconhecida'}
+                      {new Date(blog.createdAt).toLocaleDateString()}
                     </p>
 
                     <div className="flex justify-between mt-4">
@@ -128,7 +112,7 @@ export default function ShowBlog() {
                         onClick={() => handleBlogDelete(blog._id)}
                         className="text-red-600 text-sm hover:underline uppercase"
                       >
-                        Apagar post
+                        Apagar
                       </button>
                     </div>
                   </div>
@@ -138,13 +122,12 @@ export default function ShowBlog() {
           )}
         </>
       )}
-
       <div className="text-center mt-8">
         <Link
-          to="/create-blog"
+          to="/create-listing"
           className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md transition"
         >
-          + Criar novo blog
+          + Criar Nova Publicação
         </Link>
       </div>
     </div>
