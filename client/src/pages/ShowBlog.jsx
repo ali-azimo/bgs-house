@@ -10,35 +10,50 @@ export default function ShowBlog() {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchBlogs = useCallback(async () => {
+    if (!currentUser?._id) return;
+
     try {
       setShowBlogError(false);
       setIsLoading(true);
-      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/user/blog/${currentUser._id}`, {
-        credentials: 'include',
-      });
-      const data = await res.json();
 
-      if (!res.ok) throw new Error(data.message || 'Erro ao carregar postagens');
+      const res = await fetch(
+        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/user/blog/${currentUser._id}`,
+        { credentials: 'include' }
+      );
 
-      setUserBlogs(data);
+      const contentType = res.headers.get('content-type');
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`Erro ${res.status}: ${errorText}`);
+      }
+
+      if (contentType && contentType.includes('application/json')) {
+        const data = await res.json();
+        setUserBlogs(data);
+      } else {
+        const text = await res.text();
+        throw new Error(`Resposta inesperada (não é JSON): ${text.slice(0, 100)}`);
+      }
     } catch (error) {
       console.error('Erro ao buscar postagens:', error);
       setShowBlogError(true);
     } finally {
       setIsLoading(false);
     }
-  }, [currentUser._id]);
+  }, [currentUser?._id]);
 
   useEffect(() => {
-    if (currentUser?._id) fetchBlogs();
-  }, [currentUser?._id, fetchBlogs]);
+    fetchBlogs();
+  }, [fetchBlogs]);
 
   const handleBlogDelete = async (blogId) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/blog/delete/${blogId}`, {
-        method: 'DELETE',
-        credentials: 'include',
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/blog/delete/${blogId}`,
+        { method: 'DELETE', credentials: 'include' }
+      );
+
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message || 'Erro ao apagar');
