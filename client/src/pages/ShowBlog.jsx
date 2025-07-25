@@ -5,38 +5,37 @@ import { Link } from 'react-router-dom';
 export default function ShowBlog() {
   const fileRef = useRef(null);
   const { currentUser } = useSelector((state) => state.user);
-  const [showListingError, setShowListingError] = useState(false);
-  const [userListings, setUserListings] = useState([]);
+  const [showBlogError, setShowBlogError] = useState(false);
+  const [userBlogs, setUserBlogs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchListings = useCallback(async () => {
+  const fetchBlogs = useCallback(async () => {
     try {
-      setShowListingError(false);
+      setShowBlogError(false);
       setIsLoading(true);
-      const res = await fetch(`${
-          import.meta.env.VITE_API_KEY_ONRENDER}/api/user/blog/${currentUser._id}`,{
-            credentials: 'include',
-          });
+      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/user/blog/${currentUser._id}`, {
+        credentials: 'include',
+      });
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message || 'Erro ao carregar postagens');
 
-      setUserListings(data);
+      setUserBlogs(data);
     } catch (error) {
       console.error('Erro ao buscar postagens:', error);
-      setShowListingError(true);
+      setShowBlogError(true);
     } finally {
       setIsLoading(false);
     }
   }, [currentUser._id]);
 
   useEffect(() => {
-    if (currentUser?._id) fetchListings();
-  }, [currentUser?._id, fetchListings]);
+    if (currentUser?._id) fetchBlogs();
+  }, [currentUser?._id, fetchBlogs]);
 
-  const handleListingDelete = async (listingId) => {
+  const handleBlogDelete = async (blogId) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/blog/delete/${listingId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/blog/delete/${blogId}`, {
         method: 'DELETE',
         credentials: 'include',
       });
@@ -44,7 +43,7 @@ export default function ShowBlog() {
 
       if (!res.ok) throw new Error(data.message || 'Erro ao apagar');
 
-      setUserListings((prev) => prev.filter((listing) => listing._id !== listingId));
+      setUserBlogs((prev) => prev.filter((blog) => blog._id !== blogId));
     } catch (error) {
       console.error('Erro ao apagar:', error.message);
     }
@@ -62,29 +61,29 @@ export default function ShowBlog() {
         </div>
       ) : (
         <>
-          {showListingError && (
+          {showBlogError && (
             <p className="text-red-700 mt-5 text-center">
               Ocorreu um erro ao carregar as postagens.
             </p>
           )}
 
-          {userListings.length === 0 && !showListingError && (
+          {userBlogs.length === 0 && !showBlogError && (
             <p className="text-gray-600 text-center mt-10">
               Nenhuma postagem encontrada.
             </p>
           )}
 
-          {userListings.length > 0 && (
+          {userBlogs.length > 0 && (
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {userListings.map((listing) => (
+              {userBlogs.map((blog) => (
                 <div
-                  key={listing._id}
+                  key={blog._id}
                   className="bg-white shadow hover:shadow-md rounded-xl overflow-hidden transition duration-300 flex flex-col"
                 >
-                  <Link to={`/blog/${listing._id}`} className="block">
+                  <Link to={`/blog/${blog._id}`} className="block">
                     <img
-                      src={listing.imageUrls[0] || '/placeholder.jpg'}
-                      alt={listing.name}
+                      src={blog.imageUrls?.[0] || '/placeholder.jpg'}
+                      alt={blog.title || 'Imagem do blog'}
                       className="h-40 w-full object-cover"
                       loading="lazy"
                     />
@@ -92,27 +91,29 @@ export default function ShowBlog() {
 
                   <div className="flex-1 p-3 flex flex-col justify-between">
                     <Link
-                      to={`/blog/${listing._id}`}
+                      to={`/blog/${blog._id}`}
                       className="text-slate-800 font-semibold text-md hover:underline line-clamp-2"
                     >
-                      {listing.name}
+                      {blog.title || blog.name}
                     </Link>
                     <p className="text-sm text-gray-500 mt-1">
-                      {new Date(listing.createdAt).toLocaleDateString()}
+                      {blog.createdAt
+                        ? new Date(blog.createdAt).toLocaleDateString()
+                        : 'Data desconhecida'}
                     </p>
 
                     <div className="flex justify-between mt-4">
                       <Link
-                        to={`/update-blog/${listing._id}`}
+                        to={`/update-blog/${blog._id}`}
                         className="text-green-600 text-sm hover:underline uppercase"
                       >
                         Editar
                       </Link>
                       <button
-                        onClick={() => handleListingDelete(listing._id)}
+                        onClick={() => handleBlogDelete(blog._id)}
                         className="text-red-600 text-sm hover:underline uppercase"
                       >
-                        Apagar
+                        Apagar post
                       </button>
                     </div>
                   </div>
@@ -122,6 +123,7 @@ export default function ShowBlog() {
           )}
         </>
       )}
+
       <div className="text-center mt-8">
         <Link
           to="/create-blog"
