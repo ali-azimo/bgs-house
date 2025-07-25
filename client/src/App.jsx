@@ -38,9 +38,9 @@ export default function App() {
             <Route path="/create-listing" element={<CreateListing />} />
             <Route path="/update-listing/:listingId" element={<UpdateListing />}/>
             <Route path="show-listing" element={<ShowListing />}/>
+            <Route path="show-blog" element={<ShowBlog />}/>
             <Route path="/create-blog" element={<Createblog />} />
             <Route path="/update-blog/:blogId" element={<UpdateBlog />}/>
-            <Route path="show-blog" element={<ShowBlog />}/>
           </Route>
         </Routes>
       <Footer/>

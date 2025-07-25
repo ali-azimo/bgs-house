@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/update/:id', verifyToken, updateUser);
 router.delete('/delete/:id', verifyToken, deleteUser);
 router.get('/listing/:id', verifyToken, getUserListing);
-router.get('/post/:id', verifyToken, getUserBlog);
+router.get('/blog/:id', verifyToken, getUserBlog);
 router.get('/:id', verifyToken, getUser)
 
 
