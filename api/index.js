@@ -6,8 +6,12 @@ import path from 'path';
 // Importa rotas
 import userRouter from './routes/user.route.js';
 import cadRouter from './routes/cad.route.js';
-import listingRouter from './routes/listar.route.js';
-import blogRouter from './routes/blog.route.js'
+import imoRouter from './routes/imo.route.js';
+import agriRouter from './routes/agri.route.js'
+import diverRouter from './routes/diver.route.js'
+import saudeRouter from './routes/saude.route.js'
+
+
 import cors from 'cors';
 dotenv.config();
 
@@ -45,8 +49,10 @@ app.use(cookieParser());
 // Rotas
 app.use('/api/user', userRouter);
 app.use('/api/auth', cadRouter);
-app.use('/api/listing', listingRouter);
-app.use('/api/blog', blogRouter);
+app.use('/api/imo', imoRouter);
+app.use('/api/agri', agriRouter);
+app.use('/api/diver', diverRouter);
+app.use('/api/saude', saudeRouter);
 
 
 // Testar backend

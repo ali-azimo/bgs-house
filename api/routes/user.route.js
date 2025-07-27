@@ -1,14 +1,17 @@
 import express from 'express';
-import { deleteUser, getUser, getUserBlog, getUserListing, updateUser } from '../controllers/user.controller.js';
+import { deleteUser, getUser, getUserAgri, getUserDiver, getUserImo, getUserMinin, getUserSaude, updateUser } from '../controllers/user.controller.js';
 import { verifyToken } from '../utils/verificar.usuario.js';
 
 const router = express.Router();
 
 router.post('/update/:id', verifyToken, updateUser);
 router.delete('/delete/:id', verifyToken, deleteUser);
-router.get('/listing/:id', verifyToken, getUserListing);
-router.get('/blog/:id', verifyToken, getUserBlog);
 router.get('/:id', verifyToken, getUser)
+router.get('/imo/:id', verifyToken, getUserImo);
+router.get('/agri/:id', verifyToken, getUserAgri);
+router.get('/diver/:id', verifyToken, getUserDiver);
+router.get('/minin/:id', verifyToken, getUserMinin);
+router.get('/saude/:id', verifyToken, getUserSaude);
 
 
 

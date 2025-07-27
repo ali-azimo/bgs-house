@@ -14,7 +14,6 @@ export default function Footer() {
         {/* Logotipo e descrição */}
         <div>
           <img src={logo} alt="Logo BGS" className="w-28 mb-4" />
-          <h3 className="text-2xl font-bold uppercase">Imobiliária BGS</h3>
           <p className="text-[#A0AEC0] text-sm mt-1">
             Realizando Sonhos, Construindo Futuros
           </p>

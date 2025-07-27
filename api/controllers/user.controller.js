@@ -1,9 +1,11 @@
 import bycryptjs from 'bcryptjs';
 import User from '../models/user.model.js';
-import Listing from '../models/listar.model.js';
-import Blog from '../models/blog.model.js'
 import { errorHandler } from '../utils/erros.js';
-
+import Agri from '../models/agri.model.js';
+import Diver from "../models/diver.model.js"; // ajusta o caminho conforme necessário
+import Minin from '../models/minin.model.js';
+import Saude from '../models/saude.model.js';
+import Imo from '../models/imo.model.js';
 
 export const updateUser = async(req, res, next) => {
     if (req.user.id !== req.params.id) return next(errorHandler(401, "Apenas podes atualizar seus dados!"))
@@ -44,17 +46,18 @@ export const signOut = async(req, res, next) => {
         next(error)
     }
 };
-export const getUserListing = async(req, res, next) => {
-    if (req.user.id === req.params.id) {
-        try {
-            const listings = await Listing.find({ userRef: req.params.id });
-            res.status(200).json(listings);
-        } catch (error) {
-            next(error)
-        }
-    } else {
-        return next(errorHandler(401, 'Apemas o usuario pode ver suas proprias listagens!'));
+
+export const getUserImo = async (req, res, next) => {
+  if (req.user.id === req.params.id) {
+    try {
+      const imos = await Imo.find({ userRef: req.params.id });
+      res.status(200).json(imos);
+    } catch (error) {
+      next(error);
     }
+  } else {
+    return next(errorHandler(401, 'Apenas o usuário pode ver as suas próprias listagens!'));
+  }
 };
 export const getUser = async(req, res, next) => {
     try {
@@ -67,15 +70,54 @@ export const getUser = async(req, res, next) => {
     }
 };
 
-export const getUserBlog = async(req, res, next) => {
+//Agricultura
+export const getUserAgri = async(req, res, next) => {
     if (req.user.id === req.params.id) {
         try {
-            const blogs = await Blog.find({ userRef: req.params.id });
-            res.status(200).json(blogs);
+            const agris = await Agri.find({ userRef: req.params.id });
+            res.status(200).json(agris);
         } catch (error) {
             next(error)
         }
     } else {
-        return next(errorHandler(401, 'Apenas o usuario pode ver suas proprios blogs!'));
+        return next(errorHandler(401, 'Apenas o usuario pode ver suas proprios post!'));
     }
+};
+export const getUserDiver = async (req, res, next) => {
+  if (req.user.id === req.params.id) {
+    try {
+      const diverItems = await Diver.find({ userRef: req.params.id });
+      res.status(200).json(diverItems);
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    return next(errorHandler(401, 'Apenas o usuário pode ver os seus próprios dados!'));
+  }
+};
+
+export const getUserSaude = async (req, res, next) => {
+  if (req.user.id === req.params.id) {
+    try {
+      const saudeItems = await Saude.find({ userRef: req.params.id });
+      res.status(200).json(saudeItems);
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    return next(errorHandler(401, 'Apenas o usuário pode ver os seus próprios dados!'));
+  }
+};
+
+export const getUserMinin = async (req, res, next) => {
+  if (req.user.id === req.params.id) {
+    try {
+      const mininItems = await Minin.find({ userRef: req.params.id });
+      res.status(200).json(mininItems);
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    return next(errorHandler(401, 'Apenas o usuário pode ver os seus próprios dados!'));
+  }
 };

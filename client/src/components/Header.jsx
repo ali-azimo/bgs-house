@@ -58,15 +58,15 @@ export default function Header() {
   return (
     <header
       className={`${
-        darkMode ? 'bg-slate-900 text-white' : 'bg-white text-slate-800'
+        darkMode ? "bg-slate-900 text-white" : "bg-white text-slate-800"
       } shadow-md sticky top-0 z-50 transition-colors`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
         {/* LOGO */}
-        <Link to="/" className="flex items-center gap-2">
+        <Link to="/" className="flex items-center">
           <img src={logo} alt="Logo" className="h-10 w-auto object-contain" />
-          <span className="font-bold text-xl hidden sm:inline">
-            BGS Imobiliária
+          <span className="text-sm text-sky-600 dark:text-sky-400 font-bold hidden sm:inline">
+            Bule Global Solution
           </span>
         </Link>
 
