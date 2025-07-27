@@ -97,8 +97,8 @@ export default function SignIn() {
       </form>
         <div className="flex gap-2 mt-5">
             <p>Já tem uma conta?</p>
-                <Link to="/sign-up">
-                  <span className="text-blue-700">Sign p</span>
+                <Link to="/team">
+                  <span className="text-blue-700">Contacte o  Admin</span>
                 </Link>
         </div>
             
