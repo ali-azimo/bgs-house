@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore from 'swiper';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css/bundle';
 import 'swiper/css/pagination';
 import { FaMapMarkerAlt, FaPhone, FaShare, FaWhatsapp } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
-import SimilarAgris from '../components/similarAgris';
-
+import SimilarItems from '../components/SimilarItems';
 
 export default function Agri() {
   const params = useParams();
   const [agri, setAgri] = useState(null);
-  const [similarAgris, setSimilarAgris] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -41,7 +38,6 @@ export default function Agri() {
         }
 
         setAgri(data);
-        fetchSimilarAgris(data.category, data._id);
         setLoading(false);
         setError(false);
       } catch (err) {
@@ -53,24 +49,6 @@ export default function Agri() {
 
     fetchAgri();
   }, [params.agriId]);
-
-  const fetchSimilarAgris = async (category, excludeId) => {
-    try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/agri/get?category=${category}&limit=3`,
-        {
-          credentials: 'include',
-        }
-      );
-
-      const data = await res.json();
-      if (data.success) {
-        setSimilarAgris(data.agris.filter((item) => item._id !== excludeId));
-      }
-    } catch (err) {
-      console.error('Erro ao buscar agris semelhantes:', err);
-    }
-  };
 
   return (
     <main className="bg-gray-50">
@@ -144,16 +122,24 @@ export default function Agri() {
                   </div>
                 </div>
 
-                <div>
-                  <h3>Descrição</h3>
-                  <p className="text-gray-700 leading-relaxed">{agri.description}</p>
-                </div>
+                {/* Flex container para descrição e itens semelhantes com border-left */}
+                <div className="mt-8 flex flex-col md:flex-row gap-8">
+                  {/* Descrição ocupa 60% */}
+                  <div className="md:flex-[0_0_60%]">
+                    <h3 className="text-xl font-semibold mb-2">Descrição</h3>
+                    <p className="text-gray-700 leading-relaxed">{agri.description}</p>
+                  </div>
 
+                  {/* Itens semelhantes com border-left e padding */}
+                  <div className="md:flex-[0_0_40%] md:border-l md:border-gray-300 md:pl-6">
+                    <h3 className="text-xl font-semibold mb-4">Itens Semelhantes</h3>
+                    <div className="overflow-x-auto">
+                      <SimilarItems type="agri" id={agri._id} />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-
-            {/* Itens semelhantes */}
-            <SimilarAgris agri={agri} />
           </div>
         </div>
       )}

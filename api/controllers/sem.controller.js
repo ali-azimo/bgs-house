@@ -23,7 +23,8 @@ export const getSem = async (req, res) => {
     const itemAtual = await Modelo.findById(id);
     if (!itemAtual) return res.status(404).json({ mensagem: 'Item não encontrado' });
 
-    const termo = itemAtual.name.split(' ')[0]; // pega primeira palavra do nome como termo
+    // Substituído: usa as duas primeiras palavras do nome como termo de busca
+    const termo = itemAtual.name.split(' ').slice(0, 2).join(' ');
 
     const semelhantes = await Modelo.find({
       _id: { $ne: id },
