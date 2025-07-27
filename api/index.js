@@ -10,7 +10,7 @@ import imoRouter from './routes/imo.route.js';
 import agriRouter from './routes/agri.route.js'
 import diverRouter from './routes/diver.route.js'
 import saudeRouter from './routes/saude.route.js'
-
+import semRoutes from './routes/sem.route.js'
 
 import cors from 'cors';
 dotenv.config();
@@ -53,7 +53,7 @@ app.use('/api/imo', imoRouter);
 app.use('/api/agri', agriRouter);
 app.use('/api/diver', diverRouter);
 app.use('/api/saude', saudeRouter);
-
+app.use('/api/sem', semRoutes);
 
 // Testar backend
 app.get('/', (req, res) => {

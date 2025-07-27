@@ -9,7 +9,7 @@ import { app } from '../firebase';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-export default function CreateListing() {
+export default function CreateAgri() {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const [files, setFiles] = useState([]);
@@ -62,11 +62,7 @@ export default function CreateListing() {
 
       uploadTask.on(
         'state_changed',
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`O carregamento está ${progress}% concluído`);
-        },
+        () => {},
         (error) => reject(error),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -84,8 +80,8 @@ export default function CreateListing() {
     });
   };
 
- const handleChange = (e) => {
-      if (
+  const handleChange = (e) => {
+    if (
       e.target.type === 'number' ||
       e.target.type === 'text' ||
       e.target.type === 'textarea'
@@ -104,16 +100,15 @@ export default function CreateListing() {
       setLoadingSubmit(true);
       setErrorSubmit(false);
 
-      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/blog/create`,{
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-          body: JSON.stringify({
-            ...formData,
-            userRef: currentUser._id,
-          }),
-        }
-      );
+      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/agri/create`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({
+          ...formData,
+          userRef: currentUser._id,
+        }),
+      });
 
       const data = await res.json();
       setLoadingSubmit(false);
@@ -123,7 +118,7 @@ export default function CreateListing() {
         return;
       }
 
-      navigate(`/blog/${data._id}`);
+      navigate(`/agri/${data._id}`);
     } catch (error) {
       setErrorSubmit(error.message);
       setLoadingSubmit(false);
@@ -133,7 +128,7 @@ export default function CreateListing() {
   return (
     <main className="p-3 max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">
-        Criar um Blog
+        Criar Agri
       </h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
@@ -141,7 +136,7 @@ export default function CreateListing() {
         <div className="flex flex-col gap-4 flex-1">
           <input
             type="text"
-            placeholder="Nome do Blog"
+            placeholder="Nome"
             id="name"
             maxLength="62"
             minLength="10"
@@ -207,17 +202,17 @@ export default function CreateListing() {
             formData.imageUrls.map((url, index) => (
               <div
                 key={url}
-                className="flex justify-between items-center p-3 border border-gray-300 rounded-xl shadow-md bg-white transition duration-20"
+                className="flex justify-between items-center p-3 border border-gray-300 rounded-xl shadow-md bg-white"
               >
                 <img
                   src={url}
-                  alt="Imagem do blog"
+                  alt="Imagem"
                   className="w-35 h-24 object-cover rounded-xl border border-gray-200"
                 />
                 <button
                   type="button"
                   onClick={() => handleRemoveImage(index)}
-                  className="ml-4 px-3 py-2 text-sm bg-red-100 text-red-700 border border-red-300 rounded-lg uppercase hover:bg-red-200 transition"
+                  className="ml-4 px-3 py-2 text-sm bg-red-100 text-red-700 border border-red-300 rounded-lg uppercase hover:bg-red-200"
                 >
                   Apagar
                 </button>
@@ -228,7 +223,7 @@ export default function CreateListing() {
             disabled={loadingSubmit}
             className="p-3 bg-slate-700 text-white rounded-xl uppercase hover:opacity-95 disabled:opacity-80"
           >
-            {loadingSubmit ? 'A criar...' : 'Criar blog'}
+            {loadingSubmit ? 'A criar...' : 'Criar Agri'}
           </button>
           {erroSubmit && <p className="text-red-700 text-sm">{erroSubmit}</p>}
         </div>

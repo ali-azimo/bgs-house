@@ -6,18 +6,18 @@ import Profile from './pages/Profile';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
 import CreateListing from './pages/CreateListing';
-import Createblog from './pages/CreateBlog';
+import CreateAgri from './pages/CreateAgri';
 import UpdateListing from './pages/UpdateListing';
-import UpdateBlog from './pages/UpdateBlog';
+import UpdateAgri from './pages/UpdateAgri';
 import Listing from './pages/Listing';
 import Search from './pages/Search';
 import Team from './pages/Team';
 import SignIn from './pages/SignIn';
 import Footer from './components/Footer'
 import ShowListing from './pages/ShowListing';
-import ShowBlog from './pages/ShowBlog';
-import Blog from "./pages/Blog";
-import BlogHome from './pages/BlogHome';
+import ShowAgri from './pages/ShowAgri';
+import Agri from "./pages/Agri";
+import AgriHome from './pages/AgriHome';
 import Service from './pages/Service';
 
 export default function App() {
@@ -26,13 +26,13 @@ export default function App() {
       <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/blog" element={<BlogHome />} />
+          <Route path="/agri" element={<AgriHome />} />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/about" element={<About />} />
           <Route path="/search" element={<Search />} />
           <Route path="/team" element={<Team />} />
-          <Route path="/listing/:listingId" element={<Listing />} />
-          <Route path="/blog/:blogId" element={<Blog />} />
+          <Route path="/imog/:imoId" element={<Listing />} />
+          <Route path="/agri/:agriId" element={<Agri />} />
           <Route path="/service" element={<Service />} />
           <Route element={<PrivateRoute />}>
             <Route path="/sign-up" element={<SignUp />} />
@@ -40,9 +40,9 @@ export default function App() {
             <Route path="/create-listing" element={<CreateListing />} />
             <Route path="/update-listing/:listingId" element={<UpdateListing />}/>
             <Route path="show-listing" element={<ShowListing />}/>
-            <Route path="show-blog" element={<ShowBlog />}/>
-            <Route path="/create-blog" element={<Createblog />} />
-            <Route path="/update-blog/:blogId" element={<UpdateBlog />}/>
+            <Route path="show-agri" element={<ShowAgri />}/>
+            <Route path="/create-agri" element={<CreateAgri />} />
+            <Route path="/update-agri/:agriId" element={<UpdateAgri />}/>
           </Route>
         </Routes>
       <Footer/>

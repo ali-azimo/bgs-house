@@ -1,41 +1,40 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function BlogHome() {
-  const [blogs, setBlogs] = useState([]);
+export default function AgriHome() {
+  const [agrItems, setAgriItems] = useState([]);
 
   useEffect(() => {
-    const fetchBlogs = async () => {
+    const fetchAgriItems = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/blog/get`, {
+        const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/agri/get`, {
           credentials: 'include',
         });
         const data = await res.json();
-        setBlogs(data);
+        setAgriItems(data);
       } catch (error) {
-        console.error('Erro ao carregar blogs:', error);
+        console.error('Erro ao carregar dados de Agricultura:', error);
       }
     };
 
-    fetchBlogs();
+    fetchAgriItems();
   }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
-
-      {blogs.length === 0 ? (
-        <p className="text-center text-gray-500">Nenhum artigo disponível.</p>
+      {agrItems.length === 0 ? (
+        <p className="text-center text-gray-500">Nenhum conteúdo agrícola disponível.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogs.map((blog) => (
+          {agrItems.map((item) => (
             <div
-              key={blog._id}
+              key={item._id}
               className="bg-white rounded-xl shadow hover:shadow-md transition duration-300 overflow-hidden"
             >
-              {blog.imageUrls ? (
+              {item.imageUrls ? (
                 <img
-                  src={blog.imageUrls}
-                  alt={blog.title}
+                  src={item.imageUrls}
+                  alt={item.name}
                   className="w-full h-48 object-cover"
                 />
               ) : (
@@ -46,13 +45,13 @@ export default function BlogHome() {
 
               <div className="p-4">
                 <h2 className="text-lg font-semibold text-slate-800 mb-2">
-                  {blog.name || 'Sem título'}
+                  {item.name || 'Sem título'}
                 </h2>
                 <p className="text-sm text-gray-600 mb-4">
-                  {blog.description?.substring(0, 100) || 'Sem conteúdo'}...
+                  {item.description?.substring(0, 100) || 'Sem conteúdo'}...
                 </p>
                 <Link
-                  to={`/blog/${blog._id}`}
+                  to={`/agri/${item._id}`}
                   className="text-blue-600 hover:underline text-sm font-medium"
                 >
                   Ler mais →

@@ -1,123 +1,121 @@
-import {useSelector}from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
-import {getDownloadURL, getStorage, list, ref, uploadBytesResumable} from 'firebase/storage';
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytesResumable
+} from 'firebase/storage';
 import { app } from '../firebase';
-import { 
-  updateUserStart, 
-  updateUserSuccess, 
-  updateUserFailure, 
-  deleteUserFailure,
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
   deleteUserStart,
   deleteUserSuccess,
-  signOutUserStart} from '../redux/user/userSlice';
-import { useDispatch } from 'react-redux';
-import {Link} from 'react-router-dom';
-
+  deleteUserFailure,
+  signOutUserStart
+} from '../redux/user/userSlice';
+import { Link } from 'react-router-dom';
 
 export default function Profile() {
   const fileRef = useRef(null);
-  const {
-    currentUser,
-    loading,
-    error} = useSelector((state)=>state.user);
-  const [file, setFile]=useState(undefined);
-  const [filPerc, setFilePerc]=useState(0);
+  const { currentUser, loading, error } = useSelector((state) => state.user);
+  const [file, setFile] = useState(undefined);
+  const [filPerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
-  const [formData, setFormData]=useState({});
+  const [formData, setFormData] = useState({});
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  const [showListintError, setShowListintError] = useState(false);
-  const [userListng, setUserListing] = useState([]);
   const dispatch = useDispatch();
-  const token = localStorage.getItem("token");
 
-  useEffect(()=>{
-    if(file){
-      handleFileUpload(file);
-    }
-  },[file]);
-  const handleFileUpload=(file)=>{
+  useEffect(() => {
+    if (file) handleFileUpload(file);
+  }, [file]);
+
+  const handleFileUpload = (file) => {
     const storage = getStorage(app);
     const fileName = new Date().getTime() + file.name;
     const storageRef = ref(storage, fileName);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on('state_changed',
-      (snapshot)=>{
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {
         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         setFilePerc(Math.round(progress));
       },
-      (error)=>{
-        setFileUploadError(true);
-      },
-      ()=>{
-        getDownloadURL(uploadTask.snapshot.ref).then
-        ((downlodURL)=>
-          setFormData({...formData, avatar: downlodURL})
-        );
+      () => setFileUploadError(true),
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          setFormData({ ...formData, avatar: url });
+        });
       }
     );
   };
 
-const handleChange=(e)=>{
-  setFormData({...formData, [e.target.id]: e.target.value});
-};
-const handleSubmit = async (e) =>{
-  e.preventDefault();
-  try{
-    dispatch(updateUserStart());
-    const res = await fetch(`${
-          import.meta.env.VITE_API_KEY_ONRENDER}/api/user/update/${currentUser._id}`,{
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updateUserStart());
+      const res = await fetch(
+        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/user/update/${currentUser._id}`,
+        {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(formData),
-          credentials: 'include',
-    });
-    const data = await res.json();
-    if(data.success === false){
-      dispatch(updateUserFailure(data.message));
-      return;
+          credentials: 'include'
+        }
+      );
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(updateUserFailure(data.message));
+        return;
+      }
+      dispatch(updateUserSuccess(data));
+      setUpdateSuccess(true);
+    } catch (error) {
+      dispatch(updateUserFailure(error.message));
     }
-    dispatch(updateUserSuccess(data));
-    setUpdateSuccess(true);
-  }catch(error){
-    dispatch(updateUserFailure(error.message));
-  }
-}
-const handleDeleteUser = async()=>{
-  try{
-    dispatch(deleteUserStart());
-    const res = await fetch(`${
-        import.meta.env.VITE_API_KEY_ONRENDER}/api/user/delete/${currentUser._id}`,{
-          method: "DELETE",
-          credentials: 'include',
-      });
-    const data = await res.json();
-    if(data.success === false){
-      dispatch(deleteUserFailure(data.message));
-      return;
+  };
+
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
+      const res = await fetch(
+        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/user/delete/${currentUser._id}`,
+        { method: 'DELETE', credentials: 'include' }
+      );
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
     }
-    dispatch(deleteUserSuccess(data));
-  }catch(error){
-  dispatch(deleteUserFailure(error.message));
-}
-};
-const handleSignOut = async()=>{
-  try{
-    dispatch(signOutUserStart());
-    const res = await fetch(`${
-        import.meta.env.VITE_API_KEY_ONRENDER}/api/auth/signout`);
-        const data = await res.json();
-    if(data.success === false){
-      dispatch(deleteUserFailure(data.message));
-      return;
+  };
+
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      const res = await fetch(
+        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/auth/signout`
+      );
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
     }
-    dispatch(deleteUserSuccess(data));
-  }catch(error){
-    dispatch(deleteUserFailure(data.message));
-  }
-}
+  };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -125,57 +123,51 @@ const handleSignOut = async()=>{
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
-          onChange={(e) => setFile(e.target.files[0])}
           type="file"
           ref={fileRef}
           hidden
           accept="image/*"
+          onChange={(e) => setFile(e.target.files[0])}
         />
         <img
           onClick={() => fileRef.current.click()}
           src={formData.avatar || currentUser.avatar}
-          alt="Profile"
-          className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2 bg-cover bg-center"
+          alt="Avatar"
+          className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
         />
 
         <p className="text-sm self-center">
           {fileUploadError ? (
-            <span className="text-red-700">
-              Erro ao carregar imagem, escolha uma imagem valida
-            </span>
+            <span className="text-red-700">Erro ao carregar imagem</span>
           ) : filPerc > 0 && filPerc < 100 ? (
-            <span className="text-slate-700">{`Carregando ${filPerc}%`}</span>
+            <span className="text-slate-700">Carregando {filPerc}%</span>
           ) : filPerc === 100 ? (
-            <span className="text-green-700">Carregado com sucesso</span>
+            <span className="text-green-700">Imagem carregada</span>
           ) : (
-            ""
+            ''
           )}
         </p>
+
         <input
           type="text"
-          name="username"
           id="username"
-          placeholder="username"
+          placeholder="Nome de utilizador"
           className="border border-gray-300 outline-blue-500 p-3 rounded-lg"
           defaultValue={currentUser.username}
           onChange={handleChange}
         />
-
         <input
           type="email"
-          name="email"
           id="email"
-          placeholder="email"
+          placeholder="Email"
           className="border border-gray-300 outline-blue-500 p-3 rounded-lg"
           defaultValue={currentUser.email}
           onChange={handleChange}
         />
-
         <input
           type="password"
-          name="password"
           id="password"
-          placeholder="password"
+          placeholder="Nova senha"
           className="border border-gray-300 outline-blue-500 p-3 rounded-lg"
           onChange={handleChange}
         />
@@ -184,54 +176,50 @@ const handleSignOut = async()=>{
           disabled={loading}
           className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
         >
-          {loading ? "Carregando..." : "Atualizar"}
+          {loading ? 'Carregando...' : 'Atualizar'}
         </button>
+
+        {/* Grid 1: Criar novas entradas */}
         <div className="grid grid-cols-2 gap-5 mt-5">
-          <Link
-            className="bg-green-700 text-white p-3 rounded-lg text-center uppercase hover:opacity-95"
-            to={"/create-listing"}
-          >
-            Criar imovel
+          <Link to="/create-agri" className="bg-green-700 text-white p-3 rounded-lg text-center uppercase hover:opacity-95">
+            Criar Agri
           </Link>
-          <Link
-            className="bg-blue-400 text-white p-3 rounded-lg text-center uppercase hover:opacity-95"
-            to={"/create-blog"}
-          >
-            Criar blog
+          <Link to="/create-imo" className="bg-blue-700 text-white p-3 rounded-lg text-center uppercase hover:opacity-95">
+            Criar Imo
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 gap-5 mt-5">
-          <Link
-            className="p-1 rounded-lg text-center uppercase hover:opacity-95 hover:text-blue-600"
-            to={"/show-listing"}
-          >
-            Visualizar imovel
+        {/* Grid 2: Ver seções existentes */}
+        <div className="grid grid-cols-2 gap-4 mt-5 text-center">
+          <Link to="/show-saude" className="text-blue-600 uppercase hover:underline">
+            Saúde
           </Link>
-          <Link
-            className="p-1 rounded-lg text-center uppercase hover:opacity-95  hover:text-blue-600"
-            to={"/show-blog"}
-          >
-            Visualizar blog
+          <Link to="/show-mining" className="text-blue-600 uppercase hover:underline">
+            Mining
+          </Link>
+          <Link to="/show-diver" className="text-blue-600 uppercase hover:underline">
+            Diver
+          </Link>
+          <Link to="/show" className="text-blue-600 uppercase hover:underline">
+            Show
           </Link>
         </div>
       </form>
 
+      {/* Ações finais */}
       <div className="flex justify-between mt-5">
-        <span
-          onClick={handleDeleteUser}
-          className="text-red-700 cursor-pointer"
-        >
+        <span onClick={handleDeleteUser} className="text-red-700 cursor-pointer">
           Apagar conta
         </span>
         <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
           Sair
         </span>
       </div>
-      <p className="text-red-700">{error ? error : ""}</p>
-      <span className="text-green-700 self-center">
-        {updateSuccess ? "Usuario atualizado com sucesso" : ""}
-      </span>
+
+      {error && <p className="text-red-700">{error}</p>}
+      {updateSuccess && (
+        <p className="text-green-700 self-center">Usuário atualizado com sucesso</p>
+      )}
     </div>
   );
 }

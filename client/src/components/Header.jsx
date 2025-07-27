@@ -98,11 +98,12 @@ export default function Header() {
           <Link to="/about" className="hover:text-sky-600 hidden sm:inline">
             Sobre
           </Link>
+          
+          <Link to="/agri" className="hover:text-sky-600 hidden sm:inline">
+            Agro-Pecuària
+          </Link>
           <Link to="/team" className="hover:text-sky-600 hidden sm:inline">
             Contacto
-          </Link>
-          <Link to="/blog" className="hover:text-sky-600 hidden sm:inline">
-            Blog
           </Link>
           <Link to="/service" className="hover:text-sky-600 hidden sm:inline">
             Servicos
