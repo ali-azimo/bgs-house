@@ -8,6 +8,7 @@ export default function ShowGeneric({ type }) {
   const [showError, setShowError] = useState(false);
   const [userItems, setUserItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [successMessage, setSuccessMessage] = useState('');
 
   const fetchItems = useCallback(async () => {
     try {
@@ -34,6 +35,9 @@ export default function ShowGeneric({ type }) {
   }, [currentUser?._id, fetchItems]);
 
   const handleDelete = async (itemId) => {
+    const confirm = window.confirm('Tens certeza que deseja apagar?');
+    if (!confirm) return;
+
     try {
       const res = await fetch(
         `${import.meta.env.VITE_API_KEY_ONRENDER}/api/${type}/delete/${itemId}`,
@@ -46,6 +50,9 @@ export default function ShowGeneric({ type }) {
 
       if (!res.ok) throw new Error(data.message || 'Erro ao apagar');
       setUserItems((prev) => prev.filter((item) => item._id !== itemId));
+      setSuccessMessage('Apagado com sucesso.');
+
+      setTimeout(() => setSuccessMessage(''), 3000);
     } catch (error) {
       console.error('Erro ao apagar:', error.message);
     }
@@ -56,6 +63,10 @@ export default function ShowGeneric({ type }) {
       <h1 className="text-center text-3xl font-bold text-slate-800 mb-6">
         Minhas Publicações
       </h1>
+
+      {successMessage && (
+        <p className="text-green-600 text-center mb-4">{successMessage}</p>
+      )}
 
       {isLoading ? (
         <div className="text-center py-10">

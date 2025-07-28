@@ -15,6 +15,9 @@ import SignIn from './pages/SignIn';
 import Footer from './components/Footer'
 import ShowImo from './pages/ShowImo';
 import ShowAgri from './pages/ShowAgri';
+import ShowDiver from './pages/ShowDiver';
+import ShowMinin from './pages/ShowMinin';
+import ShowSaude from './pages/ShowSaude';
 import Agri from "./pages/Agri";
 import Service from './pages/Service';
 import CreateImo from './pages/CreateImo';
@@ -68,6 +71,9 @@ export default function App() {
           <Route path="/update-minin/:mininId" element={<UpdateMinin />} />
           <Route path="show-imo" element={<ShowImo />} />
           <Route path="show-agri" element={<ShowAgri />} />
+          <Route path="show-diver" element={<ShowDiver />} />
+          <Route path="show-minin" element={<ShowMinin />} />
+          <Route path="show-saude" element={<ShowSaude />} />
           <Route path="/create-agri" element={<CreateAgri />} />
           <Route path="/create-saude" element={<CreateSaude />} />
           <Route path="/create-diver" element={<CreateDiver />} />

@@ -1,13 +1,14 @@
-// GenericHome.jsx
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function GenericHome({ type }) {
   const [items, setItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Novo estado
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
+        setIsLoading(true); // Ativa o carregamento
         const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/${type}/get`, {
           credentials: 'include',
         });
@@ -15,6 +16,8 @@ export default function GenericHome({ type }) {
         setItems(data);
       } catch (error) {
         console.error(`Erro ao carregar dados de ${type}:`, error);
+      } finally {
+        setIsLoading(false); // Finaliza o carregamento
       }
     };
 
@@ -23,7 +26,9 @@ export default function GenericHome({ type }) {
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
-      {items.length === 0 ? (
+      {isLoading ? (
+        <p className="text-center text-gray-500 animate-pulse">A carregar...</p>
+      ) : items.length === 0 ? (
         <p className="text-center text-gray-500">Nenhum conteúdo disponível.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
