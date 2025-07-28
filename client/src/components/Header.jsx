@@ -114,9 +114,6 @@ export default function Header() {
           <Link to="/team" className="hover:text-sky-400 hidden sm:inline">
             Contacto
           </Link>
-          <Link to="/service" className="hover:text-sky-400 hidden sm:inline">
-            Serviços
-          </Link>
 
           {/* PERFIL */}
           <div className="relative" ref={dropdownRef}>

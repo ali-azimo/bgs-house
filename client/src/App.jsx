@@ -19,7 +19,6 @@ import ShowDiver from './pages/ShowDiver';
 import ShowMinin from './pages/ShowMinin';
 import ShowSaude from './pages/ShowSaude';
 import Agri from "./pages/Agri";
-import Service from './pages/Service';
 import CreateImo from './pages/CreateImo';
 import ImoHome from './pages/ImoHome'
 import UpdateSaude from './pages/UpdateSaude';
@@ -58,7 +57,6 @@ export default function App() {
         <Route path="/diver/:diverId" element={<GenericDetails type="diver" />} />
         <Route path="/minin/:mininId" element={<GenericDetails type="minin" />} />
         <Route path="/saude/:saudeId" element={<GenericDetails type="saude" />} />
-        <Route path="/service" element={<Service />} />
         <Route element={<PrivateRoute />}>
           <Route path="/opcoes" element={<ManagePosts />} />
           <Route path="/sign-up" element={<SignUp />} />
