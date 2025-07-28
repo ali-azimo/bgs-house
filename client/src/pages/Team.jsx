@@ -2,8 +2,8 @@ import React, { useRef, useState } from "react";
 import { FaEnvelope, FaCheck, FaFacebook, FaWhatsapp, FaLinkedin, FaGithub } from "react-icons/fa";
 import emailjs from "@emailjs/browser";
 import mungoy from "../assets/img/mungoy.jpg";
-import azimo from "../assets/img/azimo.jpg";
-import aderito from "../assets/img/aderito.jpg";
+import azimo from "../assets/img/Azimo.jpg";
+import aderito from "../assets/img/Aderito.jpg";
 
 const SOCIAL_ICONS = {
   facebook: FaFacebook,

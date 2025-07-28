@@ -32,6 +32,8 @@ import DiverHome from './pages/DiverHome';
 import SaudeHome from './pages/SaudeHome';
 import MininHome from './pages/MininHome';
 
+
+
 export default function App() {
   return (
     <BrowserRouter>
