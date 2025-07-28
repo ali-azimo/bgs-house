@@ -5,6 +5,9 @@ import {
   FaHandshake,
   FaKey,
   FaMapSigns,
+  FaBullseye,
+  FaRocket,
+  FaBuilding,
 } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay, Pagination } from 'swiper/modules';
@@ -94,16 +97,48 @@ const provincias = [
 export default function ParceriaImobiliaria() {
   return (
     <div className="bg-gray-50">
-      {/* Introdução institucional */}
-      <section className="max-w-5xl mx-auto pt-10 px-6 text-center font-thin">
+      {/* SOBRE A BGS */}
+      <section className="max-w-7xl mx-auto py-16 px-6">
+        <div className="grid md:grid-cols-3 gap-8 text-center">
+          <div className="bg-white p-6 rounded-xl shadow">
+            <FaBuilding className="text-4xl text-[#1F2E54] mx-auto mb-4" />
+            <h3 className="text-lg font-semibold mb-2 text-[#1F2E54]">
+              Quem Somos
+            </h3>
+            <p className="text-gray-700 text-sm">
+              A BGS é uma empresa moçambicana com mais de 4 anos de experiência,
+              dedicada à prestação de serviços nos setores de Instalações
+              Especiais, Mineração, Imobiliária, Investimentos, Serralharias,
+              Construção Civil, Agro-Pecuária, Saúde e Meio Ambiente.
+            </p>
+          </div>
 
-        <p className="text-lg text-gray-700 leading-relaxed">
-          A <strong>Bule Global Solution (BGS)</strong> é uma empresa moçambicana com mais de 9 anos de experiência, dedicada à prestação de serviços de qualidade nos setores de mineração, imobiliária, construção civil, saúde e investimentos. Com raízes firmes em Moçambique e visão global, a BGS tem como missão levar soluções inovadoras e sustentáveis a clientes em todo o mundo. Atuamos com profissionalismo, integridade e compromisso em cada projeto, contribuindo para o desenvolvimento econômico e social das comunidades onde operamos.
-        </p>
+          <div className="bg-white p-6 rounded-xl shadow">
+            <FaBullseye className="text-4xl text-[#1F2E54] mx-auto mb-4" />
+            <h3 className="text-lg font-semibold mb-2 text-[#1F2E54]">
+              Missão
+            </h3>
+            <p className="text-gray-700 text-sm">
+              Com raízes firmes em Moçambique e visão global, a BGS tem como
+              missão levar soluções inovadoras e sustentáveis a clientes em todo
+              o mundo.
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-xl shadow">
+            <FaRocket className="text-4xl text-[#1F2E54] mx-auto mb-4" />
+            <h3 className="text-lg font-semibold mb-2 text-[#1F2E54]">Visão</h3>
+            <p className="text-gray-700 text-sm">
+              Atuamos com profissionalismo, integridade e compromisso em cada
+              projeto, contribuindo para o desenvolvimento econômico e social
+              das comunidades onde operamos.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* Swiper das províncias */}
-      <div className="py-16 px-6 max-w-7xl mx-auto">
+      <div className="py-10 px-6 max-w-7xl mx-auto">
         <h2 className="text-xl font-bold text-center text-[#1F2E54] mb-10">
           A Nossa Missão nas Províncias de Moçambique
         </h2>
@@ -130,7 +165,9 @@ export default function ParceriaImobiliaria() {
                   className="w-full h-48 object-cover rounded-xl mb-4"
                   loading="lazy"
                 />
-                <h3 className="text-xl font-semibold text-[#1F2E54] mb-2">{nome}</h3>
+                <h3 className="text-xl font-semibold text-[#1F2E54] mb-2">
+                  {nome}
+                </h3>
                 <p className="text-gray-600 text-sm flex-grow">{texto}</p>
               </div>
             </SwiperSlide>
@@ -156,15 +193,6 @@ export default function ParceriaImobiliaria() {
               <p className="text-gray-600 text-sm">{item.texto}</p>
             </div>
           ))}
-        </div>
-
-        <div className="text-center mt-16">
-          <Link
-            to="/sign-up"
-            className="inline-block text-[#1F2E54] border border-[#1F2E54] px-6 py-2 rounded-md hover:bg-[#e9e9e9] transition text-sm"
-          >
-            Tornar-se Parceiro BGS
-          </Link>
         </div>
       </section>
     </div>

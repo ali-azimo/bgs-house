@@ -33,12 +33,14 @@ import AgriHome from './pages/AgriHome';
 import DiverHome from './pages/DiverHome';
 import SaudeHome from './pages/SaudeHome';
 import MininHome from './pages/MininHome';
+import ScrollToTop from './pages/ScrollToTop';
 
 
 
 export default function App() {
   return (
     <BrowserRouter>
+    <ScrollToTop />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
