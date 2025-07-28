@@ -30,7 +30,8 @@ mongoose.connect(process.env.MONGO)
 // }));
 
 const allowedOrigins = [
-  'http://localhost:5173',        // desenvolvimento local
+  'http://localhost:5173',
+  'http://localhost:3000',       // desenvolvimento local
   'https://www.bgs-imo.com'       // produção na Vercel
 ];
 

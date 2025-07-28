@@ -130,7 +130,7 @@ export default function Home() {
           <div className="bg-blue-600 text-white rounded-lg p-6 flex flex-col justify-center items-start shadow">
             <h2 className="text-2xl font-bold mb-2">BGS — Construindo o Futuro</h2>
             <p className="text-sm">
-              Com mais de 9 anos de experiência, a BGS atua com excelência nos sectores de mineração, imobiliária,
+              Com mais de 4 anos de experiência, a BGS atua com excelência nos sectores de mineração, imobiliária,
               construção civil, saúde e investimentos. O nosso compromisso é com o desenvolvimento sustentável e inovação.
             </p>
           </div>
