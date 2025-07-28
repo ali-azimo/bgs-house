@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Listing from '../../../api/models/imo.model';
-import ListingItems from './ListingItems';
+import ListingItems from './ImoItems';
 
 
 export default function Search() {

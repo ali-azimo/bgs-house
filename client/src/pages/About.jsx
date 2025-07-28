@@ -8,11 +8,7 @@ import {
 } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay, Pagination } from 'swiper/modules';
-import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
-
-
-
 
 const pontos = [
   {
@@ -41,87 +37,76 @@ const pontos = [
     icone: <FaBalanceScale className="text-[#3b3f52] text-4xl" />,
   },
 ];
+
 const provincias = [
   {
     nome: "Maputo",
-    imagem:
-      "https://images.unsplash.com/photo-1693064972579-0c1c85c636e8?q=80&w=813&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    texto:
-      "Oferecemos soluções habitacionais e comerciais em Maputo e arredores, adaptadas à dinâmica local.",
+    imagem: "https://images.unsplash.com/photo-1693064972579-0c1c85c636e8?q=80&w=813&auto=format&fit=crop",
+    texto: "Oferecemos soluções habitacionais e comerciais em Maputo e arredores, adaptadas à dinâmica local.",
   },
   {
     nome: "Gaza",
-    imagem:
-      "https://images.unsplash.com/photo-1738369350529-4c463d848acd?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    texto:
-      "Atuamos em Gaza com foco em imóveis rurais, agrícolas e urbanos, sempre com compromisso e qualidade.",
+    imagem: "https://images.unsplash.com/photo-1738369350529-4c463d848acd?q=80&w=387&auto=format&fit=crop",
+    texto: "Atuamos em Gaza com foco em imóveis rurais, agrícolas e urbanos, sempre com compromisso e qualidade.",
   },
   {
     nome: "Inhambane",
-    imagem:
-      "https://images.unsplash.com/photo-1684211757307-ccf7d147a48c?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    texto:
-      "Na costa de Inhambane promovemos imóveis voltados ao turismo, lazer e investimentos seguros.",
+    imagem: "https://images.unsplash.com/photo-1684211757307-ccf7d147a48c?q=80&w=870&auto=format&fit=crop",
+    texto: "Na costa de Inhambane promovemos imóveis voltados ao turismo, lazer e investimentos seguros.",
   },
   {
     nome: "Sofala",
-    imagem:
-      "https://images.unsplash.com/photo-1650215771520-818a44a7ea92?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    texto:
-      "Presença forte em Sofala com imóveis residenciais, comerciais e industriais, com suporte local dedicado.",
+    imagem: "https://images.unsplash.com/photo-1650215771520-818a44a7ea92?q=80&w=870&auto=format&fit=crop",
+    texto: "Presença forte em Sofala com imóveis residenciais, comerciais e industriais, com suporte local dedicado.",
   },
   {
     nome: "Manica",
-    imagem:
-      "https://images.unsplash.com/photo-1689009704495-ca263474f520?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    texto:
-      "Oferecemos soluções habitacionais e rurais para Manica, sempre focados na qualidade e confiança.",
+    imagem: "https://images.unsplash.com/photo-1689009704495-ca263474f520?q=80&w=870&auto=format&fit=crop",
+    texto: "Oferecemos soluções habitacionais e rurais para Manica, sempre focados na qualidade e confiança.",
   },
   {
     nome: "Tete",
-    imagem:
-      "https://cdn.pixabay.com/photo/2020/04/29/10/20/tilapia-5108235_1280.jpg",
-    texto:
-      "Atuamos em Tete com foco em imóveis para mineração, indústria e residências, com atendimento local.",
+    imagem: "https://cdn.pixabay.com/photo/2020/04/29/10/20/tilapia-5108235_1280.jpg",
+    texto: "Atuamos em Tete com foco em imóveis para mineração, indústria e residências, com atendimento local.",
   },
   {
     nome: "Zambézia",
-    imagem:
-      "https://cdn.pixabay.com/photo/2012/07/09/07/44/cashew-nut-52067_960_720.jpg",
-    texto:
-      "Presença ampla na Zambézia com imóveis residenciais e agrícolas, com suporte especializado.",
+    imagem: "https://cdn.pixabay.com/photo/2012/07/09/07/44/cashew-nut-52067_960_720.jpg",
+    texto: "Presença ampla na Zambézia com imóveis residenciais e agrícolas, com suporte especializado.",
   },
   {
     nome: "Nampula",
-    imagem:
-      "https://cdn.pixabay.com/photo/2021/02/01/18/30/fruits-5971537_960_720.jpg",
-    texto:
-      "Oferecemos imóveis em Nampula com foco no crescimento urbano e oportunidades comerciais.",
+    imagem: "https://cdn.pixabay.com/photo/2021/02/01/18/30/fruits-5971537_960_720.jpg",
+    texto: "Oferecemos imóveis em Nampula com foco no crescimento urbano e oportunidades comerciais.",
   },
   {
     nome: "Cabo Delgado",
-    imagem:
-      "https://cdn.pixabay.com/photo/2020/07/17/03/37/seal-5412860_960_720.jpg",
-    texto:
-      "Atuação em Cabo Delgado, destacando imóveis para turismo, mineração e residenciais.",
+    imagem: "https://cdn.pixabay.com/photo/2020/07/17/03/37/seal-5412860_960_720.jpg",
+    texto: "Atuação em Cabo Delgado, destacando imóveis para turismo, mineração e residenciais.",
   },
   {
     nome: "Niassa",
-    imagem:
-      "https://cdn.pixabay.com/photo/2014/02/06/17/53/beans-260210_960_720.jpg",
-    texto:
-      "Presença em Niassa com imóveis rurais e habitacionais, oferecendo soluções adaptadas ao mercado local.",
+    imagem: "https://cdn.pixabay.com/photo/2014/02/06/17/53/beans-260210_960_720.jpg",
+    texto: "Presença em Niassa com imóveis rurais e habitacionais, oferecendo soluções adaptadas ao mercado local.",
   },
-
 ];
+
 export default function ParceriaImobiliaria() {
   return (
-    <div className="bg-gray-50 ">
-          <div className=" py-16 px-6 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-center text-[#1F2E54] mb-10">
+    <div className="bg-gray-50">
+      {/* Introdução institucional */}
+      <section className="max-w-5xl mx-auto pt-10 px-6 text-center font-thin">
+
+        <p className="text-lg text-gray-700 leading-relaxed">
+          A <strong>Bule Global Solution (BGS)</strong> é uma empresa moçambicana com mais de 9 anos de experiência, dedicada à prestação de serviços de qualidade nos setores de mineração, imobiliária, construção civil, saúde e investimentos. Com raízes firmes em Moçambique e visão global, a BGS tem como missão levar soluções inovadoras e sustentáveis a clientes em todo o mundo. Atuamos com profissionalismo, integridade e compromisso em cada projeto, contribuindo para o desenvolvimento econômico e social das comunidades onde operamos.
+        </p>
+      </section>
+
+      {/* Swiper das províncias */}
+      <div className="py-16 px-6 max-w-7xl mx-auto">
+        <h2 className="text-xl font-bold text-center text-[#1F2E54] mb-10">
           A Nossa Missão nas Províncias de Moçambique
         </h2>
-
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={30}
@@ -153,11 +138,11 @@ export default function ParceriaImobiliaria() {
         </Swiper>
       </div>
 
+      {/* Seção de Vantagens */}
       <section
         id="vantagens"
-        className="bg-[#f7f7f7] w-[100%] py-24 px-6 max-w-7xl mx-auto"
+        className="bg-[#f7f7f7] w-full py-24 px-6 max-w-7xl mx-auto"
       >
-
         <div className="grid gap-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {pontos.map((item, index) => (
             <div

@@ -180,28 +180,9 @@ export default function Profile() {
         </button>
 
         {/* Grid 1: Criar novas entradas */}
-        <div className="grid grid-cols-2 gap-5 mt-5">
-          <Link to="/create-agri" className="bg-green-700 text-white p-3 rounded-lg text-center uppercase hover:opacity-95">
-            Criar Agri
-          </Link>
-          <Link to="/create-imo" className="bg-blue-700 text-white p-3 rounded-lg text-center uppercase hover:opacity-95">
-            Criar Imo
-          </Link>
-        </div>
-
-        {/* Grid 2: Ver seções existentes */}
-        <div className="grid grid-cols-2 gap-4 mt-5 text-center">
-          <Link to="/show-saude" className="text-blue-600 uppercase hover:underline">
-            Saúde
-          </Link>
-          <Link to="/show-mining" className="text-blue-600 uppercase hover:underline">
-            Mining
-          </Link>
-          <Link to="/show-diver" className="text-blue-600 uppercase hover:underline">
-            Diver
-          </Link>
-          <Link to="/show" className="text-blue-600 uppercase hover:underline">
-            Show
+        <div className="m-auto mt-5">
+          <Link to="/opcoes" className="bg-green-700 text-white p-3 rounded-lg text-center uppercase hover:opacity-95">
+            Visualizar ou criar post
           </Link>
         </div>
       </form>

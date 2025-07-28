@@ -124,41 +124,54 @@ export default function Home() {
       {/* Resto do conteúdo ... */}
 
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
-
-        {/* Banner */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white rounded-xl shadow-md p-6 my-10">
-          <div className="bg-blue-600 text-white rounded-lg p-6 flex flex-col justify-center items-start shadow">
-            <h2 className="text-2xl font-bold mb-2">Procura casa?</h2>
-            <p className="text-sm">
-              A BGS tem tudo para si — imóveis selecionados, atendimento 24h e apoio personalizado
-              para encontrar o seu novo lar.
-            </p>
+        {offerImos.length > 0 && (
+          <div>
+            <div className="my-3">
+              <h2 className="text-2xl font-semibold text-slate-600">Mais recentes</h2>
+              <Link to="/search?offer=true" className="text-sm text-blue-800 hover:underline">
+                Mostrar mais
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              {offerImos.map((imo) => (
+                <ImoItems imo={imo} key={imo._id} />
+              ))}
+            </div>
           </div>
-          <div className="rounded-lg overflow-hidden shadow">
-            <img
-              src="https://cdn.pixabay.com/photo/2022/11/22/10/37/house-7609267_1280.jpg"
-              alt="Imagem de casa BGS"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="flex flex-col justify-center items-start p-4">
-            <h3 className="text-xl font-semibold text-slate-800 mb-2">Imóveis verificados</h3>
-            <p className="text-sm text-gray-600 mb-4">
-              Todos os nossos imóveis são inspecionados, com localização privilegiada e preços
-              competitivos. Descubra agora o seu!
-            </p>
-            <Link
-              to="/search"
-              className="bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700 transition duration-300 text-sm font-semibold"
-            >
-              Explorar mais
-            </Link>
-          </div>
-        </div>
+        )}
 
+        {rentImos.length > 0 && (
+          <div>
+            <div className="my-3">
+              <h2 className="text-2xl font-semibold text-slate-600">Casas para arrendar</h2>
+              <Link to="/search?type=rent" className="text-sm text-blue-800 hover:underline">
+                Mostrar mais
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              {rentImos.map((imo) => (
+                <ImoItems imo={imo} key={imo._id} />
+              ))}
+            </div>
+          </div>
+        )}
 
-        {/* Secção de serviços */}
-        <ServicosSecao />
+        {saleImos.length > 0 && (
+          <div>
+            <div className="my-3">
+              <h2 className="text-2xl font-semibold text-slate-600">Casas para venda</h2>
+              <Link to="/search?type=sale" className="text-sm text-blue-800 hover:underline">
+                Mostrar mais
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              {saleImos.map((imo) => (
+                <ImoItems imo={imo} key={imo._id} />
+              ))}
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );

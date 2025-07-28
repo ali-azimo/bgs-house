@@ -1,4 +1,4 @@
-import { FaSearch, FaMoon, FaSun, FaSignOutAlt, FaUser } from 'react-icons/fa';
+import { FaSearch, FaSignOutAlt, FaUser } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
@@ -12,7 +12,7 @@ import logo from '../assets/img/logo.png';
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   const [searchTerm, setSearchTerm] = useState('');
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode] = useState(true); // sempre escuro
   const [showDropdown, setShowDropdown] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -61,11 +61,11 @@ export default function Header() {
         darkMode ? "bg-slate-900 text-white" : "bg-white text-slate-800"
       } shadow-md sticky top-0 z-50 transition-colors`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
         {/* LOGO */}
         <Link to="/" className="flex items-center">
           <img src={logo} alt="Logo" className="h-10 w-auto object-contain" />
-          <span className="text-sm text-sky-600 dark:text-sky-400 font-bold hidden sm:inline">
+          <span className="text-sm text-sky-400 font-bold hidden sm:inline">
             Bule Global Solution
           </span>
         </Link>
@@ -73,18 +73,18 @@ export default function Header() {
         {/* PESQUISA */}
         <form
           onSubmit={handleSubmit}
-          className="flex items-center border rounded-md px-3 py-1.5 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 focus-within:ring-2 focus-within:ring-sky-500"
+          className="flex items-center border rounded-md px-3 py-1.5 bg-slate-800 border-slate-700 focus-within:ring-2 focus-within:ring-sky-500"
         >
           <input
             type="text"
             placeholder="Buscar imóveis..."
-            className="bg-transparent outline-none w-32 sm:w-64 text-sm placeholder:text-slate-500 dark:placeholder:text-slate-400"
+            className="bg-transparent outline-none w-32 sm:w-64 text-sm placeholder:text-slate-400"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button
             type="submit"
-            className="ml-2 text-sky-600 dark:text-sky-400 hover:text-sky-800"
+            className="ml-2 text-sky-400 hover:text-sky-300"
           >
             <FaSearch />
           </button>
@@ -92,31 +92,31 @@ export default function Header() {
 
         {/* NAV */}
         <nav className="flex items-center gap-4 text-sm font-medium">
-          <Link to="/" className="hover:text-sky-600 hidden sm:inline">
-            Início
-          </Link>
-          <Link to="/about" className="hover:text-sky-600 hidden sm:inline">
+          
+          <Link to="/about" className="hover:text-sky-400 hidden sm:inline">
             Sobre
           </Link>
-          
-          <Link to="/agri" className="hover:text-sky-600 hidden sm:inline">
-            Agro-Pecuària
+          <Link to="/imo-home" className="hover:text-sky-400 hidden sm:inline">
+            Imo & Investiment
           </Link>
-          <Link to="/team" className="hover:text-sky-600 hidden sm:inline">
+          <Link to="/agri" className="hover:text-sky-400 hidden sm:inline">
+            Agro-Pecuária
+          </Link>
+          <Link to="/saude" className="hover:text-sky-400 hidden sm:inline">
+            Saúde
+          </Link>
+          <Link to="/minin" className="hover:text-sky-400 hidden sm:inline">
+            Mineração
+          </Link>
+          <Link to="/diver" className="hover:text-sky-400 hidden sm:inline">
+            Serviços diversos
+          </Link>
+          <Link to="/team" className="hover:text-sky-400 hidden sm:inline">
             Contacto
           </Link>
-          <Link to="/service" className="hover:text-sky-600 hidden sm:inline">
-            Servicos
+          <Link to="/service" className="hover:text-sky-400 hidden sm:inline">
+            Serviços
           </Link>
-
-          {/* MODO ESCURO */}
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className="text-xl hover:text-yellow-500"
-            title="Alternar modo"
-          >
-            {darkMode ? <FaSun /> : <FaMoon />}
-          </button>
 
           {/* PERFIL */}
           <div className="relative" ref={dropdownRef}>
@@ -128,23 +128,23 @@ export default function Header() {
                 onClick={() => setShowDropdown(!showDropdown)}
               />
             ) : (
-              <Link to="/profile" className="hover:text-sky-600">
+              <Link to="/profile" className="hover:text-sky-400">
                 Entrar
               </Link>
             )}
 
             {/* DROPDOWN */}
             {showDropdown && currentUser && (
-              <div className="absolute right-0 mt-2 w-44 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md shadow-lg z-10">
+              <div className="absolute right-0 mt-2 w-44 bg-slate-800 border border-slate-700 rounded-md shadow-lg z-10">
                 <Link
                   to="/profile"
-                  className="flex items-center px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700"
+                  className="flex items-center px-4 py-2 hover:bg-slate-700"
                 >
                   <FaUser className="mr-2" /> Perfil
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="w-full text-left flex items-center px-4 py-2 hover:bg-slate-100 dark:hover:bg-slate-700 text-red-600 dark:text-red-400"
+                  className="w-full text-left flex items-center px-4 py-2 hover:bg-slate-700 text-red-400"
                 >
                   <FaSignOutAlt className="mr-2" /> Sair
                 </button>

@@ -9,7 +9,7 @@ import { app } from '../firebase';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
-export default function UpdateListing() {
+export default function UpdateImo() {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const [files, setFiles] = useState([]);
@@ -20,9 +20,9 @@ export default function UpdateListing() {
   const params = useParams();
 
   useEffect(() => {
-    const fetchListing = async () => {
-      const listingId = params.listingId;
-      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/get/${listingId}`, {
+    const fetchImo = async () => {
+      const imoId = params.imoId;
+      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get/${imoId}`, {
         credentials: 'include',
       });
       const data = await res.json();
@@ -31,7 +31,7 @@ export default function UpdateListing() {
         console.log(data.message);
       }
     }
-    fetchListing();
+    fetchImo();
   }, []);
 
   const [formData, seteFormData] = useState({
@@ -49,7 +49,7 @@ export default function UpdateListing() {
     finished: false,
   });
 
-  const handleImageSubmit = (e) => {
+  const handleImageSubmit = () => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
       setImageUploadError(false);
@@ -65,7 +65,7 @@ export default function UpdateListing() {
         });
         setImageUploadError(false);
         setUploading(false);
-      }).catch((err) => {
+      }).catch(() => {
         setImageUploadError('Erro ao carregar imagem (tamanho máximo 2MB por imagem)');
         setUploading(false);
       });
@@ -92,8 +92,8 @@ export default function UpdateListing() {
           reject(error);
         },
         () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downlodURL) => {
-            resolve(downlodURL);
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            resolve(downloadURL);
           });
         }
       );
@@ -139,7 +139,7 @@ export default function UpdateListing() {
       if (+formData.regularPrice < +formData.discountPrice) return setErrorSubmit("O preço com desconto deve ser menor que o preço normal");
       setLoadingSubmit(true);
       setErrorSubmit(false);
-      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/listing/update/${params.listingId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/update/${params.imoId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -154,8 +154,9 @@ export default function UpdateListing() {
       setLoadingSubmit(false);
       if (data.success === false) {
         setErrorSubmit(data.message);
+      } else {
+        navigate(`/imo/${data._id}`);
       }
-      navigate(`/listing/${data._id}`);
     } catch (error) {
       setErrorSubmit(error.message);
       setLoadingSubmit(false);

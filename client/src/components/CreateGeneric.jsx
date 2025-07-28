@@ -9,7 +9,7 @@ import { app } from '../firebase';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-export default function CreateListing() {
+export default function CreateGeneric({ title, endpoint, redirectTo }) {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const [files, setFiles] = useState([]);
@@ -22,18 +22,10 @@ export default function CreateListing() {
     name: '',
     description: '',
     address: '',
-    type: 'rent',
-    bedroom: 1,
-    bathroom: 1,
-    regularPrice: 50,
-    discountPrice: 0,
-    offer: false,
-    parking: false,
-    finished: false,
   });
 
   const handleImageSubmit = (e) => {
-    if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
+    if (files.length > 0 && files.length + formData.imageUrls.length < 4) {
       setUploading(true);
       setImageUploadError(false);
       const promises = [];
@@ -56,7 +48,7 @@ export default function CreateListing() {
           setUploading(false);
         });
     } else {
-      setImageUploadError('Apenas 6 imagens são permitidas');
+      setImageUploadError('Apenas 3 imagens são permitidas');
       setUploading(false);
     }
   };
@@ -70,11 +62,7 @@ export default function CreateListing() {
 
       uploadTask.on(
         'state_changed',
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`O carregamento está ${progress}% concluído`);
-        },
+        () => {},
         (error) => reject(error),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -93,18 +81,6 @@ export default function CreateListing() {
   };
 
   const handleChange = (e) => {
-    if (e.target.id === 'sale' || e.target.id === 'rent') {
-      seteFormData({ ...formData, type: e.target.id });
-    }
-
-    if (
-      e.target.id === 'parking' ||
-      e.target.id === 'finished' ||
-      e.target.id === 'offer'
-    ) {
-      seteFormData({ ...formData, [e.target.id]: e.target.checked });
-    }
-
     if (
       e.target.type === 'number' ||
       e.target.type === 'text' ||
@@ -120,16 +96,12 @@ export default function CreateListing() {
     try {
       if (formData.imageUrls.length < 1)
         return setErrorSubmit('Deves carregar pelo menos uma imagem');
-      if (+formData.regularPrice < +formData.discountPrice)
-        return setErrorSubmit(
-          'O preço regular não pode ser menor que o preço com desconto'
-        );
 
       setLoadingSubmit(true);
       setErrorSubmit(false);
 
       const res = await fetch(
-       `/api/listing/create`,
+        `${import.meta.env.VITE_API_KEY_ONRENDER}/api/${endpoint}/create`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -149,7 +121,7 @@ export default function CreateListing() {
         return;
       }
 
-      navigate(`/listing/${data._id}`);
+      navigate(`${redirectTo}/${data._id}`);
     } catch (error) {
       setErrorSubmit(error.message);
       setLoadingSubmit(false);
@@ -159,7 +131,7 @@ export default function CreateListing() {
   return (
     <main className="p-3 max-w-4xl mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">
-        Criar um Imóvel
+        {title}
       </h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
@@ -167,7 +139,7 @@ export default function CreateListing() {
         <div className="flex flex-col gap-4 flex-1">
           <input
             type="text"
-            placeholder="Nome do imóvel"
+            placeholder="Nome"
             id="name"
             maxLength="62"
             minLength="10"
@@ -195,86 +167,6 @@ export default function CreateListing() {
             value={formData.address}
             className="border border-gray-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 focus:outline-none rounded-xl p-3 shadow-sm"
           />
-
-          {/* Checkboxes */}
-          <div className="flex gap-6 flex-wrap">
-            {[
-              { id: 'sale', label: 'Venda', checked: formData.type === 'sale' },
-              { id: 'rent', label: 'Arrendamento', checked: formData.type === 'rent' },
-              { id: 'parking', label: 'Parqueamento', checked: formData.parking },
-              { id: 'finished', label: 'Acabado', checked: formData.finished },
-              { id: 'offer', label: 'Promoção', checked: formData.offer },
-            ].map(({ id, label, checked }) => (
-              <div key={id} className="flex gap-2 items-center">
-                <input
-                  type="checkbox"
-                  id={id}
-                  className="w-5 h-5"
-                  onChange={handleChange}
-                  checked={checked}
-                />
-                <span>{label}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Inputs Numéricos */}
-          <div className="flex flex-wrap gap-6">
-            {[
-              { id: 'bedroom', label: 'Quartos', value: formData.bedroom },
-              { id: 'bathroom', label: 'Casas de banho', value: formData.bathroom },
-            ].map(({ id, label, value }) => (
-              <div key={id} className="flex items-center gap-2">
-                <input
-                  type="number"
-                  id={id}
-                  min="1"
-                  max="10"
-                  required
-                  onChange={handleChange}
-                  value={value}
-                  className="border border-gray-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 focus:outline-none rounded-xl p-3 shadow-sm w-24"
-                />
-                <span>{label}</span>
-              </div>
-            ))}
-
-            <div className="flex items-center gap-2">
-              <input
-                type="number"
-                id="regularPrice"
-                min="50"
-                max="1000000000"
-                required
-                onChange={handleChange}
-                value={formData.regularPrice}
-                className="border border-gray-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 focus:outline-none rounded-xl p-3 shadow-sm w-36"
-              />
-              <div className="flex flex-col items-center">
-                <p>Preço normal</p>
-                <span className="text-xs">(MZN / mês)</span>
-              </div>
-            </div>
-
-            {formData.offer && (
-              <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  id="discountPrice"
-                  min="0"
-                  max="1000000000"
-                  required
-                  onChange={handleChange}
-                  value={formData.discountPrice}
-                  className="border border-gray-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 focus:outline-none rounded-xl p-3 shadow-sm w-36"
-                />
-                <div className="flex flex-col items-center">
-                  <p>Preço com desconto</p>
-                  <span className="text-xs">(MZN / mês)</span>
-                </div>
-              </div>
-            )}
-          </div>
         </div>
 
         {/* Lado Direito */}
@@ -282,7 +174,7 @@ export default function CreateListing() {
           <p className="font-semibold">
             Imagens:
             <span className="font-normal text-gray-600 ml-2 text-sm">
-              A primeira imagem será usada como capa (máx. 6)
+              A primeira imagem será usada como capa (máx. 3)
             </span>
           </p>
 
@@ -313,17 +205,17 @@ export default function CreateListing() {
             formData.imageUrls.map((url, index) => (
               <div
                 key={url}
-                className="flex justify-between items-center p-3 border border-gray-300 rounded-xl shadow-md bg-white transition duration-20"
+                className="flex justify-between items-center p-3 border border-gray-300 rounded-xl shadow-md bg-white"
               >
                 <img
                   src={url}
-                  alt="Imagem do imóvel"
+                  alt="Imagem"
                   className="w-35 h-24 object-cover rounded-xl border border-gray-200"
                 />
                 <button
                   type="button"
                   onClick={() => handleRemoveImage(index)}
-                  className="ml-4 px-3 py-2 text-sm bg-red-100 text-red-700 border border-red-300 rounded-lg uppercase hover:bg-red-200 transition"
+                  className="ml-4 px-3 py-2 text-sm bg-red-100 text-red-700 border border-red-300 rounded-lg uppercase hover:bg-red-200"
                 >
                   Apagar
                 </button>
@@ -334,7 +226,7 @@ export default function CreateListing() {
             disabled={loadingSubmit}
             className="p-3 bg-slate-700 text-white rounded-xl uppercase hover:opacity-95 disabled:opacity-80"
           >
-            {loadingSubmit ? 'A criar...' : 'Criar imóvel'}
+            {loadingSubmit ? `A criar...` : title}
           </button>
           {erroSubmit && <p className="text-red-700 text-sm">{erroSubmit}</p>}
         </div>

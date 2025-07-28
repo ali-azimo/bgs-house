@@ -5,47 +5,74 @@ import About from './pages/About';
 import Profile from './pages/Profile';
 import Header from './components/Header';
 import PrivateRoute from './components/PrivateRoute';
-import CreateListing from './pages/CreateListing';
 import CreateAgri from './pages/CreateAgri';
-import UpdateListing from './pages/UpdateListing';
+import UpdateImo from './pages/UpdateImo';
 import UpdateAgri from './pages/UpdateAgri';
-import Listing from './pages/Listing';
+import Imo from './pages/Imo';
 import Search from './pages/Search';
 import Team from './pages/Team';
 import SignIn from './pages/SignIn';
 import Footer from './components/Footer'
-import ShowListing from './pages/ShowListing';
+import ShowImo from './pages/ShowImo';
 import ShowAgri from './pages/ShowAgri';
 import Agri from "./pages/Agri";
-import AgriHome from './pages/AgriHome';
 import Service from './pages/Service';
+import CreateImo from './pages/CreateImo';
+import ImoHome from './pages/ImoHome'
+import UpdateSaude from './pages/UpdateSaude';
+import UpdateDiver from './pages/UpdateDiver';
+import UpdateMinin from './pages/UpdateMinin';
+import ManagePosts from './components/ManagePosts';
+import CreateSaude from './pages/CreateSaude';
+import CreateMinin from './pages/CreateMinin';
+import CreateDiver from './pages/CreateDiver';
+import GenericDetails from './components/GenericDetails';
+import AgriHome from './pages/AgriHome';
+import DiverHome from './pages/DiverHome';
+import SaudeHome from './pages/SaudeHome';
+import MininHome from './pages/MininHome';
 
 export default function App() {
   return (
     <BrowserRouter>
       <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/agri" element={<AgriHome />} />
-          <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/imog/:imoId" element={<Listing />} />
-          <Route path="/agri/:agriId" element={<Agri />} />
-          <Route path="/service" element={<Service />} />
-          <Route element={<PrivateRoute />}>
-            <Route path="/sign-up" element={<SignUp />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/create-listing" element={<CreateListing />} />
-            <Route path="/update-listing/:listingId" element={<UpdateListing />}/>
-            <Route path="show-listing" element={<ShowListing />}/>
-            <Route path="show-agri" element={<ShowAgri />}/>
-            <Route path="/create-agri" element={<CreateAgri />} />
-            <Route path="/update-agri/:agriId" element={<UpdateAgri />}/>
-          </Route>
-        </Routes>
-      <Footer/>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/agri" element={<AgriHome />} />
+        <Route path="/diver" element={<DiverHome />} />
+        <Route path="/saude" element={<SaudeHome />} />
+        <Route path="/minin" element={<MininHome />} />
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/team" element={<Team />} />
+        <Route path="/imo-home" element={<ImoHome />} />
+
+        <Route path="/agri/:agriId" element={<GenericDetails type="agri" />} />
+        <Route path="/imo/:imoId" element={<GenericDetails type="imo" />} />
+        <Route path="/diver/:diverId" element={<GenericDetails type="diver" />} />
+        <Route path="/minin/:mininId" element={<GenericDetails type="minin" />} />
+        <Route path="/saude/:saudeId" element={<GenericDetails type="saude" />} />
+        <Route path="/service" element={<Service />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/opcoes" element={<ManagePosts />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/create-imo" element={<CreateImo />} />
+          <Route path="/update-imo/:imoId" element={<UpdateImo />} />
+          <Route path="/update-agri/:agriId" element={<UpdateAgri />} />
+          <Route path="/update-saude/:saudeId" element={<UpdateSaude />} />
+          <Route path="/update-diver/:diverId" element={<UpdateDiver />} />
+          <Route path="/update-minin/:mininId" element={<UpdateMinin />} />
+          <Route path="show-imo" element={<ShowImo />} />
+          <Route path="show-agri" element={<ShowAgri />} />
+          <Route path="/create-agri" element={<CreateAgri />} />
+          <Route path="/create-saude" element={<CreateSaude />} />
+          <Route path="/create-diver" element={<CreateDiver />} />
+          <Route path="/create-minin" element={<CreateMinin />} />
+        </Route>
+      </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

@@ -41,7 +41,10 @@ export default function Footer() {
             <li><Link to="/search" className="hover:text-white">Imóveis</Link></li>
             <li><Link to="/about" className="hover:text-white">Sobre Nós</Link></li>
             <li><Link to="/team" className="hover:text-white">Contacte-nos</Link></li>
-            <li><Link to="/blog" className="hover:text-white">Blog</Link></li>
+            <li><Link to="/agri" className="hover:text-white">Agro-Pecuária</Link></li>
+            <li><Link to="/saude" className="hover:text-white">Saúde</Link></li>
+            <li><Link to="/minin" className="hover:text-white">Mineração</Link></li>
+            <li><Link to="/diver" className="hover:text-white">Serviços diversos</Link></li>
           </ul>
         </div>
 

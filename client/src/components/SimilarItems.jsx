@@ -1,65 +1,83 @@
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaMapMarkerAlt } from 'react-icons/fa';
 
-export default function SimilarContent({ items = [], type = 'blog' }) {
-  if (!items || items.length === 0) {
-    return (
-      <div className="mt-16 text-center text-gray-500 text-lg">
-        Sem item semelhante.
-      </div>
-    );
-  }
+export default function SimilarItems({ type, id }) {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showAll, setShowAll] = useState(false);
 
-  // Define o path base consoante o tipo
-  const basePath = {
-    blog: 'blog',
-    agri: 'agri',
-    diver: 'diver',
-    minin: 'minin',
-    saude: 'saude',
-    imo: 'imo',
-  }[type] || 'blog';
+  useEffect(() => {
+    if (!type || !id) return;
+
+    const fetchSimilar = async () => {
+      try {
+        const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/sem/${type}/${id}`, {
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+        });
+
+        if (!res.ok) {
+          throw new Error('Erro na resposta da API');
+        }
+
+        const data = await res.json();
+        setItems(data || []);
+      } catch (error) {
+        console.error('Erro ao buscar semelhantes:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSimilar();
+  }, [type, id]);
+
+  if (loading) return <p className="text-gray-500">A carregar...</p>;
+  if (!items.length) return <p className="text-gray-500">Nenhum item semelhante encontrado.</p>;
+
+  // Mostrar os primeiros 10 ou todos
+  const itemsToShow = showAll ? items : items.slice(0, 10);
 
   return (
-    <div className="mt-16">
-      <h2 className="text-2xl font-bold text-slate-800 mb-6">
-        {type === 'imo' ? 'Propriedades Relacionadas' : 'Artigos Relacionados'}
-      </h2>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {items.map((item) => (
-          <div
+    <div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+        {itemsToShow.map((item) => (
+          // Aqui o Link para a rota do imóvel, ex: /imo/abc123
+          <Link
             key={item._id}
-            className="bg-white rounded-xl shadow hover:shadow-md transition duration-300 overflow-hidden"
+            to={`/${type}/${item._id}`}
+            className="block group"
           >
-            {item.imageUrls ? (
+            <div className="aspect-w-4 aspect-h-3 w-full overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
               <img
-                src={item.imageUrls}
+                src={item.imageUrls?.[0] || '/placeholder.jpg'}
                 alt={item.name}
-                className="w-full h-40 object-cover"
+                className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-300"
               />
-            ) : (
-              <div className="w-full h-40 bg-gray-200 flex items-center justify-center text-gray-500 text-sm">
-                Sem imagem
-              </div>
-            )}
-
-            <div className="p-4">
-              <h3 className="text-md font-semibold text-slate-800 mb-2 line-clamp-2">
-                {item.name}
-              </h3>
-              <p className="text-sm text-gray-600 mb-3 line-clamp-3">
-                {item.description?.substring(0, 100) || 'Sem conteúdo'}...
-              </p>
-              <Link
-                to={`/${basePath}/${item._id}`}
-                className="text-blue-600 hover:underline text-sm font-medium"
-              >
-                Ler mais →
-              </Link>
             </div>
-          </div>
+            <p className="mt-2 text-sm text-gray-800 font-semibold truncate">{item.name}</p>
+            {(item.address || item.location) && (
+              <p className="flex items-center text-xs text-gray-500 truncate">
+                <FaMapMarkerAlt className="mr-1" />
+                {item.address || item.location}
+              </p>
+            )}
+          </Link>
         ))}
       </div>
+
+      {/* Botão mostrar mais/menos */}
+      {items.length > 10 && (
+        <div className="mt-4 text-center">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            className="text-blue-600 hover:underline text-sm font-medium"
+          >
+            {showAll ? 'Mostrar menos' : 'Mostrar mais'}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
