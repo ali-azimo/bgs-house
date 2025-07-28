@@ -124,37 +124,42 @@ export default function Home() {
       {/* Resto do conteúdo ... */}
 
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
-
-        {/* Banner */}
+        {/* Banner Institucional BGS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white rounded-xl shadow-md p-6 my-10">
+          {/* Texto principal */}
           <div className="bg-blue-600 text-white rounded-lg p-6 flex flex-col justify-center items-start shadow">
-            <h2 className="text-2xl font-bold mb-2">Procura casa?</h2>
+            <h2 className="text-2xl font-bold mb-2">BGS — Construindo o Futuro</h2>
             <p className="text-sm">
-              A BGS tem tudo para si — imóveis selecionados, atendimento 24h e apoio personalizado
-              para encontrar o seu novo lar.
+              Com mais de 9 anos de experiência, a BGS atua com excelência nos sectores de mineração, imobiliária,
+              construção civil, saúde e investimentos. O nosso compromisso é com o desenvolvimento sustentável e inovação.
             </p>
           </div>
+
+          {/* Imagem ilustrativa */}
           <div className="rounded-lg overflow-hidden shadow">
             <img
               src="https://cdn.pixabay.com/photo/2022/11/22/10/37/house-7609267_1280.jpg"
-              alt="Imagem de casa BGS"
+              alt="Sectores da BGS"
               className="w-full h-full object-cover"
             />
           </div>
+
+          {/* Destaque e chamada para ação */}
           <div className="flex flex-col justify-center items-start p-4">
-            <h3 className="text-xl font-semibold text-slate-800 mb-2">Imóveis verificados</h3>
+            <h3 className="text-xl font-semibold text-slate-800 mb-2">Confiança em cada projecto</h3>
             <p className="text-sm text-gray-600 mb-4">
-              Todos os nossos imóveis são inspecionados, com localização privilegiada e preços
-              competitivos. Descubra agora o seu!
+              Seja no ramo imobiliário, na extração mineira ou nos investimentos em saúde, a BGS oferece soluções
+              integradas, profissionais experientes e resultados que transformam vidas.
             </p>
             <Link
-              to="/search"
+              to="/sobre"
               className="bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700 transition duration-300 text-sm font-semibold"
             >
-              Explorar mais
+              Conheça a BGS
             </Link>
           </div>
         </div>
+
 
 
         {/* Secção de serviços */}
