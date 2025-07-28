@@ -128,39 +128,37 @@ export default function Team() {
         ))}
       </div>
 
-      <div className="mt-16 bg-white p-6 md:p-8 rounded-2xl shadow-lg">
-        <h3 className="text-xl md:text-2xl font-semibold mb-6 text-center text-[#1F2E54]">
+      <div className="mt-16 bg-white p-6 md:p-10 rounded-2xl shadow-xl">
+        <h3 className="text-xl md:text-2xl font-semibold mb-8 text-center text-[#1F2E54]">
           Envie-nos uma Mensagem
         </h3>
 
-        <form className="space-y-4" ref={form} onSubmit={sendEmail}>
-          {[
-            { id: "username", label: "Nome", type: "text", placeholder: "Seu nome" },
-            { id: "subject", label: "Assunto", type: "text", placeholder: "Assunto" },
-            { id: "useremail", label: "Email", type: "email", placeholder: "Seu email" },
-          ].map(({ id, label, type, placeholder }) => (
-            <div key={id}>
-              <label htmlFor={id} className="block text-gray-700 mb-2">{label}</label>
-              <input
-                id={id}
-                type={type}
-                name={id}
-                placeholder={placeholder}
-                required
-                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AEEF] transition"
-              />
-            </div>
-          ))}
+        <form className="space-y-6" ref={form} onSubmit={sendEmail}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[{ id: "username", label: "Nome", type: "text", placeholder: "Seu nome" }, { id: "subject", label: "Assunto", type: "text", placeholder: "Assunto" }, { id: "useremail", label: "Email", type: "email", placeholder: "Seu email" }].map(({ id, label, type, placeholder }) => (
+              <div key={id} className="flex flex-col">
+                <label htmlFor={id} className="text-sm text-gray-700 mb-1 font-medium">{label}</label>
+                <input
+                  id={id}
+                  type={type}
+                  name={id}
+                  placeholder={placeholder}
+                  required
+                  className="p-3 rounded-xl border border-gray-300 bg-gray-50 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00AEEF] focus:bg-white transition"
+                />
+              </div>
+            ))}
+          </div>
 
-          <div>
-            <label htmlFor="message" className="block text-gray-700 mb-2">Mensagem</label>
+          <div className="flex flex-col">
+            <label htmlFor="message" className="text-sm text-gray-700 mb-1 font-medium">Mensagem</label>
             <textarea
               id="message"
               name="message"
-              rows="4"
+              rows="5"
               placeholder="Escreva a sua mensagem..."
               required
-              className="w-full p-3 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#00AEEF] transition"
+              className="p-3 rounded-xl border border-gray-300 bg-gray-50 shadow-sm resize-none focus:outline-none focus:ring-2 focus:ring-[#00AEEF] focus:bg-white transition"
             ></textarea>
           </div>
 
@@ -175,7 +173,7 @@ export default function Team() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-3 px-4 rounded-lg font-bold transition duration-200 flex items-center justify-center gap-2 text-[#1F2E54] ${
+            className={`w-full py-3 px-4 rounded-xl font-bold transition duration-200 flex items-center justify-center gap-2 text-[#1F2E54] ${
               isSubmitting ? "bg-[#F4B400]/70 cursor-not-allowed" : "bg-[#F4B400] hover:bg-[#e3a800]"
             }`}
           >
