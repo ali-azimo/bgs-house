@@ -23,7 +23,7 @@ export default function Team() {
       name: "Dércio Mauricio Mungoy",
       role: "Especialista em Vendas",
       description:
-        "Com mais de 10 anos de experiência, Dércio é um especialista em vendas que ajuda os clientes a encontrar a propriedade perfeita. Profissional comprometido com a excelência e com uma visão clara sobre o mercado imobiliário moçambicano.",
+        "Dércio é um profissional versátil e comprometido com a excelência. Destaca-se também como consultor nas áreas de mineração, construção de piscinas e água mineral. Com uma visão clara e estratégica, oferece soluções eficazes em diversos sectores, demonstrando profundo conhecimento do mercado moçambicano e um forte compromisso com os resultados em cada projecto que abraça.",
       social: {
         facebook: "https://www.facebook.com/dercio.mungoy",
         whatsapp: "https://wa.me/258842507746",

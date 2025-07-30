@@ -273,7 +273,7 @@ export default function UpdateImo() {
                   type="number"
                   id='discountPrice'
                   min='0'
-                  max='1000000'
+                  max='100000000'
                   required
                   className='p-3 border border-gray-300 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 focus:outline-none rounded-xl shadow-sm w-36'
                   onChange={handleChange}
