@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { FaEnvelope, FaCheck } from "react-icons/fa";
 import emailjs from "@emailjs/browser";
 
-export default function ContactForm() {
+export default function Contact() {
   const form = useRef();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);

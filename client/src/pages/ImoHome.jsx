@@ -7,6 +7,7 @@ import 'swiper/css/bundle';
 import ImoItems from './ImoItems'; // supondo que mudou o nome do componente também
 import ServicosSecao from '../components/Service';
 import { FaClock, FaQuestionCircle, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import MapMoz from '../components/MapMoz';
 
 export default function Home() {
   const [offerImos, setOfferImos] = useState([]);
@@ -171,7 +172,7 @@ export default function Home() {
             </div>
           </div>
         )}
-
+        <MapMoz  />
       </div>
     </div>
   );
