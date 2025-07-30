@@ -7,7 +7,7 @@ export default function ServicosSecao() {
       titulo: "Imobiliária e investimento",
       descricao: "Oportunidades seguras para comprar, vender e investir em imóveis residenciais e comerciais.",
       icone: <GiReceiveMoney className="text-4xl text-amber-600 mb-3" />,
-      rota: "/imobiliaria",
+      rota: "/imo-home",
     },
     {
       titulo: "Mineração e atividade conexas",
