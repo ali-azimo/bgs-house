@@ -1,4 +1,5 @@
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import About from './pages/About';
@@ -12,15 +13,15 @@ import Imo from './pages/Imo';
 import Search from './pages/Search';
 import Team from './pages/Team';
 import SignIn from './pages/SignIn';
-import Footer from './components/Footer'
+import Footer from './components/Footer';
 import ShowImo from './pages/ShowImo';
 import ShowAgri from './pages/ShowAgri';
 import ShowDiver from './pages/ShowDiver';
 import ShowMinin from './pages/ShowMinin';
 import ShowSaude from './pages/ShowSaude';
-import Agri from "./pages/Agri";
+import Agri from './pages/Agri';
 import CreateImo from './pages/CreateImo';
-import ImoHome from './pages/ImoHome'
+import ImoHome from './pages/ImoHome';
 import UpdateSaude from './pages/UpdateSaude';
 import UpdateDiver from './pages/UpdateDiver';
 import UpdateMinin from './pages/UpdateMinin';
@@ -34,13 +35,27 @@ import DiverHome from './pages/DiverHome';
 import SaudeHome from './pages/SaudeHome';
 import MininHome from './pages/MininHome';
 import ScrollToTop from './pages/ScrollToTop';
+import { initGA, logPageView } from './ga';
 
+const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
+function RouteTracker() {
+  const location = useLocation();
+  useEffect(() => {
+    initGA(measurementId); // inicializa uma vez
+  }, [measurementId]);
+
+  useEffect(() => {
+    logPageView(); // dispara pageview em cada mudança de rota
+  }, [location]);
+
+  return null;
+}
 
 export default function App() {
   return (
     <BrowserRouter>
-    <ScrollToTop />
+      <RouteTracker />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
