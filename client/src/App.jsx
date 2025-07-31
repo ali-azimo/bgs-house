@@ -41,8 +41,13 @@ const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
 function RouteTracker() {
   const location = useLocation();
+
   useEffect(() => {
-    initGA(measurementId); // inicializa uma vez
+    if (measurementId) {
+      initGA(measurementId); // inicializa uma vez
+    } else {
+      console.warn('GA measurement ID não encontrado. Verifica a variável de ambiente VITE_GA_MEASUREMENT_ID');
+    }
   }, [measurementId]);
 
   useEffect(() => {
@@ -56,6 +61,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <RouteTracker />
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

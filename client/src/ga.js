@@ -1,3 +1,4 @@
+// src/ga.js
 export const initGA = (measurementId) => {
   if (!measurementId || typeof window === 'undefined') return;
   if (window.gtagInitialized) return; // evita reinicializações
