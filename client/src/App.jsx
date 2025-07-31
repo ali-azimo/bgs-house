@@ -36,6 +36,7 @@ import SaudeHome from './pages/SaudeHome';
 import MininHome from './pages/MininHome';
 import ScrollToTop from './pages/ScrollToTop';
 import { initGA, logPageView } from './ga';
+import ConsentBanner from './components/ConsentBanner';
 
 const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
@@ -58,8 +59,10 @@ function RouteTracker() {
 }
 
 export default function App() {
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
   return (
     <BrowserRouter>
+     <ConsentBanner measurementId={measurementId} />
       <RouteTracker />
       <ScrollToTop />
       <Header />
