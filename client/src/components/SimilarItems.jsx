@@ -49,7 +49,7 @@ export default function SimilarItems({ type, id }) {
             to={`/${type}/${item._id}`}
             className="block group"
           >
-            <div className="aspect-w-4 aspect-h-3 w-full overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
+            <div className="w-full overflow-hidden rounded-lg shadow hover:shadow-lg transition-shadow duration-300">
               <img
                 src={item.imageUrls?.[0] || '/placeholder.jpg'}
                 alt={item.name}

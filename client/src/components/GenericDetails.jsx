@@ -15,7 +15,6 @@ export default function GenericDetails({ type }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
-  const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -130,26 +129,6 @@ export default function GenericDetails({ type }) {
                       <FaMapMarkerAlt className="text-green-600 mr-2" />
                       <span>{item.address}</span>
                     </div>
-
-                    {/* Ícones Condicionais */}
-                    <ul className='text-green-900 font-semibold text-sm gap-4 sm:gap-6 flex items-center flex-wrap'>
-                        <li className='flex items-center gap-1 whitespace-nowrap'>
-                            <FaBed className='text-lg'/>
-                            {item.bedrooms > 1 ? `${item.bedrooms} quarto` : `${item.bedroom} quartos`}
-                        </li>
-                        <li className='flex items-center gap-1 whitespace-nowrap'>
-                            <FaBath className='text-lg'/>
-                            {item.bathrooms > 1 ? `${item.batrooms} banheiro` : `${item.bathroom} banheiros`}
-                        </li>
-                        <li className='flex items-center gap-1 whitespace-nowrap'>
-                            <FaParking className='text-lg'/>
-                            {item.parking ? "sem parquemaneto" : "Parqueamento"}
-                        </li>
-                        <li className='flex items-center gap-1 whitespace-nowrap'>
-                            <FaChair className='text-lg'/>
-                            {item.finished ? "Patio familiar" : "sem patio familiar"}
-                        </li>
-                    </ul>
                   </div>
                 </div>
 

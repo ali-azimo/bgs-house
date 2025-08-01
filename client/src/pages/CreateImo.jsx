@@ -93,7 +93,7 @@ export default function CreateImo() {
   };
 
   const handleChange = (e) => {
-    if (e.target.id === 'sale' || e.target.id === 'rent') {
+    if (e.target.id === 'sale' || e.target.id === 'rent' || e.target.id === 'build') {
       seteFormData({ ...formData, type: e.target.id });
     }
 
@@ -201,6 +201,7 @@ export default function CreateImo() {
             {[
               { id: 'sale', label: 'Venda', checked: formData.type === 'sale' },
               { id: 'rent', label: 'Arrendamento', checked: formData.type === 'rent' },
+              { id: 'build', label: 'Constuir', checked: formData.type === 'build' },
               { id: 'parking', label: 'Parqueamento', checked: formData.parking },
               { id: 'finished', label: 'Acabado', checked: formData.finished },
               { id: 'offer', label: 'Promoção', checked: formData.offer },

@@ -38,8 +38,7 @@ import ScrollToTop from './pages/ScrollToTop';
 import { initGA, logPageView } from './ga';
 import ConsentBanner from './components/ConsentBanner';
 import PrivacyPolicy from './components/PrivacyPolicy';
-
-  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
 function RouteTracker() {
   const location = useLocation();
   useEffect(() => {
@@ -78,7 +77,7 @@ export default function App() {
         <Route path="/imo-home" element={<ImoHome />} />
         <Route path='/privacy' element={<PrivacyPolicy/>}/>
         <Route path="/agri/:agriId" element={<GenericDetails type="agri" />} />
-        <Route path="/imo/:imoId" element={<GenericDetails type="imo" />} />
+        <Route path="/imo/:imoId" element={<Imo type="imo" />} />
         <Route path="/diver/:diverId" element={<GenericDetails type="diver" />} />
         <Route path="/minin/:mininId" element={<GenericDetails type="minin" />} />
         <Route path="/saude/:saudeId" element={<GenericDetails type="saude" />} />

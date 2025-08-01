@@ -13,6 +13,7 @@ export default function Home() {
   const [offerImos, setOfferImos] = useState([]);
   const [saleImos, setSaleImos] = useState([]);
   const [rentImos, setRentImos] = useState([]);
+  const [buildImos, setBuildImos] = useState([]);
   const [loading, setLoading] = useState(true);
 
   SwiperCore.use([Navigation, Autoplay, EffectFade]);
@@ -27,6 +28,7 @@ export default function Home() {
         const data = await res.json();
         setOfferImos(data);
         fetchRentImos();
+        fetchBuildImos();
       } catch (error) {
         console.log(error);
       }
@@ -54,6 +56,19 @@ export default function Home() {
         );
         const data = await res.json();
         setSaleImos(data);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    const fetchBuildImos = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?type=build&limit=4`,
+          { credentials: 'include' }
+        );
+        const data = await res.json();
+        setBuildImos(data);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -167,6 +182,21 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap gap-4">
               {saleImos.map((imo) => (
+                <ImoItems imo={imo} key={imo._id} />
+              ))}
+            </div>
+          </div>
+        )}
+        {buildImos.length > 0 && (
+          <div>
+            <div className="my-3">
+              <h2 className="text-2xl font-semibold text-slate-600">Construção & Investimento</h2>
+              <Link to="/search?type=build" className="text-sm text-blue-800 hover:underline">
+                Mostrar mais
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-4">
+              {buildImos.map((imo) => (
                 <ImoItems imo={imo} key={imo._id} />
               ))}
             </div>
