@@ -11,6 +11,7 @@ export default function Search() {
     parking: false,
     finished: false,
     offer: false,
+    build: false,
     sort: 'created_at',
     order: 'desc',
   });
@@ -24,6 +25,7 @@ export default function Search() {
     const typeFromUrl = urlParams.get('type');
     const parkingFromUrl = urlParams.get('parking');
     const finishedFromUrl = urlParams.get('finished');
+    const buildFromUrl = urlParams.get('build');
     const offerFromUrl = urlParams.get('offer');
     const sortFromUrl = urlParams.get('sort');
     const orderFromUrl = urlParams.get('order');
@@ -34,6 +36,7 @@ export default function Search() {
       parkingFromUrl ||
       finishedFromUrl ||
       offerFromUrl ||
+      buildFromUrl ||
       sortFromUrl ||
       orderFromUrl
     ) {
@@ -43,6 +46,7 @@ export default function Search() {
         parking: parkingFromUrl === 'true',
         finished: finishedFromUrl === 'true',
         offer: offerFromUrl === 'true',
+        build: buildFromUrl === 'true',
         sort: sortFromUrl || 'created_at',
         order: orderFromUrl || 'desc',
       });
@@ -66,7 +70,7 @@ export default function Search() {
   }, [location.search]);
 
   const handlerChange = (e) => {
-    if (e.target.id === 'all' || e.target.id === 'rent' || e.target.id === 'sale') {
+    if (e.target.id === 'all' || e.target.id === 'rent' || e.target.id === 'sale' || e.target.id === 'build') {
       setSidebardata({ ...sidebardata, type: e.target.id });
     }
     if (e.target.id === 'searchTerm') {
@@ -138,7 +142,7 @@ export default function Search() {
           <div className="flex flex-col gap-2">
             <span className="font-semibold text-slate-700">Tipo</span>
             <div className="flex flex-col gap-1 text-sm">
-              {["all", "rent", "sale", "offer"].map((type) => (
+              {["all", "rent", "sale", "build", "offer"].map((type) => (
                 <label key={type} className="flex items-center gap-2">
                   <input
                     type="checkbox"

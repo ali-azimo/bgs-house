@@ -28,7 +28,6 @@ export default function Home() {
         const data = await res.json();
         setOfferImos(data);
         fetchRentImos();
-        fetchBuildImos();
       } catch (error) {
         console.log(error);
       }
@@ -56,6 +55,7 @@ export default function Home() {
         );
         const data = await res.json();
         setSaleImos(data);
+        fetchBuildImos();
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -73,8 +73,7 @@ export default function Home() {
       } catch (error) {
         console.log(error);
       }
-    };
-
+    }
     fetchOfferImos();
   }, []);
 
