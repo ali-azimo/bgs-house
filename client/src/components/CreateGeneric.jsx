@@ -25,7 +25,7 @@ export default function CreateGeneric({ title, endpoint, redirectTo }) {
   });
 
   const handleImageSubmit = (e) => {
-    if (files.length > 0 && files.length + formData.imageUrls.length < 4) {
+    if (files.length > 0 && files.length + formData.imageUrls.length < 6) {
       setUploading(true);
       setImageUploadError(false);
       const promises = [];
@@ -48,7 +48,7 @@ export default function CreateGeneric({ title, endpoint, redirectTo }) {
           setUploading(false);
         });
     } else {
-      setImageUploadError('Apenas 3 imagens são permitidas');
+      setImageUploadError('Apenas 6 imagens são permitidas');
       setUploading(false);
     }
   };
