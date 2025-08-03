@@ -82,14 +82,17 @@ export default function MapMoz({ address }) {
   }
 
   return (
-    <div className="w-full my-10 px-4 m-auto flex flex-col items-center gap-4">
+    <div className="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-md mt-8 m-auto">
       {isLoaded && (
         <>
-          <Autocomplete onLoad={onAutocompleteLoad} onPlaceChanged={onPlaceChanged}>
+          <Autocomplete
+            onLoad={onAutocompleteLoad}
+            onPlaceChanged={onPlaceChanged}
+          >
             <input
               type="text"
               placeholder="Pesquisar localização..."
-              className="w-full max-w-md px-4 py-2 border rounded shadow"
+              className="w-full px-4 py-2 border border-gray-300 bg-gray-50 rounded shadow m-auto my-2"
             />
           </Autocomplete>
 
@@ -113,7 +116,10 @@ export default function MapMoz({ address }) {
                   onClick={() => setOpen(true)}
                 />
                 {open && (
-                  <InfoWindow position={coordinates} onCloseClick={() => setOpen(false)}>
+                  <InfoWindow
+                    position={coordinates}
+                    onCloseClick={() => setOpen(false)}
+                  >
                     <div className="text-sm">
                       <h3 className="font-semibold">Imóvel</h3>
                       <p>{address}</p>

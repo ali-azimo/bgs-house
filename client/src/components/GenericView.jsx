@@ -79,7 +79,7 @@ export default function GenericView({ type }) {
               {item.imageUrls.map((url) => (
                 <SwiperSlide key={url}>
                   <div
-                    className="w-full h-[250px] sm:h-[350px] md:h-[400px] lg:h-[450px] bg-cover bg-center"
+                    className="w-full h-[250px] sm:h-[350px] md:h-[400px] lg:h-[550px] bg-cover bg-center"
                     style={{ backgroundImage: `url(${url})` }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>

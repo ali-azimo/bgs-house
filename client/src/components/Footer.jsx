@@ -64,7 +64,7 @@ export default function Footer() {
           <h4 className="text-lg font-semibold mb-4 text-[#00AEEF]">Contacto</h4>
           <p className="text-[#CBD5E0] mb-2">Cidade de Maputo, Moçambique</p>
           <p className="text-[#CBD5E0] mb-2">+258 845826662 / 875826662</p>
-          <p className="text-[#CBD5E0]">bgs.soluction@gmail.com</p>
+          <p className="text-[#CBD5E0]"> bgs.infomoz@gmail.com</p>
         </div>
       </div>
 

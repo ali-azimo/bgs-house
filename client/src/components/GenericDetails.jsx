@@ -74,7 +74,7 @@ export default function GenericDetails({ type }) {
       {item && !loading && !error && (
         <div>
           {/* Carrossel */}
-          <div className="relative">
+          <div className="relative ">
             <Swiper
               navigation
               pagination={{ clickable: true }}
@@ -84,9 +84,9 @@ export default function GenericDetails({ type }) {
             >
               {item.imageUrls.map((url) => (
                 <SwiperSlide key={url}>
-                  <div className="relative w-full h-[250px] sm:h-[350px] md:h-[400px] lg:h-[500px]">
+                  <div className="relative w-full h-[250px] sm:h-[350px] md:h-[400px] lg:h-[550px]">
                     <div
-                      className="absolute inset-0 bg-cover bg-center bg-center"
+                      className="absolute inset-0 bg-cover bg-center object-cover bg-top-10"
                       style={{ backgroundImage: `url(${url})` }}
                     />
                     {/* Camada de transparência (opcional) */}
@@ -151,15 +151,29 @@ export default function GenericDetails({ type }) {
                       </a>
                       <a
                         href="tel:+258845826662"
-                        className="inline-flex items-center gap-2 text-blue-600 hover:underline"
+                        className="inline-flex items-center gap-2 text-blue-400 hover:underline"
                       >
-                        <FaPhone /> Ligar: +258 845826662
+                        <FaPhone /> Ligar: +258 845826662  
                       </a>
+                     <div className="grid lg:grid-cols-2 gap-4 p2-4 ">
+                        <a
+                          href="tel:+258845826662"
+                          className="inline-flex items-center gap-2 text-blue-400 hover:underline"
+                        >
+                          <FaPhone /> Ligar: +258 82/84/872507746 
+                        </a>
+                        <a
+                          href="tel:+258845826662"
+                          className="inline-flex items-center gap-2 text-blue-400 hover:underline"
+                        >
+                          <FaPhone /> Ligar: +258 844314455  
+                        </a>
+                     </div>
                       <a
-                        href="mailto:bgs.soluction@gmail.com"
+                        href="mailto: bgs.infomoz@gmail.com"
                         className="inline-flex items-center gap-2 text-red-600 hover:underline"
                       >
-                        <FaEnvelope /> Email: bgs.soluction@gmail.com
+                        <FaEnvelope /> Email:  bgs.infomoz@gmail.com
                       </a>
                     </div>
 

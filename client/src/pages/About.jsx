@@ -15,13 +15,13 @@ import 'swiper/css/bundle';
 
 const pontos = [
   {
-    titulo: 'Visibilidade com Propósito',
-    texto: 'Mais do que exibir o seu imóvel, posicionamo-lo no mercado certo, com um público realmente interessado.',
+    titulo: 'Visibilidade com propósito',
+    texto: 'Mais do que gerir teu negócio, agregamo-lo valor no mercado diante de potenciais interessados.',
     icone: <FaEye className="text-[#3b3f52] text-4xl" />,
   },
   {
-    titulo: 'Parceria de Confiança',
-    texto: 'Conduzimos o processo com integridade. Aqui, o seu imóvel é tratado como investimento, não apenas como anúncio.',
+    titulo: 'Parceria de confiança',
+    texto: 'Conduzimos o processo com integridade, responsabilidade e confidencialidade.',
     icone: <FaHandshake className="text-[#3b3f52] text-4xl" />,
   },
   {
@@ -30,8 +30,8 @@ const pontos = [
     icone: <FaMapSigns className="text-[#3b3f52] text-4xl" />,
   },
   {
-    titulo: 'Processo Claro e Ágil',
-    texto: 'Publicação sem complicações, com apoio dedicado. Sem promessas exageradas. Apenas resultado e clareza.',
+    titulo: 'Processo claro e Ágil',
+    texto: 'Reconhecendo que o tempo é um recurso escasso, tratamos do teu negócio com celeridade, sem complicações, apoio dedicado e sem promessas exageradas. Somos pragmàticos e trazendo apenas resultados e clareza.',
     icone: <FaKey className="text-[#3b3f52] text-4xl" />,
   },
   {
@@ -106,10 +106,7 @@ export default function ParceriaImobiliaria() {
               Quem Somos
             </h3>
             <p className="text-gray-700 text-sm">
-              A BGS é uma empresa moçambicana com mais de 4 anos de experiência,
-              dedicada à prestação de serviços nos setores de Instalações
-              Especiais, Mineração, Imobiliária, Investimentos, Serralharias,
-              Construção Civil, Agro-Pecuária, Saúde e Meio Ambiente.
+              A BGS - Bule Global Solutions (BGS) é uma empresa moçambicana com mais de 4 anos de experiência, dedicada à prestação de serviços de qualidade nos sectores de Instalações especiais, Mineração, Gestão de Negócios (Comissões, consignações Agenciamento Mediação e Intermediação), Imobiliária e Investimentos, Serralharias e Construção civil, Agro-Pecuària, Saúde e meio ambiente, e outros.
             </p>
           </div>
 
@@ -119,9 +116,7 @@ export default function ParceriaImobiliaria() {
               Missão
             </h3>
             <p className="text-gray-700 text-sm">
-              Com raízes firmes em Moçambique e visão global, a BGS tem como
-              missão levar soluções inovadoras e sustentáveis a clientes em todo
-              o mundo.
+              Com raízes firmes em Moçambique e visão global, a BGS tem como missão levar soluções inovadoras e sustentáveis a clientes em todo o mundo.
             </p>
           </div>
 
@@ -129,9 +124,7 @@ export default function ParceriaImobiliaria() {
             <FaRocket className="text-4xl text-[#1F2E54] mx-auto mb-4" />
             <h3 className="text-lg font-semibold mb-2 text-[#1F2E54]">Visão</h3>
             <p className="text-gray-700 text-sm">
-              Atuamos com profissionalismo, integridade e compromisso em cada
-              projeto, contribuindo para o desenvolvimento econômico e social
-              das comunidades onde operamos.
+              Atuamos com profissionalismo, integridade e compromisso em cada projeto, contribuindo para o desenvolvimento econômico e social das comunidades onde operamos."
             </p>
           </div>
         </div>
