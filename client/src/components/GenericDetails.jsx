@@ -84,9 +84,9 @@ export default function GenericDetails({ type }) {
             >
               {item.imageUrls.map((url) => (
                 <SwiperSlide key={url}>
-                  <div className="relative w-full h-[250px] sm:h-[350px] md:h-[400px] lg:h-[450px]">
+                  <div className="relative w-full h-[250px] sm:h-[350px] md:h-[400px] lg:h-[500px]">
                     <div
-                      className="absolute inset-0 bg-cover bg-center"
+                      className="absolute inset-0 bg-cover bg-center bg-center"
                       style={{ backgroundImage: `url(${url})` }}
                     />
                     {/* Camada de transparência (opcional) */}
