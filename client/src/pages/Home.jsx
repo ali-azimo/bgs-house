@@ -152,7 +152,7 @@ export default function Home() {
               integradas, profissionais experientes e resultados que transformam vidas.
             </p>
             <Link
-              to="/sobre"
+              to="/team"
               className="bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700 transition duration-300 text-sm font-semibold"
             >
               Conheça a BGS

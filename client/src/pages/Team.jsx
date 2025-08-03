@@ -39,7 +39,7 @@ export default function Team() {
       social: {
         whatsapp: "https://wa.me/25884314455",
         linkedin: "https://www.linkedin.com/in/ali-azimo-0240142b0/",
-        github: "https://github.com/azimo",
+        github: "https://github.com/ali-azimo",
       },
       image: azimo,
     },
