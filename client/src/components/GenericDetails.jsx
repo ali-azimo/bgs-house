@@ -147,13 +147,7 @@ export default function GenericDetails({ type }) {
                         rel="noreferrer"
                         className="inline-flex items-center gap-2 text-green-600 hover:underline"
                       >
-                        <FaWhatsapp /> WhatsApp: +258 845826662 / 875826662
-                      </a>
-                      <a
-                        href="tel:+258845826662"
-                        className="inline-flex items-center gap-2 text-blue-400 hover:underline"
-                      >
-                        <FaPhone /> Ligar: +258 845826662  
+                        <FaWhatsapp /> WhatsApp: +258 875826662
                       </a>
                      <div className="grid lg:grid-cols-2 gap-4 p2-4 ">
                         <a

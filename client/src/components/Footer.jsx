@@ -69,7 +69,7 @@ export default function Footer() {
       </div>
 
       <div className="text-center text-sm text-[#A0AEC0] mt-10 border-t border-gray-700 pt-6">
-        &copy; 2025 Imobiliária BGS. Todos os direitos reservados.
+        &copy; 2025 BGS Mozambique. Todos os direitos reservados.
       </div>
     </footer>
   );
