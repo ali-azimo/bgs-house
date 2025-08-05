@@ -125,8 +125,8 @@ export default function GenericDetails({ type }) {
                     <h1 className="text-3xl font-bold text-[#1F2E54]">
                       {item.name}
                     </h1>
-                    <div className="flex items-center mt-2 text-gray-600">
-                      <FaMapMarkerAlt className="text-green-600 mr-2" />
+                    <div className="flex items-center mt-2">
+                      <FaMapMarkerAlt className="text-[#1F2E54] mr-2" />
                       <span>{item.address}</span>
                     </div>
                   </div>
@@ -135,7 +135,7 @@ export default function GenericDetails({ type }) {
                 <div className="mt-8 flex flex-col md:flex-row gap-8">
                   {/* Descrição */}
                   <div className="md:flex-[0_0_60%]">
-                    <h3 className="text-xl font-semibold mb-2">Descrição</h3>
+                    <h3 className="text-xl text-[#1F2E54] font-semibold mb-2">Descrição</h3>
                     <p className="text-gray-700 leading-relaxed mb-4">
                       {item.description}
                     </p>

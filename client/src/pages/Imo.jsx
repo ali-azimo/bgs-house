@@ -128,19 +128,19 @@ export default function Imo({ type }) {
                       {item.name}
                     </h1>
                     <div className="flex items-center mt-2 text-gray-600">
-                      <FaMapMarkerAlt className="text-green-600 mr-2" />
+                      <FaMapMarkerAlt className="text-[#1F2E54] mr-2" />
                       <span>{item.address}</span>
                     </div>
 
                     {/* Ícones Condicionais */}
-                    <ul className='text-green-900 font-semibold text-sm gap-4 sm:gap-6 flex items-center flex-wrap my-4'>
+                    <ul className='text-[#1F2E54] font-semibold text-sm gap-4 sm:gap-6 flex items-center flex-wrap my-4'>
                         <li className='flex items-center gap-1 whitespace-nowrap'>
                             <FaBed className='text-lg'/>
-                            {item.bedrooms > 1 ? `${item.bedrooms} quarto` : `${item.bedroom} quartos`}
+                            {item.bedrooms > 1 ? `${item.bedrooms} Quarto` : `${item.bedroom} Quartos`}
                         </li>
                         <li className='flex items-center gap-1 whitespace-nowrap'>
                             <FaBath className='text-lg'/>
-                            {item.bathrooms > 1 ? `${item.batrooms} banheiro` : `${item.bathroom} banheiros`}
+                            {item.bathrooms > 1 ? `${item.batrooms} Casa de banho` : `${item.bathroom} Casa de banhos`}
                         </li>
                         <li className='flex items-center gap-1 whitespace-nowrap'>
                             <IoCarSport className='text-lg'/>

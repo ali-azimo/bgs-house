@@ -21,10 +21,10 @@ export default function ImoItems({ imo }) {
 
           <div className="text-slate-700 flex gap-4">
             <div className="font-bold text-xs">
-              {imo.bedroom > 1 ? `${imo.bedroom} quartos` : `${imo.bedroom} quarto`}
+              {imo.bedroom > 1 ? `${imo.bedroom} Quarto` : `${imo.bedroom} Quartos`}
             </div>
             <div className="font-bold text-xs">
-              {imo.bathroom > 1 ? `${imo.bathroom} banheiros` : `${imo.bathroom} banheiro`}
+              {imo.bathroom > 1 ? `${imo.bathroom} Casa de banho` : `${imo.bathroom} Casa de banhos`}
             </div>
           </div>
         </div>
