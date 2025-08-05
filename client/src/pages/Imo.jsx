@@ -5,7 +5,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css/bundle';
 import 'swiper/css/pagination';
-import { FaMapMarkerAlt, FaShare,FaChair, FaParking, FaBed, FaBath, FaCar, FaWhatsapp, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaShare,FaChair, FaBed, FaBath, FaCar, FaWhatsapp, FaEnvelope, FaPhone } from 'react-icons/fa';
+import { IoCarSport } from "react-icons/io5";
+import { GiKidSlide } from "react-icons/gi";
 import SimilarItems from '../components/SimilarItems';
 import MapMoz from '../components/MapMoz';
 
@@ -131,7 +133,7 @@ export default function Imo({ type }) {
                     </div>
 
                     {/* Ícones Condicionais */}
-                    <ul className='text-green-900 font-semibold text-sm gap-4 sm:gap-6 flex items-center flex-wrap'>
+                    <ul className='text-green-900 font-semibold text-sm gap-4 sm:gap-6 flex items-center flex-wrap my-4'>
                         <li className='flex items-center gap-1 whitespace-nowrap'>
                             <FaBed className='text-lg'/>
                             {item.bedrooms > 1 ? `${item.bedrooms} quarto` : `${item.bedroom} quartos`}
@@ -141,11 +143,11 @@ export default function Imo({ type }) {
                             {item.bathrooms > 1 ? `${item.batrooms} banheiro` : `${item.bathroom} banheiros`}
                         </li>
                         <li className='flex items-center gap-1 whitespace-nowrap'>
-                            <FaParking className='text-lg'/>
-                            {item.parking ? "Parquemaneto" : "sem Parqueamento"}
+                            <IoCarSport className='text-lg'/>
+                            {item.parking ? "Parqueamanto" : "sem Parqueamento"}
                         </li>
                         <li className='flex items-center gap-1 whitespace-nowrap'>
-                            <FaChair className='text-lg'/>
+                            <GiKidSlide className='text-lg'/>
                             {item.finished ? "Patio familiar" : "sem patio familiar"}
                         </li>
                     </ul>

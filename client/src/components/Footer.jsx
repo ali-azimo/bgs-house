@@ -40,12 +40,10 @@ export default function Footer() {
             <li><Link to="/" className="hover:text-white">Início</Link></li>
             <li><Link to="/search" className="hover:text-white">Imóveis</Link></li>
             <li><Link to="/about" className="hover:text-white">Sobre Nós</Link></li>
-            <li><Link to="/team" className="hover:text-white">Contacte-nos</Link></li>
             <li><Link to="/imo-home" className="hover:text-white">Imobiliária & Investimentos</Link></li>
             <li><Link to="/agri" className="hover:text-white">Agro-Pecuária</Link></li>
             <li><Link to="/saude" className="hover:text-white">Saúde & meio ambiente</Link></li>
             <li><Link to="/minin" className="hover:text-white">Mineração</Link></li>
-            <li><Link to="/diver" className="hover:text-white">Serviços diversos</Link></li>
           </ul>
         </div>
 

@@ -157,7 +157,7 @@ export default function Search() {
                     ? "Aluguer"
                     : type === "sale"
                     ? "Venda"
-                    : "Com Oferta"}
+                    : "Oferta"}
                 </label>
               ))}
             </div>
