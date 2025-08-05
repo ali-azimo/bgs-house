@@ -143,7 +143,7 @@ export default function Header() {
             </div>
           </form>
           <nav className="flex flex-col items-center space-y-6 text-xl font-semibold">
-            {['/about','/imo-home','/agri','/saude','/minin','/diver','/team'].map((path, idx) => (
+            {['/about','/imo-home','/agricultura','/saude','/minin','/diverso','/team'].map((path, idx) => (
               <Link key={idx} to={path}
                 onClick={() => setNavOpen(false)}
                 className="text-white hover:text-sky-400"
