@@ -45,7 +45,7 @@ export default function Header() {
     <header className="bg-slate-900 text-white sticky top-0 z-50 shadow-md">
       <div className="max-w-8xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <img src={logo} alt="Logo" className="h-10 w-auto" />
+          <img src={logo} alt="Logo" className="h-20 w-auto" />
           <span className="hidden sm:inline text-sm text-sky-400 font-bold ml-2">
             Bule Global Solution
           </span>
@@ -143,7 +143,7 @@ export default function Header() {
             </div>
           </form>
           <nav className="flex flex-col items-center space-y-6 text-xl font-semibold">
-            {['/about','/imo-home','/agricultura','/saude','/minin','/diverso','/team'].map((path, idx) => (
+            {['/Sobre','/Imobiliária','/Agricultura','/Saúde & meio ambiente','/Mineração','/Diversos serviços','/Equipe Técnica'].map((path, idx) => (
               <Link key={idx} to={path}
                 onClick={() => setNavOpen(false)}
                 className="text-white hover:text-sky-400"
