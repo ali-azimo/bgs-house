@@ -1,7 +1,7 @@
-import { FaSearch, FaUser, FaBars, FaTimes } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { FaBars, FaTimes, FaSearch, FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useRef, useState } from 'react';
 import {
   signOutUserStart,
   deleteUserFailure,
@@ -10,20 +10,19 @@ import {
 import logo from '../assets/img/logo.png';
 
 export default function Header() {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser } = useSelector(state => state.user);
   const [searchTerm, setSearchTerm] = useState('');
-  const [showMobileMenu, setShowMobileMenu] = useState(false);
-  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
+  const [userOpen, setUserOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const menuRef = useRef();
 
-  const handleSubmit = (e) => {
+  const handleSearch = (e) => {
     e.preventDefault();
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('searchTerm', searchTerm);
-    const searchQuery = urlParams.toString();
-    navigate(`/search?${searchQuery}`);
+    const params = new URLSearchParams();
+    params.set('searchTerm', searchTerm);
+    navigate(`/search?${params.toString()}`);
+    setNavOpen(false);
   };
 
   const handleLogout = async () => {
@@ -31,169 +30,130 @@ export default function Header() {
       dispatch(signOutUserStart());
       const res = await fetch(`${import.meta.env.VITE_API_KEY_ONRENDER}/api/auth/signout`);
       const data = await res.json();
-
-      if (data.success === false) {
-        dispatch(deleteUserFailure(data.message));
-        return;
+      if (!data.success) {
+        dispatch(deleteUserFailure(data.message)); return;
       }
-
       dispatch(deleteUserSuccess(data));
       localStorage.removeItem('token');
       navigate('/sign-in');
-    } catch (error) {
-      dispatch(deleteUserFailure(error.message));
+    } catch(err) {
+      dispatch(deleteUserFailure(err.message));
     }
   };
 
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setShowMobileMenu(false);
-        setShowUserDropdown(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const navLinks = [
-    { path: '/about', label: 'Sobre' },
-    { path: '/imo-home', label: 'Imo & Investiment' },
-    { path: '/agri', label: 'Agro-Pecuária' },
-    { path: '/saude', label: 'Saúde' },
-    { path: '/minin', label: 'Mineração' },
-    { path: '/diver', label: 'Serviços diversos' },
-    { path: '/team', label: 'Contacto' },
-  ];
-
   return (
-    <header className="bg-slate-900 text-white shadow-md sticky top-0 z-50">
-      <div className="max-w-8xl mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo e Menu Mobile Button */}
-          <div className="flex items-center gap-6">
-            <Link to="/" className="flex items-center">
-              <img src={logo} alt="Logo" className="h-20 w-auto" />
-            </Link>
-            
-            {/* Links de Navegação (Desktop) */}
-            <nav className="hidden md:flex items-center gap-6">
-              {navLinks.map((link) => (
-                <Link 
-                  key={link.path} 
-                  to={link.path} 
-                  className="hover:text-sky-400 text-sm font-medium"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
+    <header className="bg-slate-900 text-white sticky top-0 z-50 shadow-md">
+      <div className="max-w-8xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between">
+        <Link to="/" className="flex items-center">
+          <img src={logo} alt="Logo" className="h-10 w-auto" />
+          <span className="hidden sm:inline text-sm text-sky-400 font-bold ml-2">
+            Bule Global Solution
+          </span>
+        </Link>
 
-          {/* Barra de Pesquisa e Conta do Usuário */}
-          <div className="flex items-center gap-4">
-            {/* Barra de Pesquisa (Desktop) */}
-            <form
-              onSubmit={handleSubmit}
-              className="hidden md:flex items-center border rounded-lg px-4 py-2 bg-slate-800 border-slate-700 focus-within:ring-2 focus-within:ring-sky-500"
-            >
-              <input
-                type="text"
-                placeholder="Buscar..."
-                className="bg-transparent outline-none w-64 text-sm placeholder:text-slate-400"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <button type="submit" className="text-sky-400 hover:text-sky-300 ml-2">
-                <FaSearch size={16} />
-              </button>
-            </form>
+        {/* desktop nav */}
+        <nav className="hidden sm:flex gap-4 items-center">
+          <Link to="/about" className="hover:text-sky-400">Sobre</Link>
+          <Link to="/imo-home" className="hover:text-sky-400">Imo & Investiment</Link>
+          <Link to="/agri" className="hover:text-sky-400">Agro‑Pecuária</Link>
+          <Link to="/saude" className="hover:text-sky-400">Saúde</Link>
+          <Link to="/minin" className="hover:text-sky-400">Mineração</Link>
+          <Link to="/diver" className="hover:text-sky-400">Serviços diversos</Link>
+          <Link to="/team" className="hover:text-sky-400">Contacto</Link>
 
-            {/* Ícone do Menu Mobile */}
-            <button 
-              className="md:hidden text-white hover:text-sky-400"
-              onClick={() => setShowMobileMenu(!showMobileMenu)}
-            >
-              {showMobileMenu ? <FaTimes size={20} /> : <FaBars size={20} />}
+          {/* search input desktop */}
+          <form onSubmit={handleSearch} className="flex items-center border rounded-md px-3 py-1.5 bg-slate-800 border-slate-700">
+            <input
+              type="text"
+              placeholder="Buscar imóveis..."
+              className="bg-transparent outline-none w-64 text-sm placeholder:text-slate-400"
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+            />
+            <button type="submit" className="ml-2 text-sky-400 hover:text-sky-300">
+              <FaSearch />
             </button>
+          </form>
+        </nav>
 
-            {/* Ícone do Usuário */}
-            <div className="relative" ref={menuRef}>
-              {currentUser ? (
-                <button 
-                  onClick={() => setShowUserDropdown(!showUserDropdown)}
-                  className="flex items-center gap-2"
-                >
-                  <div className="h-9 w-9 rounded-full bg-slate-700 flex items-center justify-center border border-sky-500">
-                    <FaUser size={16} />
-                  </div>
-                </button>
-              ) : (
-                <Link to="/sign-in" className="flex items-center gap-2 hover:text-sky-400">
-                  <div className="h-9 w-9 rounded-full bg-slate-700 flex items-center justify-center">
-                    <FaUser size={16} />
-                  </div>
-                </Link>
-              )}
+        {/* mobile right icons */}
+        <div className="flex items-center gap-4">
+          <button onClick={() => setNavOpen(true)} className="sm:hidden text-white">
+            <FaBars size={24} />
+          </button>
 
-              {/* Dropdown do Usuário */}
-              {showUserDropdown && currentUser && (
-                <div className="absolute right-0 mt-2 w-48 bg-slate-800 border border-slate-700 rounded-lg shadow-xl z-10 overflow-hidden">
-                  <Link
-                    to="/profile"
-                    className="block px-4 py-3 hover:bg-slate-700 transition-colors"
-                    onClick={() => setShowUserDropdown(false)}
-                  >
-                    Perfil
-                  </Link>
-                  <button
-                    onClick={() => {
-                      handleLogout();
-                      setShowUserDropdown(false);
-                    }}
-                    className="w-full text-left px-4 py-3 hover:bg-slate-700 text-red-400 transition-colors"
-                  >
-                    Sair
-                  </button>
-                </div>
-              )}
-            </div>
+          <div className="relative">
+            {currentUser ? (
+              <img
+                src={currentUser.avatar}
+                alt="Perfil"
+                className="h-8 w-8 rounded-full cursor-pointer border border-slate-300"
+                onClick={() => setUserOpen(open => !open)}
+              />
+            ) : (
+              <button onClick={() => setUserOpen(open => !open)}>
+                <FaUser size={24} />
+              </button>
+            )}
+            {userOpen && (
+              <div className="absolute right-0 mt-2 w-44 bg-slate-800 border border-slate-700 rounded-md shadow-lg z-20">
+                {currentUser
+                  ? <>
+                      <Link to="/profile" className="flex items-center px-4 py-2 hover:bg-slate-700">
+                        <FaUser className="mr-2" /> Perfil
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full text-left flex items-center px-4 py-2 hover:bg-slate-700 text-red-400"
+                      >
+                        <FaSignOutAlt className="mr-2" /> Sair
+                      </button>
+                    </>
+                  : (
+                      <Link to="/profile" className="flex items-center px-4 py-2 hover:bg-slate-700">
+                        <FaUser className="mr-2" /> Entrar
+                      </Link>
+                    )}
+              </div>
+            )}
           </div>
         </div>
+      </div>
 
-        {/* Menu Mobile */}
-        {showMobileMenu && (
-          <div className="md:hidden mt-4 pt-4 border-t border-slate-800">
-            {/* Barra de Pesquisa Mobile */}
-            <form onSubmit={handleSubmit} className="flex items-center mb-6">
+      {/* mobile full-screen menu */}
+      {navOpen && (
+        <div className="fixed inset-0 bg-slate-900 bg-opacity-95 z-50 flex flex-col">
+          <div className="flex justify-end p-4">
+            <button onClick={() => setNavOpen(false)}>
+              <FaTimes size={28} />
+            </button>
+          </div>
+          <form onSubmit={handleSearch} className="px-6 mb-8">
+            <div className="relative">
               <input
                 type="text"
-                placeholder="Buscar..."
-                className="bg-slate-800 rounded-lg px-4 py-2 outline-none w-full text-sm"
+                placeholder="Buscar imóveis..."
+                className="w-full bg-slate-800 text-white placeholder:text-slate-400 text-lg px-4 py-3 rounded-md"
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={e => setSearchTerm(e.target.value)}
               />
-              <button type="submit" className="ml-2 text-sky-400">
-                <FaSearch size={16} />
+              <button type="submit" className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white">
+                <FaSearch size={20} />
               </button>
-            </form>
-
-            {/* Links de Navegação Mobile */}
-            <nav className="flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <Link 
-                  key={link.path} 
-                  to={link.path} 
-                  className="py-2 hover:text-sky-400"
-                  onClick={() => setShowMobileMenu(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-        )}
-      </div>
+            </div>
+          </form>
+          <nav className="flex flex-col items-center space-y-6 text-xl font-semibold">
+            {['/about','/imo-home','/agri','/saude','/minin','/diver','/team'].map((path, idx) => (
+              <Link key={idx} to={path}
+                onClick={() => setNavOpen(false)}
+                className="text-white hover:text-sky-400"
+              >
+                {path.slice(1).replace('-', ' ')}
+              </Link>
+            ))}
+          </nav>
+        </div>
+      )}
     </header>
   );
 }
