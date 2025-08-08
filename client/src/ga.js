@@ -1,4 +1,3 @@
-// src/ga.js
 export const initGA = (measurementId) => {
   if (!measurementId || typeof window === 'undefined') return;
   if (window.gtagInitialized) return; // evita reinicializações
@@ -13,8 +12,12 @@ export const initGA = (measurementId) => {
   script2.innerHTML = `
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
     gtag('js', new Date());
-    gtag('config', '${measurementId}', { send_page_view: false });
+    gtag('config', '${measurementId}', {
+      send_page_view: false,
+      anonymize_ip: true
+    });
   `;
   document.head.appendChild(script2);
 

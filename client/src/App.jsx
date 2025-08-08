@@ -1,5 +1,7 @@
+// src/App.jsx
 import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import About from './pages/About';
@@ -35,32 +37,30 @@ import DiverHome from './pages/DiverHome';
 import SaudeHome from './pages/SaudeHome';
 import MininHome from './pages/MininHome';
 import ScrollToTop from './pages/ScrollToTop';
-import { initGA, logPageView } from './ga';
+
+import { logPageView } from './ga';
 import ConsentBanner from './components/ConsentBanner';
 import PrivacyPolicy from './components/PrivacyPolicy';
+
 const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+
 function RouteTracker() {
   const location = useLocation();
-  useEffect(() => {
-    if (measurementId) {
-      initGA(measurementId); // inicializa uma vez
-    } else {
-      console.warn('GA measurement ID não encontrado. Verifica a variável de ambiente VITE_GA_MEASUREMENT_ID');
-    }
-  }, [measurementId]);
 
   useEffect(() => {
-    logPageView(); // dispara pageview em cada mudança de rota
+    const consent = localStorage.getItem('bgs_consent');
+    if (consent === 'accepted') {
+      logPageView(); // dispara pageview só se o consentimento foi dado
+    }
   }, [location]);
 
   return null;
 }
 
 export default function App() {
-  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
   return (
     <BrowserRouter>
-     <ConsentBanner measurementId={measurementId} />
+      <ConsentBanner measurementId={measurementId} />
       <RouteTracker />
       <ScrollToTop />
       <Header />
@@ -75,7 +75,7 @@ export default function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/team" element={<Team />} />
         <Route path="/imo-home" element={<ImoHome />} />
-        <Route path='/privacy' element={<PrivacyPolicy/>}/>
+        <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/agri/:agriId" element={<GenericDetails type="agri" />} />
         <Route path="/imo/:imoId" element={<Imo type="imo" />} />
         <Route path="/diver/:diverId" element={<GenericDetails type="diver" />} />
