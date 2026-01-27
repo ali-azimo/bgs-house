@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "private": "true",
-  "proxy": "",
+  "proxy": "https://bgs-house-ekyf.onrender.com/",
   "scripts": {
     "dev": "nodemon api/index.js",
     "start": "node api/index.js",
