@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
-import ImoItems from './ImoItems'; // supondo que mudou o nome do componente também
+import ImoItems from './ImoItems';
 import ServicosSecao from '../components/Service';
 import { FaClock, FaQuestionCircle, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import MapMoz from '../components/MapMoz';
@@ -21,8 +21,9 @@ export default function Home() {
   useEffect(() => {
     const fetchOfferImos = async () => {
       try {
+        // Buscar imóveis com oferta, ordenados do mais antigo para o mais novo
         const res = await fetch(
-          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?offer=true&limit=4`,
+          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?offer=true&limit=8&sort=createdAt&order=asc`,
           { credentials: 'include' }
         );
         const data = await res.json();
@@ -35,8 +36,9 @@ export default function Home() {
 
     const fetchRentImos = async () => {
       try {
+        // Buscar imóveis para arrendamento, ordenados do mais antigo para o mais novo
         const res = await fetch(
-          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?type=rent&limit=4`,
+          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?type=rent&limit=8&sort=createdAt&order=asc`,
           { credentials: 'include' }
         );
         const data = await res.json();
@@ -49,22 +51,24 @@ export default function Home() {
 
     const fetchSaleImos = async () => {
       try {
+        // Buscar imóveis para venda, ordenados do mais antigo para o mais novo
         const res = await fetch(
-          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?type=sale&limit=4`,
+          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?type=sale&limit=8&sort=createdAt&order=asc`,
           { credentials: 'include' }
         );
         const data = await res.json();
         setSaleImos(data);
         fetchBuildImos();
-        setLoading(false);
       } catch (error) {
         console.log(error);
       }
     };
+    
     const fetchBuildImos = async () => {
       try {
+        // Buscar imóveis para construção, ordenados do mais antigo para o mais novo
         const res = await fetch(
-          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?type=build&limit=4`,
+          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?type=build&limit=8&sort=createdAt&order=asc`,
           { credentials: 'include' }
         );
         const data = await res.json();
@@ -73,7 +77,8 @@ export default function Home() {
       } catch (error) {
         console.log(error);
       }
-    }
+    };
+    
     fetchOfferImos();
   }, []);
 
@@ -90,7 +95,7 @@ export default function Home() {
 
   return (
     <div>
-      {/* Swiper */}
+      {/* Swiper - Slider de Imóveis em Destaque */}
       <Swiper
         loop={true}
         autoplay={{
@@ -136,18 +141,19 @@ export default function Home() {
         ))}
       </Swiper>
 
-      {/* Resto do conteúdo ... */}
-
-      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
+      {/* Conteúdo Principal - Grid de 8 itens por secção */}
+      <div className="max-w-6xl mx-auto p-3 flex flex-col gap-12 my-10">
+        
+        {/* Secção: Mais recentes (Ofertas) */}
         {offerImos.length > 0 && (
           <div>
-            <div className="my-3">
-              <h2 className="text-2xl font-semibold text-slate-600">Mais recentes</h2>
-              <Link to="/search?offer=true" className="text-sm text-blue-800 hover:underline">
-                Mostrar mais
+            <div className="flex justify-between items-center my-3">
+              <h2 className="text-2xl font-semibold text-slate-600">Ofertas Especiais</h2>
+              <Link to="/search?offer=true&sort=createdAt&order=asc" className="text-sm text-blue-800 hover:underline">
+                Ver todos →
               </Link>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {offerImos.map((imo) => (
                 <ImoItems imo={imo} key={imo._id} />
               ))}
@@ -155,15 +161,16 @@ export default function Home() {
           </div>
         )}
 
+        {/* Secção: Casas para Arrendar */}
         {rentImos.length > 0 && (
           <div>
-            <div className="my-3">
-              <h2 className="text-2xl font-semibold text-slate-600">Casas para arrendar</h2>
-              <Link to="/search?type=rent" className="text-sm text-blue-800 hover:underline">
-                Mostrar mais
+            <div className="flex justify-between items-center my-3">
+              <h2 className="text-2xl font-semibold text-slate-600">Casas para Arrendar</h2>
+              <Link to="/search?type=rent&sort=createdAt&order=asc" className="text-sm text-blue-800 hover:underline">
+                Ver todos →
               </Link>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {rentImos.map((imo) => (
                 <ImoItems imo={imo} key={imo._id} />
               ))}
@@ -171,37 +178,42 @@ export default function Home() {
           </div>
         )}
 
+        {/* Secção: Casas para Venda */}
         {saleImos.length > 0 && (
           <div>
-            <div className="my-3">
-              <h2 className="text-2xl font-semibold text-slate-600">Casas para venda</h2>
-              <Link to="/search?type=sale" className="text-sm text-blue-800 hover:underline">
-                Mostrar mais
+            <div className="flex justify-between items-center my-3">
+              <h2 className="text-2xl font-semibold text-slate-600">Casas para Venda</h2>
+              <Link to="/search?type=sale&sort=createdAt&order=asc" className="text-sm text-blue-800 hover:underline">
+                Ver todos →
               </Link>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {saleImos.map((imo) => (
                 <ImoItems imo={imo} key={imo._id} />
               ))}
             </div>
           </div>
         )}
+
+        {/* Secção: Construção & Investimento */}
         {buildImos.length > 0 && (
           <div>
-            <div className="my-3">
+            <div className="flex justify-between items-center my-3">
               <h2 className="text-2xl font-semibold text-slate-600">Construção & Investimento</h2>
-              <Link to="/search?type=build" className="text-sm text-blue-800 hover:underline">
-                Mostrar mais
+              <Link to="/search?type=build&sort=createdAt&order=asc" className="text-sm text-blue-800 hover:underline">
+                Ver todos →
               </Link>
             </div>
-            <div className="flex flex-wrap gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {buildImos.map((imo) => (
                 <ImoItems imo={imo} key={imo._id} />
               ))}
             </div>
           </div>
         )}
-        <MapMoz  />
+
+        {/* Mapa de Moçambique */}
+        <MapMoz />
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
 import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
-import ImoItems from './ImoItems'; // supondo que mudou o nome do componente também
+import ImoItems from './ImoItems';
 import ServicosSecao from '../components/Service';
 import { FaClock, FaQuestionCircle, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
@@ -19,8 +19,9 @@ export default function Home() {
   useEffect(() => {
     const fetchOfferImos = async () => {
       try {
+        // Buscar imóveis com oferta, ordenados do mais antigo para o mais novo
         const res = await fetch(
-          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?offer=true&limit=4`,
+          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?offer=true&limit=4&sort=createdAt&order=asc`,
           { credentials: 'include' }
         );
         const data = await res.json();
@@ -33,8 +34,9 @@ export default function Home() {
 
     const fetchRentImos = async () => {
       try {
+        // Buscar imóveis para arrendamento, ordenados do mais antigo para o mais novo
         const res = await fetch(
-          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?type=rent&limit=4`,
+          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?type=rent&limit=4&sort=createdAt&order=asc`,
           { credentials: 'include' }
         );
         const data = await res.json();
@@ -47,8 +49,9 @@ export default function Home() {
 
     const fetchSaleImos = async () => {
       try {
+        // Buscar imóveis para venda, ordenados do mais antigo para o mais novo
         const res = await fetch(
-          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?type=sale&limit=4`,
+          `${import.meta.env.VITE_API_KEY_ONRENDER}/api/imo/get?type=sale&limit=4&sort=createdAt&order=asc`,
           { credentials: 'include' }
         );
         const data = await res.json();
@@ -75,7 +78,7 @@ export default function Home() {
 
   return (
     <div>
-      {/* Swiper */}
+      {/* Swiper - Slider de Imóveis em Destaque */}
       <Swiper
         loop={true}
         autoplay={{
@@ -121,10 +124,48 @@ export default function Home() {
         ))}
       </Swiper>
 
-      {/* Resto do conteúdo ... */}
+      {/* Secção de Imóveis para Venda */}
+      {saleImos && saleImos.length > 0 && (
+        <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-semibold text-slate-600">Imóveis para Venda</h2>
+            <Link
+              to="/search?type=sale&sort=createdAt&order=asc"
+              className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+            >
+              Ver todos →
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {saleImos.map((imo) => (
+              <ImoItems key={imo._id} imo={imo} />
+            ))}
+          </div>
+        </div>
+      )}
 
+      {/* Secção de Imóveis para Arrendamento */}
+      {rentImos && rentImos.length > 0 && (
+        <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-semibold text-slate-600">Imóveis para Arrendamento</h2>
+            <Link
+              to="/search?type=rent&sort=createdAt&order=asc"
+              className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+            >
+              Ver todos →
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {rentImos.map((imo) => (
+              <ImoItems key={imo._id} imo={imo} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Banner Institucional BGS */}
       <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10">
-        {/* Banner Institucional BGS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 bg-white rounded-xl shadow-md p-6 my-10">
           {/* Texto principal */}
           <div className="bg-blue-600 text-white rounded-lg p-6 flex flex-col justify-center items-start shadow">
@@ -159,8 +200,6 @@ export default function Home() {
             </Link>
           </div>
         </div>
-
-
 
         {/* Secção de serviços */}
         <ServicosSecao />
