@@ -142,7 +142,7 @@ export default function GenericDetails({ type }) {
 
                     <div className="flex flex-col gap-3 mt-4">
                       <a
-                        href="https://wa.me/258845826662"
+                        href="https://wa.me/258824533491"
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-2 text-green-600 hover:underline"
@@ -151,13 +151,13 @@ export default function GenericDetails({ type }) {
                       </a>
                      <div className="grid lg:grid-cols-2 gap-4 p2-4 ">
                         <a
-                          href="tel:+258845826662"
+                          href="tel:+258875826662"
                           className="inline-flex items-center gap-2 text-blue-400 hover:underline"
                         >
                           <FaPhone /> Ligar: +258 82/84/872507746 
                         </a>
                         <a
-                          href="tel:+258845826662"
+                          href="tel:+2588758267466"
                           className="inline-flex items-center gap-2 text-blue-400 hover:underline"
                         >
                           <FaPhone /> Ligar: +258 844314455  
