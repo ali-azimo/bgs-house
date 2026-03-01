@@ -164,18 +164,18 @@ export default function Imo({ type }) {
 
                     <div className="flex flex-col gap-3 mt-4">
                       <a
-                        href="https://wa.me/258845826662"
+                        href="https://wa.me/25887582662"
                         target="_blank"
                         rel="noreferrer"
                         className="inline-flex items-center gap-2 text-green-600 hover:underline"
                       >
-                        <FaWhatsapp /> WhatsApp: +258 845826662 / 875826662
+                        <FaWhatsapp /> WhatsApp: +258 824533491 / 875826662
                       </a>
                       <a
-                        href="tel:+258845826662"
+                        href="tel:+2588758267466"
                         className="inline-flex items-center gap-2 text-blue-600 hover:underline"
                       >
-                        <FaPhone /> Ligar: +258 845826662
+                        <FaPhone /> Ligar: +258 824533491 / 875826662
                       </a>
                       <a
                         href="mailto:bgs.soluction@gmail.com"
