@@ -1,0 +1,19 @@
+# api/Dockerfile
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copiar package.json e package-lock.json
+COPY package*.json ./
+
+# Instalar dependências (apenas produção)
+RUN npm ci --only=production
+
+# Copiar o resto do código da API
+COPY . .
+
+# Expor a porta que a API usa
+EXPOSE 3000
+
+# Comando para iniciar a aplicação
+CMD ["node", "index.js"]
